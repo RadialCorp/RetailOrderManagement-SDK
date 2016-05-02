@@ -70,6 +70,24 @@ return call_user_func(function () {
         'payloadMap' => $payloadMap,
         'types' => [],
     ];
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\Payment\SettlementCreateRequest'] = [
+        'validators' => [
+            [
+                'validator' => $requiredFieldsValidator,
+                'params' => [
+                    'getAmount',
+                    'getCurrencyCode',
+                    'getTaxAmount',
+                    'getSettlementType',
+                    'getClientContext',
+                    'getFinalDebit',
+                ]
+            ]
+        ],
+        'validatorIterator' => $validatorIterator,
+        'schemaValidator' => $xsdSchemaValidator,
+        'childPayloads' => $noChildPayloads,
+    ];
     $map['\eBayEnterprise\RetailOrderManagement\Payload\Payment\CreditCardAuthRequest'] = [
         'validators' => [
             [
