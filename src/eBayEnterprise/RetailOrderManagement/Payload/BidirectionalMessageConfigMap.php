@@ -103,5 +103,9 @@ return call_user_func(function () {
         'request' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\ProtectPanRequest',
         'reply' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\ProtectPanReply',
     ];
+    $map['payments/settlement/create'] = [
+        'request' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\PaymentSettlementRequest',
+        'reply' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\PaymentSettlementReply',
+    ];
     return $map;
 });

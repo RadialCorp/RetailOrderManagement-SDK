@@ -25,7 +25,7 @@ use Psr\Log\NullLogger;
 
 class PaymentSettlementRequest implements IPaymentSettlementRequest
 {
-    use TTopLevelPayload, TPaymentContext, TBillingAddress, TShippingAddress;
+    use TTopLevelPayload, TPaymentContext;
 
     protected $currencyCode;
     protected $requestId;
@@ -34,10 +34,6 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
     protected $settlementType;
     protected $clientContext;
     protected $finalDebit;
-
-
-    /** @var string */
-    protected $payerAuthenticationResponse;
 
     /**
      * @param IValidatorIterator
@@ -61,6 +57,8 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
 
         $this->extractionPaths = [
             'requestId' => 'string(@requestId)',
+            'cardNumber' =>
+                'string(x:PaymentContext/x:EncryptedPaymentAccountUniqueId|x:PaymentContext/x:PaymentAccountUniqueId)',
             'orderId' => 'string(x:PaymentContext/x:OrderId)',
             'currencyCode' => 'string(x:Amount/@currencyCode)',
             'amount' => 'number(x:Amount)',
@@ -120,6 +118,19 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
     protected function getSchemaFile()
     {
         return $this->getSchemaDir() . self::XSD;
+    }
+
+    /**
+     * Name, value pairs of root attributes
+     *
+     * @return array
+     */
+    protected function getRootAttributes()
+    {
+        return [
+            'xmlns' => $this->getXmlNamespace(),
+            'requestId' => $this->getRequestId(),
+        ];
     }
 
     /**
@@ -222,7 +233,7 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
 
     public function setFinalDebit($finalDebit)
     {
-        $this->finalDebit = (bool) $finalDebit;
+        $this->finalDebit = $finalDebit;
         return $this;
     }
 }

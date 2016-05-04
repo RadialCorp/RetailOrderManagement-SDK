@@ -15,11 +15,12 @@
 
 namespace eBayEnterprise\RetailOrderManagement\Payload\Payment;
 
+use eBayEnterprise\RetailOrderManagement\Payload\IPayload;
 /**
  * Interface ISettlementCreateRequest
  * @package eBayEnterprise\RetailOrderManagement\Payload\Payment
  */
-interface IPaymentSettlementRequest
+interface IPaymentSettlementRequest extends IPayload, IOrderId
 {
     // XML related values - document root node, XMLNS and name of the xsd schema file
     const XML_NS = 'http://api.gsicommerce.com/schema/checkout/1.0';
