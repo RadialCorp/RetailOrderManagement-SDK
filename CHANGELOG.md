@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [1.5.0] - 2016-05-06
 ### Added
 - Add payment settlement request
 - Add payment settlement reply
@@ -185,6 +185,7 @@ All notable changes to this project will be documented in this file.
 - HTTP API for bidirectional communication.
 - AMQP API for unidirectional messages.
 
+[1.5.0]: https://github.com/eBayEnterprise/RetailOrderManagement-SDK/compare/1.4.8...1.5.0
 [1.4.8]: https://github.com/eBayEnterprise/RetailOrderManagement-SDK/compare/1.4.7...1.4.8
 [1.4.7]: https://github.com/eBayEnterprise/RetailOrderManagement-SDK/compare/1.4.6...1.4.7
 [1.4.6]: https://github.com/eBayEnterprise/RetailOrderManagement-SDK/compare/1.4.5...1.4.6
