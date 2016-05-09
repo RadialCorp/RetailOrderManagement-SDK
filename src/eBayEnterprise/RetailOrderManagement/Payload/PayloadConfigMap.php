@@ -70,6 +70,33 @@ return call_user_func(function () {
         'payloadMap' => $payloadMap,
         'types' => [],
     ];
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\Payment\ConfirmFundsRequest'] = [
+        'validators' => [
+            [
+                'validator' => $requiredFieldsValidator,
+                'params' => [
+                    'getAmount',
+                    'getCurrencyCode',
+                ]
+            ]
+        ],
+        'validatorIterator' => $validatorIterator,
+        'schemaValidator' => $xsdSchemaValidator,
+        'childPayloads' => $noChildPayloads,
+    ];
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\Payment\ConfirmFundsReply'] = [
+        'validators' => [
+            [
+                'validator' => $requiredFieldsValidator,
+                'params' => [
+                    'getFundsAvailable',
+                ]
+            ]
+        ],
+        'validatorIterator' => $validatorIterator,
+        'schemaValidator' => $xsdSchemaValidator,
+        'childPayloads' => $noChildPayloads,
+    ];
     $map['\eBayEnterprise\RetailOrderManagement\Payload\Payment\PaymentSettlementRequest'] = [
         'validators' => [
             [
@@ -92,9 +119,7 @@ return call_user_func(function () {
         'validators' => [
             [
                 'validator' => $requiredFieldsValidator,
-                'params' => [
-                    'getFoo',//todo
-                ]
+                'params' => []
             ]
         ],
         'validatorIterator' => $validatorIterator,

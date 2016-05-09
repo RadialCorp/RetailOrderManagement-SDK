@@ -107,5 +107,9 @@ return call_user_func(function () {
         'request' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\PaymentSettlementRequest',
         'reply' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\PaymentSettlementReply',
     ];
+    $map['payments/funds/confirm'] = [
+        'request' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\ConfirmFundsRequest',
+        'reply' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\ConfirmFundsReply',
+    ];
     return $map;
 });
