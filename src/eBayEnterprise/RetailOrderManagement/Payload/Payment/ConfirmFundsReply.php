@@ -27,7 +27,7 @@ class ConfirmFundsReply implements IConfirmFundsReply
 {
     const SUCCESS = 'Success';
 
-    use TTopLevelPayload, TPaymentContext, TOrderId;
+    use TTopLevelPayload, TPaymentContext;
 
     /** @var string * */
     protected $fundsAvailable;
@@ -53,7 +53,9 @@ class ConfirmFundsReply implements IConfirmFundsReply
         $this->parentPayload = $parentPayload;
 
         $this->extractionPaths = [
-            'orderId' => 'string(x:OrderId)',
+            'orderId' => 'string(x:PaymentContext/x:OrderId)',
+            'cardNumber' =>
+                'string(x:PaymentContext/x:EncryptedPaymentAccountUniqueId|x:PaymentContext/x:PaymentAccountUniqueId)',
             'fundsAvailable' => 'string(x:FundsAvailable)',
         ];
     }
@@ -96,7 +98,7 @@ class ConfirmFundsReply implements IConfirmFundsReply
      */
     protected function serializeContents()
     {
-        return $this->serializeOrderId() . 
+        return $this->serializePaymentContext() .
         "<FundsAvailable>{$this->xmlEncode($this->getFundsAvailable())}</FundsAvailable>";
     }
 
