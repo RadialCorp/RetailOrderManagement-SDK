@@ -19,6 +19,7 @@
  */
 return call_user_func(function () {
     $orderEvents = '\eBayEnterprise\RetailOrderManagement\Payload\OrderEvents';
+    $riskEvents = '\eBayEnterprise\RetailOrderManagement\Payload\Risk';
     $map = [];
     $map['OrderAccepted'] = "$orderEvents\OrderAccepted";
     $map['OrderBackorder'] = "$orderEvents\OrderBackorder";
@@ -31,5 +32,6 @@ return call_user_func(function () {
     $map['OrderReturnInTransit'] = "$orderEvents\OrderReturnInTransit";
     $map['OrderShipped'] = "$orderEvents\OrderShipped";
     $map['Test'] = "$orderEvents\TestMessage";
+    $map['RiskAssessmentReply'] = "$riskEvents\RiskAssessmentReply";
     return $map;
 });
