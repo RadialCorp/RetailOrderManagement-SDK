@@ -216,8 +216,8 @@ class AmqpApi implements IAmqpApi
     {
         $context = $this->getContext();
         $logData = [
-            'rom_request_url' => $this->config->getEndpoint(),
-            'queue_name' => $this->config->getQueueName(),
+             'rom_request_url' => $this->config->getEndpoint(),
+             'queue_name' => $this->config->getQueueName(),
         ];
         return $context ? $context->getMetaData(__CLASS__, $logData) : $logData;
     }

@@ -3984,5 +3984,18 @@ return call_user_func(function () {
         'schemaValidator' => $xsdSchemaValidator,
         'childPayloads' => $noChildPayloads,
     ];
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\Risk\RiskAssessmentReply'] = [
+        'validators' => [
+        [
+          'validator' => $requiredFieldsValidator,
+                 'params' => [
+                        'getResponseCode',
+                 ]
+             ]
+         ],
+         'validatorIterator' => $validatorIterator,
+         'schemaValidator' => $xsdSchemaValidator,
+         'childPayloads' => $noChildPayloads,
+    ];
     return $map;
 });
