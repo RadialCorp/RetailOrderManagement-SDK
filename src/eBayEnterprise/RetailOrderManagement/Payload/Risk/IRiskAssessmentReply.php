@@ -28,10 +28,6 @@ interface IRiskAssessmentReply extends IPayload, IOrderEvent
     const ROOT_NODE = 'RiskAssessmentReply';
     const XSD = '/checkout/1.0/Risk-Service-RiskAssessment-1.0.xsd';
 
-    public function getMockOrderEvent();
-    public function setMockOrderEvent($mockOrderEvent);
     public function getResponseCode();
     public function setResponseCode($responseCode);
-    public function getSessionId();
-    public function setSessionId($sessionId);
 }

@@ -196,9 +196,6 @@ class AmqpApi implements IAmqpApi
         if ($message) {
             // direct delivery_info array access recommended in PhpAmqpLib documentation
             $this->channel->basic_ack($message->delivery_info['delivery_tag']);
-
-            $logMessage = 'Message Payload:';
-            $this->logger->debug($logMessage, $this->getRequestUrlLogData($message->body));
         }
         return $message;
     }
@@ -215,22 +212,13 @@ class AmqpApi implements IAmqpApi
         return $this;
     }
 
-    protected function getRequestUrlLogData($message=null)
+    protected function getRequestUrlLogData()
     {
         $context = $this->getContext();
-        if($message)
-        {
-                $logData = [
-                  'rom_request_url' => $this->config->getEndpoint(),
-                  'queue_name' => $this->config->getQueueName(),
-                  'body' => $message,
-                ];
-        } else {
-                $logData = [
-                    'rom_request_url' => $this->config->getEndpoint(),
-                    'queue_name' => $this->config->getQueueName(),
-                ];
-        }
+        $logData = [
+             'rom_request_url' => $this->config->getEndpoint(),
+             'queue_name' => $this->config->getQueueName(),
+        ];
         return $context ? $context->getMetaData(__CLASS__, $logData) : $logData;
     }
 

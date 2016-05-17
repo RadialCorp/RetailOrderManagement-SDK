@@ -29,6 +29,8 @@ class RiskAssessmentReply implements IRiskAssessmentReply
     protected $_mockOrderEvent;
     protected $_responseCode;
     protected $_sessionId;
+    protected $_reasonCode;
+    protected $_reasonCodeDescription;
 
     /**
      * @param IValidatorIterator
@@ -51,12 +53,16 @@ class RiskAssessmentReply implements IRiskAssessmentReply
         $this->parentPayload = $parentPayload;
         $this->extractionPaths = [
             'orderId' => 'string(x:OrderId)',
-	    'transactionDeviceInfo' => 'string(x:TransactionDeviceInfo)',
-	    '_mockOrderEvent' => 'string(x:MockOrderEvent)',
 	    '_responseCode' => 'string(x:ResponseCode)',
 	    'storeId' => 'string(x:StoreId)',
-	    '_sessionId' => 'string(@sessionId)',
         ];
+	$this->optionalExtractionPaths = [
+	    'transactionDeviceInfo' => 'string(x:TransactionDeviceInfo)',
+	    '_mockOrderEvent' => 'string(x:MockOrderEvent)',
+	    '_reasonCode' => 'string(x:ReasonCode)',
+	    '_reasonCodeDescription' => 'string(x:ReasonCodeDescription)',
+	    '_sessionId' => 'string(@sessionId)',
+	];
     }
     /**
      * Serialize the various parts of the payload into XML strings and
@@ -74,10 +80,12 @@ class RiskAssessmentReply implements IRiskAssessmentReply
     protected function serializeRiskReply()
     {
         return sprintf(
-	    '<MockOrderEvent>%s</MockOrderEvent>' .
+	    '<OrderId>%s</OrderId>' .
 	    '<ResponseCode>%s</ResponseCode>' .
-	    $this->xmlEncode($this->getMockOrderEvent()),
-	    $this->xmlEncode($this->getResponseCode())
+	    '<StoreId>%s</StoreId>',
+	    $this->xmlEncode($this->getCustomerOrderId()),
+	    $this->xmlEncode($this->getResponseCode()),
+	    $this->xmlEncode($this->getStoreId())
         );
     }
     /**
@@ -108,13 +116,6 @@ class RiskAssessmentReply implements IRiskAssessmentReply
         return static::ROOT_NODE;
     }
 	   
-    protected function getRootAttributes()
-    {
-        return [
-            '_sessionId' => $this->getSessionId(),
-        ];
-    }
-
     public function getMockOrderEvent()
     {
 	return $this->_mockOrderEvent;
@@ -135,6 +136,28 @@ class RiskAssessmentReply implements IRiskAssessmentReply
     {
 	$this->_responseCode = $responseCode;
 	return $this;
+    }
+
+    public function getReasonCode()
+    {
+        return $this->_reasonCode;
+    }
+
+    public function setReasonCode($reasonCode)
+    {
+        $this->_reasonCode = $reasonCode;
+        return $this;
+    }
+
+    public function getReasonCodeDescription()
+    {
+        return $this->_reasonCodeDescription;
+    }
+
+    public function setReasonCodeDescription($reasonCodeDescription)
+    {
+        $this->_reasonCodeDescription = $reasonCodeDescription;
+        return $this;
     }
 
     public function getSessionId()
