@@ -33,8 +33,6 @@ class XsdSchemaValidator implements Payload\ISchemaValidator
      */
     public function validate($xmlString, $schemaFile = null)
     {
-	print_r("XML String: ". $xmlString);
-
         $doc = $this->loadXmlDoc($xmlString);
         $originalUseErrors = $this->setupValidationErrorHandling();
         $isValid = $doc->schemaValidate($schemaFile);
