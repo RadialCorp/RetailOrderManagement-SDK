@@ -66,6 +66,7 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
             'taxAmount' => 'number(x:TaxAmount)',
             'clientContext' => 'number(x:ClientContext)',
             'settlementType' => 'string(x:SettlementType)',
+            'invoiceId' => 'string(x:InvoiceId)',
         ];
         $this->booleanExtractionPaths = [
             'finalDebit' => 'boolean(x:FinalDebit)'
@@ -91,19 +92,19 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
     protected function serializeSettlementInfo()
     {
         return sprintf(
+            '<InvoiceId>%s</InvoiceId>'.
             '<Amount currencyCode="%s">%.2f</Amount>'.
             '<TaxAmount currencyCode="%s">%.2f</TaxAmount>'.
             '<SettlementType>%s</SettlementType>'.
             '<ClientContext>%s</ClientContext>'.
-            '<InvoiceId>%s</InvoiceId>'.
             '<FinalDebit>%s</FinalDebit>',
+            $this->xmlEncode($this->getInvoiceId()),
             $this->xmlEncode($this->getCurrencyCode()),
             $this->getAmount(),
             $this->xmlEncode($this->getCurrencyCode()),
             $this->getTaxAmount(),
             $this->xmlEncode($this->getSettlementType()),
             $this->xmlEncode($this->getClientContext()),
-            $this->xmlEncode($this->getInvoiceId()),
             $this->xmlEncode($this->getFinalDebit())
         );
     }
