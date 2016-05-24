@@ -104,4 +104,15 @@ interface IPaymentSettlementRequest extends IPayload, IOrderId
      * @return self
      */
     public function setFinalDebit($finalDebit);
+
+    /**
+     * @return int
+     */
+    public function getInvoiceId();
+
+    /**
+     * @param int
+     * @return self
+     */
+    public function setInvoiceId($invoiceId);
 }

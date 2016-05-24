@@ -34,6 +34,7 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
     protected $settlementType;
     protected $clientContext;
     protected $finalDebit;
+    protected $invoiceId;
 
     /**
      * @param IValidatorIterator
@@ -94,6 +95,7 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
             '<TaxAmount currencyCode="%s">%.2f</TaxAmount>'.
             '<SettlementType>%s</SettlementType>'.
             '<ClientContext>%s</ClientContext>'.
+            '<InvoiceId>%s</InvoiceId>'.
             '<FinalDebit>%s</FinalDebit>',
             $this->xmlEncode($this->getCurrencyCode()),
             $this->getAmount(),
@@ -101,6 +103,7 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
             $this->getTaxAmount(),
             $this->xmlEncode($this->getSettlementType()),
             $this->xmlEncode($this->getClientContext()),
+            $this->xmlEncode($this->getInvoiceId()),
             $this->xmlEncode($this->getFinalDebit())
         );
     }
@@ -234,6 +237,17 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
     public function setFinalDebit($finalDebit)
     {
         $this->finalDebit = $finalDebit;
+        return $this;
+    }
+
+    public function getInvoiceId()
+    {
+        return $this->invoiceId;
+    }
+
+    public function setInvoiceId($invoiceId)
+    {
+        $this->invoiceId = $invoiceId;
         return $this;
     }
 }
