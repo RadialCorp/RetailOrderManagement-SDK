@@ -36,4 +36,17 @@ trait TPaymentContext
             $this->serializePaymentAccountUniqueId()
         );
     }
+
+    /**
+     * Create an XML string representing the PaymentContextBase nodes
+     * @return string
+     */
+    protected function serializePaymentContextBase()
+    {
+        return sprintf(
+            '<PaymentContextBase>%s</PaymentContextBase>',
+            $this->serializeOrderId()
+        );
+    }
+
 }

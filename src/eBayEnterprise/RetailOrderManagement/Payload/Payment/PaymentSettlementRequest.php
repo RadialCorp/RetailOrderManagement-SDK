@@ -60,7 +60,7 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
             'requestId' => 'string(@requestId)',
             'cardNumber' =>
                 'string(x:PaymentContext/x:EncryptedPaymentAccountUniqueId|x:PaymentContext/x:PaymentAccountUniqueId)',
-            'orderId' => 'string(x:PaymentContext/x:OrderId)',
+            'orderId' => 'string(x:PaymentContext/x:OrderId|x:PaymentContextBase/x:OrderId)',
             'currencyCode' => 'string(x:Amount/@currencyCode)',
             'amount' => 'number(x:Amount)',
             'taxAmount' => 'number(x:TaxAmount)',
@@ -80,7 +80,9 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
      */
     protected function serializeContents()
     {
-        return $this->serializePaymentContext()
+        return $this->getCardNumber() ?
+            $this->serializePaymentContext() :
+            $this->serializePaymentContextBase() 
         . $this->serializeSettlementInfo();
     }
 

@@ -53,7 +53,7 @@ class ConfirmFundsReply implements IConfirmFundsReply
         $this->parentPayload = $parentPayload;
 
         $this->extractionPaths = [
-            'orderId' => 'string(x:PaymentContext/x:OrderId)',
+            'orderId' => 'string(x:PaymentContext/x:OrderId|x:PaymentContextBase/x:OrderId)',
             'cardNumber' =>
                 'string(x:PaymentContext/x:EncryptedPaymentAccountUniqueId|x:PaymentContext/x:PaymentAccountUniqueId)',
             'fundsAvailable' => 'string(x:FundsAvailable)',
@@ -98,7 +98,9 @@ class ConfirmFundsReply implements IConfirmFundsReply
      */
     protected function serializeContents()
     {
-        return $this->serializePaymentContext() .
+        return $this->getCardNumber() ?
+            $this->serializePaymentContext() :
+            $this->serializePaymentContextBase() .
         "<FundsAvailable>{$this->xmlEncode($this->getFundsAvailable())}</FundsAvailable>";
     }
 

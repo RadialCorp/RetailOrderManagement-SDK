@@ -68,7 +68,9 @@ class ConfirmFundsRequest implements IConfirmFundsRequest
      */
     protected function serializeContents()
     {
-        return $this->serializePaymentContext()
+        return $this->getCardNumber() ?
+            $this->serializePaymentContext() :
+            $this->serializePaymentContextBase()
         . $this->serializeAmount();
     }
 
