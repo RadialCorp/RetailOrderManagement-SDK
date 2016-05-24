@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.5.2] - 2016-05-24
+### Added
+- Add auth cancel payloads
+- Add risk assess reply
+- Add invoice id to settlement request
+
 ## [1.5.1] - 2016-05-10
 ### Added
 - Add confirm funds request
@@ -190,8 +196,9 @@ All notable changes to this project will be documented in this file.
 - HTTP API for bidirectional communication.
 - AMQP API for unidirectional messages.
 
-[1.5.1]: https://github.com/eBayEnterprise/RetailOrderManagement-SDK/compare/1.5.0...1.5.1
-[1.5.0]: https://github.com/eBayEnterprise/RetailOrderManagement-SDK/compare/1.4.8...1.5.0
+[1.5.2]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.5.1...1.5.2
+[1.5.1]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.5.0...1.5.1
+[1.5.0]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.4.8...1.5.0
 [1.4.8]: https://github.com/eBayEnterprise/RetailOrderManagement-SDK/compare/1.4.7...1.4.8
 [1.4.7]: https://github.com/eBayEnterprise/RetailOrderManagement-SDK/compare/1.4.6...1.4.7
 [1.4.6]: https://github.com/eBayEnterprise/RetailOrderManagement-SDK/compare/1.4.5...1.4.6
