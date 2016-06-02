@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.5.5] - 2016-06-02
+### Added
+- Add Settlement status payloads
+
 ## [1.5.2] - 2016-05-24
 ### Added
 - Add auth cancel payloads
@@ -196,6 +200,7 @@ All notable changes to this project will be documented in this file.
 - HTTP API for bidirectional communication.
 - AMQP API for unidirectional messages.
 
+[1.5.5]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.5.4...1.5.5
 [1.5.2]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.5.1...1.5.2
 [1.5.1]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.5.0...1.5.1
 [1.5.0]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.4.8...1.5.0
