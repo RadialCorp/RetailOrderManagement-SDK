@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.5.7] - 2016-06-03
+### Fixed
+- Fix how amount is serialized
+
 ## [1.5.6] - 2016-06-03
 ### Added
 - Add confirm funds isTimeout method
@@ -204,6 +208,7 @@ All notable changes to this project will be documented in this file.
 - HTTP API for bidirectional communication.
 - AMQP API for unidirectional messages.
 
+[1.5.7]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.5.6...1.5.7
 [1.5.6]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.5.5...1.5.6
 [1.5.5]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.5.4...1.5.5
 [1.5.2]: https://github.com/RadialCorp/RetailOrderManagement-SDK/compare/1.5.1...1.5.2

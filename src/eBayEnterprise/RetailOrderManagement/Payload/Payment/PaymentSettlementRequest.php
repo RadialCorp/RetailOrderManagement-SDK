@@ -80,10 +80,10 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
      */
     protected function serializeContents()
     {
-        return $this->getCardNumber() ?
+        $paymentContext = $this->getCardNumber() ?
             $this->serializePaymentContext() :
-            $this->serializePaymentContextBase() 
-        . $this->serializeSettlementInfo();
+            $this->serializePaymentContextBase();
+        return $paymentContext . $this->serializeSettlementInfo();
     }
 
     /**

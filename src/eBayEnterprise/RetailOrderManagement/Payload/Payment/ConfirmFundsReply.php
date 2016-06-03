@@ -109,9 +109,10 @@ class ConfirmFundsReply implements IConfirmFundsReply
      */
     protected function serializeContents()
     {
-        return $this->getCardNumber() ?
+        $paymentContext = $this->getCardNumber() ?
             $this->serializePaymentContext() :
-            $this->serializePaymentContextBase() .
+            $this->serializePaymentContextBase();
+        return $paymentContext .
         "<FundsAvailable>{$this->xmlEncode($this->getFundsAvailable())}</FundsAvailable>";
     }
 
