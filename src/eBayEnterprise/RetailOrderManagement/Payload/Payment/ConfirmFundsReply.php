@@ -26,6 +26,7 @@ use Psr\Log\NullLogger;
 class ConfirmFundsReply implements IConfirmFundsReply
 {
     const SUCCESS = 'Success';
+    const TIMEOUT = 'Timeout';
 
     use TTopLevelPayload, TPaymentContext;
 
@@ -68,6 +69,16 @@ class ConfirmFundsReply implements IConfirmFundsReply
     public function isSuccess()
     {
         return ($this->getFundsAvailable() === static::SUCCESS);
+    }
+
+    /**
+     * Did upstream systems report a timeout?
+     *
+     * @return bool
+     */
+    public function isTimeout()
+    {
+        return ($this->getFundsAvailable() === static::TIMEOUT);
     }
 
     /**
