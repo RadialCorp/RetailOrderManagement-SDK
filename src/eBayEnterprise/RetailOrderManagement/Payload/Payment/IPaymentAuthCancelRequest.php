@@ -17,15 +17,15 @@ namespace eBayEnterprise\RetailOrderManagement\Payload\Payment;
 
 use eBayEnterprise\RetailOrderManagement\Payload\IPayload;
 /**
- * Interface ISettlementCreateRequest
+ * Interface IPaymentAuthCancelRequest
  * @package eBayEnterprise\RetailOrderManagement\Payload\Payment
  */
-interface IPaymentSettlementRequest extends IPayload, IOrderId
+interface IPaymentAuthCancelRequest extends IPayload, IOrderId
 {
     // XML related values - document root node, XMLNS and name of the xsd schema file
     const XML_NS = 'http://api.gsicommerce.com/schema/checkout/1.0';
-    const ROOT_NODE = 'PaymentSettlementRequest';
-    const XSD = '/checkout/1.0/Payment-Service-PaymentSettlement-1.0.xsd';
+    const ROOT_NODE = 'PaymentAuthCancelRequest';
+    const XSD = '/checkout/1.0/Payment-Service-PaymentAuthCancel-1.0.xsd';
 
     /**
      * RequestId is used to globally identify a request message and is used
@@ -58,61 +58,14 @@ interface IPaymentSettlementRequest extends IPayload, IOrderId
     public function setAmount($amount);
 
     /**
-     * The tax amount to capture
-     *
-     * xsd note: minimum value 0
-     *           maximum precision 2 decimal places
-     * @return float
+     * @return mixed
      */
-    public function getTaxAmount();
+    public function getCurrencyCode();
 
     /**
-     * @param float
-     * @return self
+     * @param $code
+     * @return mixed
      */
-    public function setTaxAmount($amount);
+    public function setCurrencyCode($code);
 
-    /**
-     * @return self
-     */
-    public function getSettlementType();
-
-    /**
-     * @param string
-     * @return self
-     */
-    public function setSettlementType($type);
-
-    /**
-     * @return self
-     */
-    public function getClientContext();
-
-    /**
-     * @param string
-     * @return self
-     */
-    public function setClientContext($context);
-
-    /**
-     * @return self
-     */
-    public function getFinalDebit();
-
-    /**
-     * @param bool
-     * @return self
-     */
-    public function setFinalDebit($finalDebit);
-
-    /**
-     * @return int
-     */
-    public function getInvoiceId();
-
-    /**
-     * @param int
-     * @return self
-     */
-    public function setInvoiceId($invoiceId);
 }

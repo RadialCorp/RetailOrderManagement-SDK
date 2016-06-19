@@ -23,18 +23,13 @@ use eBayEnterprise\RetailOrderManagement\Payload\TTopLevelPayload;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
-class PaymentSettlementRequest implements IPaymentSettlementRequest
+class PaymentAuthCancelRequest implements IPaymentAuthCancelRequest
 {
     use TTopLevelPayload, TPaymentContext;
 
-    protected $currencyCode;
     protected $requestId;
     protected $amount;
-    protected $taxAmount;
-    protected $settlementType;
-    protected $clientContext;
-    protected $finalDebit;
-    protected $invoiceId;
+    protected $currencyCode;
 
     /**
      * @param IValidatorIterator
@@ -60,16 +55,9 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
             'requestId' => 'string(@requestId)',
             'cardNumber' =>
                 'string(x:PaymentContext/x:EncryptedPaymentAccountUniqueId|x:PaymentContext/x:PaymentAccountUniqueId)',
-            'orderId' => 'string(x:PaymentContext/x:OrderId|x:PaymentContextBase/x:OrderId)',
+            'orderId' => 'string(x:PaymentContext/x:OrderId)',
             'currencyCode' => 'string(x:Amount/@currencyCode)',
             'amount' => 'number(x:Amount)',
-            'taxAmount' => 'number(x:TaxAmount)',
-            'clientContext' => 'number(x:ClientContext)',
-            'settlementType' => 'string(x:SettlementType)',
-            'invoiceId' => 'string(x:InvoiceId)',
-        ];
-        $this->booleanExtractionPaths = [
-            'finalDebit' => 'boolean(x:FinalDebit)'
         ];
     }
 
@@ -80,10 +68,8 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
      */
     protected function serializeContents()
     {
-        $paymentContext = $this->getCardNumber() ?
-            $this->serializePaymentContext() :
-            $this->serializePaymentContextBase();
-        return $paymentContext . $this->serializeSettlementInfo();
+        return $this->serializePaymentContext()
+        . $this->serializeSettlementInfo();
     }
 
     /**
@@ -94,20 +80,9 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
     protected function serializeSettlementInfo()
     {
         return sprintf(
-            '<InvoiceId>%s</InvoiceId>'.
-            '<Amount currencyCode="%s">%.2f</Amount>'.
-            '<TaxAmount currencyCode="%s">%.2f</TaxAmount>'.
-            '<SettlementType>%s</SettlementType>'.
-            '<ClientContext>%s</ClientContext>'.
-            '<FinalDebit>%s</FinalDebit>',
-            $this->xmlEncode($this->getInvoiceId()),
+            '<Amount currencyCode="%s">%.2f</Amount>',
             $this->xmlEncode($this->getCurrencyCode()),
-            $this->getAmount(),
-            $this->xmlEncode($this->getCurrencyCode()),
-            $this->getTaxAmount(),
-            $this->xmlEncode($this->getSettlementType()),
-            $this->xmlEncode($this->getClientContext()),
-            $this->xmlEncode($this->getFinalDebit())
+            $this->getAmount()
         );
     }
 
@@ -192,65 +167,6 @@ class PaymentSettlementRequest implements IPaymentSettlementRequest
         }
         $this->currencyCode = $value;
 
-        return $this;
-    }
-
-    public function getTaxAmount()
-    {
-        return $this->taxAmount;
-    }
-
-    public function setTaxAmount($amount)
-    {
-        if (is_float($amount)) {
-            $this->taxAmount = round($amount, 2, PHP_ROUND_HALF_UP);
-        } else {
-            $this->taxAmount = null;
-        }
-        return $this;
-    }
-
-    public function getSettlementType()
-    {
-        return $this->settlementType;
-    }
-
-    public function setSettlementType($type)
-    {
-        $this->settlementType = $type;
-        return $this;
-    }
-
-    public function getClientContext()
-    {
-        return $this->clientContext;
-    }
-
-    public function setClientContext($context)
-    {
-        $this->clientContext = $context;
-        return $this;
-    }
-
-    public function getFinalDebit()
-    {
-        return $this->finalDebit;
-    }
-
-    public function setFinalDebit($finalDebit)
-    {
-        $this->finalDebit = $finalDebit;
-        return $this;
-    }
-
-    public function getInvoiceId()
-    {
-        return $this->invoiceId;
-    }
-
-    public function setInvoiceId($invoiceId)
-    {
-        $this->invoiceId = $invoiceId;
         return $this;
     }
 }

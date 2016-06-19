@@ -39,4 +39,11 @@ interface IConfirmFundsReply extends IPayload, IPaymentContext
      * @return bool
      */
     public function isSuccess();
+
+    /**
+     * Did upstream systems report a timeout?
+     *
+     * @return bool
+     */
+    public function isTimeout();
 }

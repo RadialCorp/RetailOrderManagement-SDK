@@ -32,6 +32,15 @@ class ConfirmFundsRequest implements IConfirmFundsRequest
     protected $amount;
 
     /**
+     * Validate the serialized data via the schema validator.
+     * @param  string $serializedData
+     * @return $this
+     */
+    protected function schemaValidate($serializedData)
+    {
+        return $this;
+    }
+    /**
      * @param IValidatorIterator
      * @param ISchemaValidator
      * @param IPayloadMap
@@ -68,8 +77,10 @@ class ConfirmFundsRequest implements IConfirmFundsRequest
      */
     protected function serializeContents()
     {
-        return $this->serializePaymentContext()
-        . $this->serializeAmount();
+        $paymentContext = $this->getCardNumber() ?
+            $this->serializePaymentContext() :
+            $this->serializePaymentContextBase();
+        return $paymentContext . $this->serializeAmount();
     }
 
     /**
