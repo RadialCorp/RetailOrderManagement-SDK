@@ -80,9 +80,9 @@ class RiskAssessmentReply implements IRiskAssessmentReply
     protected function serializeRiskReply()
     {
         return sprintf(
-	    '<OrderId>%s</OrderId>' .
+	    '<OrderId>%s</OrderId>' . $this->serializeMockOrderEvent() .
 	    '<ResponseCode>%s</ResponseCode>' .
-	    '<StoreId>%s</StoreId>',
+	    '<StoreId>%s</StoreId>' . $this->serializeReasonCode() . $this->serializeReasonCodeDescription(),
 	    $this->xmlEncode($this->getCustomerOrderId()),
 	    $this->xmlEncode($this->getResponseCode()),
 	    $this->xmlEncode($this->getStoreId())
@@ -169,5 +169,23 @@ class RiskAssessmentReply implements IRiskAssessmentReply
     {
 	$this->_sessionId = $sessionId;
 	return $this;
+    }
+
+    protected function serializeReasonCode()
+    {
+        $reasonCode = $this->getReasonCode();
+        return $reasonCode ? "<ReasonCode>{$this->xmlEncode($reasonCode)}</ReasonCode>" : '';
+    }
+
+    protected function serializeReasonCodeDescription()
+    {
+        $reasonCodeDesc = $this->getReasonCodeDescription();
+        return $reasonCodeDesc ? "<ReasonCodeDescription>{$this->xmlEncode($reasonCodeDesc)}</ReasonCodeDescription>" : '';
+    }
+
+    protected function serializeMockOrderEvent()
+    {
+	$mockOrderEvent = $this->getMockOrderEvent();
+	return $mockOrderEvent ? "<MockOrderEvent>{$this->xmlEncode($mockOrderEvent)}</MockOrderEvent>" : '';
     }
 }
