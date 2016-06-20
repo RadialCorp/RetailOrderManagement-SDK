@@ -57,11 +57,10 @@ class RiskAssessmentReply implements IRiskAssessmentReply
 	    'storeId' => 'string(x:StoreId)',
         ];
 	$this->optionalExtractionPaths = [
-	    'transactionDeviceInfo' => 'string(x:TransactionDeviceInfo)',
-	    '_mockOrderEvent' => 'string(x:MockOrderEvent)',
-	    '_reasonCode' => 'string(x:ReasonCode)',
-	    '_reasonCodeDescription' => 'string(x:ReasonCodeDescription)',
-	    '_sessionId' => 'string(@sessionId)',
+	    '_mockOrderEvent' => 'x:MockOrderEvent',
+	    '_reasonCode' => 'x:ReasonCode',
+	    '_reasonCodeDescription' => 'x:ReasonCodeDescription',
+	    '_sessionId' => '@sessionId',
 	];
     }
     /**
@@ -187,5 +186,12 @@ class RiskAssessmentReply implements IRiskAssessmentReply
     {
 	$mockOrderEvent = $this->getMockOrderEvent();
 	return $mockOrderEvent ? "<MockOrderEvent>{$this->xmlEncode($mockOrderEvent)}</MockOrderEvent>" : '';
+    }
+
+    protected function getRootAttributes()
+    {
+        return [
+            '_sessionId' => $this->getSessionId(),
+        ];
     }
 }
