@@ -187,11 +187,4 @@ class RiskAssessmentReply implements IRiskAssessmentReply
 	$mockOrderEvent = $this->getMockOrderEvent();
 	return $mockOrderEvent ? "<MockOrderEvent>{$this->xmlEncode($mockOrderEvent)}</MockOrderEvent>" : '';
     }
-
-    protected function getRootAttributes()
-    {
-        return [
-            '_sessionId' => $this->getSessionId(),
-        ];
-    }
 }
