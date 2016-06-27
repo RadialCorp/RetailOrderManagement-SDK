@@ -36,6 +36,7 @@ class HttpConfig implements IHttpConfig
     protected $contentType = 'text/xml';
     /** @var LoggerInterface */
     protected $logger;
+    protected $timeout;
 
     /**
      * @param string $apiKey
@@ -58,7 +59,8 @@ class HttpConfig implements IHttpConfig
         $service,
         $operation,
         array $endpointParams = [],
-        LoggerInterface $logger = null
+        LoggerInterface $logger = null,
+	$timeout = null
     ) {
         $this->logger = $logger ?: new NullLogger();
         $this->apiKey = $apiKey;
@@ -69,6 +71,7 @@ class HttpConfig implements IHttpConfig
         $this->service = $service;
         $this->operation = $operation;
         $this->endpointParams = $endpointParams;
+	$this->timeout = $timeout;
     }
 
     public function getApiKey()
@@ -86,7 +89,8 @@ class HttpConfig implements IHttpConfig
             $this->storeId,
             $this->service,
             $this->operation,
-            ($this->endpointParams ? '/' . implode('/', $this->endpointParams) : '')
+            ($this->endpointParams ? '/' . implode('/', $this->endpointParams) : ''),
+	    $this->timeout
         );
     }
 
@@ -103,5 +107,10 @@ class HttpConfig implements IHttpConfig
     public function getContentType()
     {
         return $this->contentType;
+    }
+
+    public function getResponseTimeout()
+    {
+        return $this->timeout;
     }
 }

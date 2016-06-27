@@ -140,10 +140,19 @@ class HttpApi implements IBidirectionalApi
      */
     protected function post()
     {
+	$options = array();
+	
+	if( $this->config->getResponseTimeout() )
+	{
+		$timeoutSeconds = (float)$this->config->getResponseTimeout() / 1000.0;
+		$options = array( 'timeout' => $timeoutSeconds );
+	}
+
         $this->lastRequestsResponse = \Requests::post(
             $this->config->getEndpoint(),
             $this->buildHeader(),
-            $this->getRequestBody()->serialize()
+            $this->getRequestBody()->serialize(),
+	    $options
         );
         return $this->lastRequestsResponse->success;
     }
