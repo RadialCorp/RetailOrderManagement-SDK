@@ -32,6 +32,8 @@ class ConfirmFundsReply implements IConfirmFundsReply
 
     /** @var string * */
     protected $fundsAvailable;
+    /** @var boolean **/
+    protected $reauthorizationAttempted;
 
     /**
      * @param IValidatorIterator
@@ -58,6 +60,9 @@ class ConfirmFundsReply implements IConfirmFundsReply
             'cardNumber' =>
                 'string(x:PaymentContext/x:EncryptedPaymentAccountUniqueId|x:PaymentContext/x:PaymentAccountUniqueId)',
             'fundsAvailable' => 'string(x:FundsAvailable)',
+        ];
+	$this->booleanExtractionPaths = [
+            'reauthorizationAttempted' => 'boolean(x:ReauthorizationAttempted)'
         ];
     }
 
@@ -113,7 +118,7 @@ class ConfirmFundsReply implements IConfirmFundsReply
             $this->serializePaymentContext() :
             $this->serializePaymentContextBase();
         return $paymentContext .
-        "<FundsAvailable>{$this->xmlEncode($this->getFundsAvailable())}</FundsAvailable>";
+        "<FundsAvailable>{$this->xmlEncode($this->getFundsAvailable())}</FundsAvailable>" . "<ReauthorizationAttempted>{$this->xmlEncode($this->getReauthorizationAttempted())</ReauthorizationAttempted>";
     }
 
     /**
@@ -143,5 +148,16 @@ class ConfirmFundsReply implements IConfirmFundsReply
     protected function getXmlNamespace()
     {
         return static::XML_NS;
+    }
+
+    public function getReauthorizationAttempted()
+    {
+	return $this->reauthorizationAttempted;
+    }
+
+    public function setReauthorizationAttempted($reauthorizationAttempted)
+    {
+	$this->reauthorizationAttempted = $reauthorizationAttempted;
+	return $this;
     }
 }

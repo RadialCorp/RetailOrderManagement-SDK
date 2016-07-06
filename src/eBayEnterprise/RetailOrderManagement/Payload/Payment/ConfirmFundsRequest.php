@@ -30,6 +30,7 @@ class ConfirmFundsRequest implements IConfirmFundsRequest
     protected $currencyCode;
     protected $requestId;
     protected $amount;
+    protected $performReauthorization;
 
     /**
      * Validate the serialized data via the schema validator.
@@ -68,6 +69,9 @@ class ConfirmFundsRequest implements IConfirmFundsRequest
             'currencyCode' => 'string(x:Amount/@currencyCode)',
             'amount' => 'number(x:Amount)',
         ];
+	$this->booleanExtractionPaths = [
+            'performReauthorization' => 'boolean(x:PerformReauthorization)'
+        ];
     }
 
     /**
@@ -80,7 +84,7 @@ class ConfirmFundsRequest implements IConfirmFundsRequest
         $paymentContext = $this->getCardNumber() ?
             $this->serializePaymentContext() :
             $this->serializePaymentContextBase();
-        return $paymentContext . $this->serializeAmount();
+        return $paymentContext . $this->serializeAmount() . "<PerformReauthorization>{$this->xmlEncode($this->getPerformReauthorization())</PerformReauthorization>";
     }
 
     /**
@@ -179,5 +183,16 @@ class ConfirmFundsRequest implements IConfirmFundsRequest
         $this->currencyCode = $value;
 
         return $this;
+    }
+
+    public function getPerformReauthorization()
+    {
+	return $this->performReauthorization;
+    }
+
+    public function setPerformReauthorization($performReauthorization)
+    {
+	$this->performReauthorization = $performReauthorization;
+	return $this;
     }
 }
