@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0" 
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0" 
+            elementFormDefault="qualified" 
+            attributeFormDefault="unqualified" 
+            version="${project.version}">
+
+	<xsd:include schemaLocation="Payment-Datatypes-1.0.xsd"/>
+	<xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
+	
+	<xsd:element name="PublicKeyRequest" type="PublicKeyRequestType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">Retrieves the public key for a given store and encryption algorithm.</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="PublicKeyReply" type="PublicKeyReplyType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+				Response to the PublicKeyRequest; returns a public key.
+                If there is an active key associated with a given store and algorithm version.
+            </xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	
+	<xsd:complexType name="PublicKeyRequestType">
+		<xsd:sequence>
+			<xsd:element name="AlgorithmVersion" type="AlgorithmVersionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="AlgorithmVersionType">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="3"/>
+			<xsd:maxLength value="8"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="PublicKeyReplyType">
+		<xsd:sequence>
+			<xsd:element name="PublicKey" type="StoreEncryptionKey"/>
+			<xsd:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">This xsd:any element indicates that future optional elements may show up in this location of the XML document in the responses returned from the service.
+	
+	The purpose of this xsd:any element is to define a more robust service interface that allows for new, optional elements to be added to the service's responses without the service clients' code throwing exceptions.
+	
+	The client code for this service call should be written to not break if new optional XML elements show up in this part of the service response.  Modern XML marshalling frameworks often process xsd:any elements properly out-of-the-box (for example, in Java, JAXB and JibX XML marshalling frameworks both honor xsd:any elements and don't throw exceptions if new optional elements appear within the xsd:any section of the XML document). 
+	
+	Developers' unit tests of their service client code should include a test case where this reply message contains one or more new elements in this location of the XML document.
+	
+	If new optional elements are added to this interface, a new schema will be created, communications will be sent out, and you will have the option to modify your service client code to process and use the new elements.
+	                  
+	If there is no need/desire to process the new optional elements, your service client should continue to run          uninterrupted as long as it is built to honor this xsd:any element.
+	              </xsd:documentation>
+				</xsd:annotation>
+			</xsd:any>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="StoreEncryptionKey">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="2000"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+</xsd:schema>
