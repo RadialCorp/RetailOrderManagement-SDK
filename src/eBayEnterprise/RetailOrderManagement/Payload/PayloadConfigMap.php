@@ -70,6 +70,32 @@ return call_user_func(function () {
         'payloadMap' => $payloadMap,
         'types' => [],
     ];
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\Payment\PublicKeyRequest'] = [
+        'validators' => [
+	    [
+		'validator' => $requiredFieldsValidator,
+                'params' => [
+                    'getAlgorithmVersion',
+                ]
+	    ]
+        ],
+	'validatorIterator' => $validatorIterator,
+        'schemaValidator' => $xsdSchemaValidator,
+        'childPayloads' => $noChildPayloads,
+    ];
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\Payment\PublicKeyReply'] = [
+        'validators' => [
+	    [
+                'validator' => $requiredFieldsValidator,
+                'params' => [
+                    'getPublicKey',
+                ]
+	    ]
+        ],
+        'validatorIterator' => $validatorIterator,
+        'schemaValidator' => $xsdSchemaValidator,
+        'childPayloads' => $noChildPayloads,
+    ];
     $map['\eBayEnterprise\RetailOrderManagement\Payload\Payment\ConfirmFundsRequest'] = [
         'validators' => [
             [
