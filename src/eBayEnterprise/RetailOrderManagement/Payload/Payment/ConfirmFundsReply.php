@@ -118,7 +118,7 @@ class ConfirmFundsReply implements IConfirmFundsReply
             $this->serializePaymentContext() :
             $this->serializePaymentContextBase();
         return $paymentContext .
-        "<FundsAvailable>{$this->xmlEncode($this->getFundsAvailable())}</FundsAvailable>" . "<ReauthorizationAttempted>{$this->xmlEncode($this->getReauthorizationAttempted())</ReauthorizationAttempted>";
+        "<FundsAvailable>{$this->xmlEncode($this->getFundsAvailable())}</FundsAvailable>" . $this->serializeReauthorizationAttempted();
     }
 
     /**
@@ -157,7 +157,15 @@ class ConfirmFundsReply implements IConfirmFundsReply
 
     public function setReauthorizationAttempted($reauthorizationAttempted)
     {
-	$this->reauthorizationAttempted = $reauthorizationAttempted;
+	$this->reauthorizationAttempted = (bool)$reauthorizationAttempted;
 	return $this;
+    }
+ 
+    protected function serializeReauthorizationAttempted()
+    {
+        return sprintf(
+            '<ReauthorizationAttempted>%s</ReauthorizationAttempted>',
+            $this->xmlEncode($this->getReauthorizationAttempted())
+        );
     }
 }

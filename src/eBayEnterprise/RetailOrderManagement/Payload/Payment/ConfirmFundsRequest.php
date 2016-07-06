@@ -84,7 +84,7 @@ class ConfirmFundsRequest implements IConfirmFundsRequest
         $paymentContext = $this->getCardNumber() ?
             $this->serializePaymentContext() :
             $this->serializePaymentContextBase();
-        return $paymentContext . $this->serializeAmount() . "<PerformReauthorization>{$this->xmlEncode($this->getPerformReauthorization())</PerformReauthorization>";
+        return $paymentContext . $this->serializeAmount() . $this->serializePerformReauthorization();
     }
 
     /**
@@ -192,7 +192,15 @@ class ConfirmFundsRequest implements IConfirmFundsRequest
 
     public function setPerformReauthorization($performReauthorization)
     {
-	$this->performReauthorization = $performReauthorization;
+	$this->performReauthorization = (bool)$performReauthorization;
 	return $this;
+    }
+
+    protected function serializePerformReauthorization()
+    {
+	return sprintf(
+            '<PerformReauthorization>%s</PerformReauthorization>',
+            $this->xmlEncode($this->getPerformReauthorization())
+        );
     }
 }
