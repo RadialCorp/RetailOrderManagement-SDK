@@ -78,7 +78,13 @@ return call_user_func(function () {
                     'getAmount',
                     'getCurrencyCode',
                 ]
-            ]
+            ],
+	    [
+		'validator' => $optionalGroupValidator,
+		'params' => [
+			'getPerformReauthorization',
+		]
+	    ]
         ],
         'validatorIterator' => $validatorIterator,
         'schemaValidator' => $xsdSchemaValidator,
@@ -91,7 +97,13 @@ return call_user_func(function () {
                 'params' => [
                     'getFundsAvailable',
                 ]
-            ]
+            ],
+	    [
+		'validator' => $optionalGroupValidator,
+		'params' => [
+		    'getReauthorizationAttempted',
+		]
+	    ]
         ],
         'validatorIterator' => $validatorIterator,
         'schemaValidator' => $xsdSchemaValidator,
