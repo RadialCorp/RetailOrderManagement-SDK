@@ -85,7 +85,7 @@ class PublicKeyRequest implements IPublicKeyRequest
 
     protected function getSchemaFile()
     {
-        return $this->getSchemaDir() . self::XSD;
+        return $this->getSchemaDir() . static::XSD;
     }
 
     /**

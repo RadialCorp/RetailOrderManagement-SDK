@@ -72,7 +72,7 @@ class PublicKeyReply implements IPublicKeyReply
      */
     protected function getSchemaFile()
     {
-        return $this->getSchemaDir() . self::XSD;
+        return $this->getSchemaDir() . static::XSD;
     }
 
     /**
