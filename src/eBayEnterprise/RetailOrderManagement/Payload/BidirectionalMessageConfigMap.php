@@ -115,5 +115,9 @@ return call_user_func(function () {
         'request' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\ConfirmFundsRequest',
         'reply' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\ConfirmFundsReply',
     ];
+    $map['payments/publickey/lookup'] = [
+	'request' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\PublicKeyRequest',
+        'reply' => '\eBayEnterprise\RetailOrderManagement\Payload\Payment\PublicKeyReply',
+    ];
     return $map;
 });

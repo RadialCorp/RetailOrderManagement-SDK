@@ -163,9 +163,14 @@ class ConfirmFundsReply implements IConfirmFundsReply
  
     protected function serializeReauthorizationAttempted()
     {
-        return sprintf(
-            '<ReauthorizationAttempted>%s</ReauthorizationAttempted>',
-            $this->xmlEncode($this->getReauthorizationAttempted())
-        );
+    	if( $this->getReauthorizationAttempted() )
+        {
+                return sprintf(
+                    '<ReauthorizationAttempted>%s</ReauthorizationAttempted>',
+                    $this->xmlEncode($this->getReauthorizationAttempted())
+                );
+        } else {
+                return '<ReauthorizationAttempted>0</ReauthorizationAttempted>';
+        }
     }
 }
