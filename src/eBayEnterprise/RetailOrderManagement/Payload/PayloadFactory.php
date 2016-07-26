@@ -66,6 +66,12 @@ class PayloadFactory implements IPayloadFactory
                 $payloadMap->merge($cascadedPayloadMap);
             }
 
+	    file_put_contents("/tmp/robert", "Type: ". print_r($type, true) . "\n", FILE_APPEND);
+	    file_put_contents("/tmp/robert", "Validator Iterator: ". print_r($validatorIterator, true) . "\n", FILE_APPEND);
+	    file_put_contents("/tmp/robert", "Schema Validator: ". print_r($schemaValidator, true) . "\n", FILE_APPEND);
+	    file_put_contents("/tmp/robert", "Payload Map: ". print_r($payloadMap, true) . "\n", FILE_APPEND);
+	    file_put_contents("/tmp/robert", "Parent Payload: ". print_r($parentPayload, true) . "\n", FILE_APPEND);
+
             return new $type($validatorIterator, $schemaValidator, $payloadMap, $logger ?: new NullLogger(), $parentPayload);
         }
         throw new UnsupportedPayload("No configuration found for '$type'");

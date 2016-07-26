@@ -16,9 +16,10 @@
 namespace eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee;
 use DateTime;
 
-interface ITaxDutyFeeInvoiceRequest extends ITaxDutyFeeInvoice, IShipGroupContainer, IDestinationContainer
+interface ITaxDutyFeeInvoiceRequest extends ITaxDutyFeeInvoice, IShipGroupContainer, IDestinationContainer, IFeeContainer
 {
     const XSD = '/checkout/1.0/TaxDutyFee-InvoiceRequest-1.0.xsd';
+    const ROOT_NODE = 'TaxInvoiceRequest';
 
     /**
      * Order ID For Tax Invoice

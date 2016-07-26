@@ -15,6 +15,8 @@
 
 namespace eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee;
 
+use eBayEnterprise\RetailOrderManagement\Payload\Payment\TStrings;
+
 trait TPayloadNoBody
 {
     use TStrings;

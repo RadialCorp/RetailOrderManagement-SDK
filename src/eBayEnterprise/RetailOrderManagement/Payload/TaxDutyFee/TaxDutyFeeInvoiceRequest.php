@@ -206,9 +206,9 @@ class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
      *
      * @return string
      */
-    public function getInvoiceNumber()
+    public function getInvoiceType()
     {
-        return $this->invoiceNumber;
+        return $this->invoiceType;
     }
 
     /**
@@ -408,7 +408,7 @@ class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
      */
     protected function getRootNodeName()
     {
-        return 'TaxDutyQuoteRequest';
+    	return static::ROOT_NODE;
     }
 
     protected function serializeBillingInformation()

@@ -2495,7 +2495,7 @@ return call_user_func(function () {
                     'getCurrency',
 		    'getVatInclusivePricingFlag',
                     'getBillingInformation',
-                ]
+                ],
             ],
             [
                 'validator' => $subpayloadValidator,
@@ -2515,10 +2515,21 @@ return call_user_func(function () {
                     '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ShipGroupIterable',
                 '\eBayEnterprise\RetailOrderManagement\Payload\Checkout\IDestinationIterable' =>
                     '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\DestinationIterable',
-		'\eBayEnterprise\RetailOrderManagement\Payload\Checkout\IFeeIterable' =>
+		'\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IFeeIterable' =>
                     '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\FeeIterable',
             ],
         ],
+    ];
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxDutyFeeInvoiceReply'] = [
+        'validators' => [
+            [
+                'validator' => $requiredFieldsValidator,
+                'params' => []
+            ]
+        ],
+        'validatorIterator' => $validatorIterator,
+        'schemaValidator' => $xsdSchemaValidator,
+        'childPayloads' => $noChildPayloads,
     ];
     $map['\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ShipGroupIterable'] = [
         'validators' => [
