@@ -261,6 +261,19 @@ interface IOrderItem extends IPayload, IIdentity, IFeeContainer, IEstimatedDeliv
     public function setMerchandisePricing(IPriceGroup $merchandisePricing);
 
     /**
+     * Get merchandise pricing data.
+     *
+     * @return ITaxedPriceGroup
+     */
+    public function getInvoiceMerchandisePricing();
+
+    /**
+     * @param ITaxedPriceGroup
+     * @return self
+     */
+    public function setInvoiceMerchandisePricing(ITaxedPriceGroup $merchandisePricing);
+
+    /**
      * Get shipping pricing data.
      *
      * restrictions: optional
