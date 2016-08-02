@@ -302,7 +302,7 @@ class OrderItem implements IOrderItem
         return $this->invoiceMerchandisePricing;
     }
 
-    public function setMerchandisePricing(ITaxedPriceGroup $merchandisePricing)
+    public function setInvoiceMerchandisePricing(ITaxedPriceGroup $merchandisePricing)
     {
         $this->invoiceMerchandisePricing = $merchandisePricing;
         return $this;
