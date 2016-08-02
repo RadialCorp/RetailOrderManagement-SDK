@@ -55,13 +55,7 @@ class BidirectionalMessageFactory implements IBidirectionalMessageFactory
     {
         $key = $this->config->getConfigKey();
 
-	file_put_contents("/tmp/robert", "Type: ". $type . "\n", FILE_APPEND);
-	file_put_contents("/tmp/robert", "Key: ". $key . "\n", FILE_APPEND);
-
         if (isset($this->messageTypeMap[$key])) {
-	    file_put_contents("/tmp/robert", "Class: ". print_r($this->messageTypeMap[$key][$type], true) . "\n", FILE_APPEND);
-	    file_put_contents("/tmp/robert", "Payload: ". print_r($this->payloadFactory->buildPayload($this->messageTypeMap[$key][$type], null, null, $this->logger), true) . "\n", FILE_APPEND);
-
             return $this->payloadFactory->buildPayload($this->messageTypeMap[$key][$type], null, null, $this->logger);
         }
         throw new UnsupportedPayload("No payload found for '$key'");

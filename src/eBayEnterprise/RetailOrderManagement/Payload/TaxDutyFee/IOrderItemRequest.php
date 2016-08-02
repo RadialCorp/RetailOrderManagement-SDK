@@ -17,10 +17,14 @@ namespace eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee;
 
 interface IOrderItemRequest extends IOrderItem, IFeeContainer, IGifting, ICustomizationContainer
 {
+    const INVOICE_MERCHANDISE_PRICE_GROUP_INTERFACE = 
+	'\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedMerchandisePriceGroup';
     const MERCHANDISE_PRICE_GROUP_INTERFACE =
         '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IMerchandisePriceGroup';
     const SHIPPING_PRICE_GROUP_INTERFACE =
         '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IPriceGroup';
+    const INVOICE_PRICE_GROUP_INTERFACE =
+	'\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedPriceGroup';
     const DUTY_PRICE_GROUP_INTERFACE =
         '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IDutyPriceGroup';
     const PHYSICAL_ADDRESS_INTERFACE =
@@ -34,11 +38,25 @@ interface IOrderItemRequest extends IOrderItem, IFeeContainer, IGifting, ICustom
     public function getEmptyMerchandisePriceGroup();
 
     /**
+     * Get a new, empty price group for merchandise prices.
+     *
+     * @return ITaxedMerchandisePriceGroup
+     */
+    public function getEmptyInvoiceMerchandisePriceGroup();
+
+    /**
      * Get a new, empty price group for shipping prices.
      *
      * @return IShippingPriceGroup
      */
     public function getEmptyShippingPriceGroup();
+
+    /**
+     * Get a new, empty price group for invoice shipping prices.
+     *
+     * @return ITaxedPriceGroup
+     */
+    public function getEmptyInvoicePriceGroup();
 
     /**
      * Get a new, empty price group for duty prices.
@@ -109,6 +127,19 @@ interface IOrderItemRequest extends IOrderItem, IFeeContainer, IGifting, ICustom
     public function setMerchandisePricing(IMerchandisePriceGroup $priceGroup);
 
     /**
+     * Get the price information for the item
+     *
+     * @return ITaxedMerchandisePriceGroup
+     */
+    public function getInvoiceMerchandisePricing();
+
+    /**
+     * @param ITaxedMerchandisePriceGroup
+     * @return self
+     */
+    public function setInvoiceMerchandisePricing(ITaxedMerchandisePriceGroup $priceGroup);
+
+    /**
      * Get the item's shipping price
      *
      * restrictions: optional
@@ -121,6 +152,20 @@ interface IOrderItemRequest extends IOrderItem, IFeeContainer, IGifting, ICustom
      * @return self
      */
     public function setShippingPricing(IPriceGroup $priceGroup);
+
+    /**
+     * Get the item's invoice shipping price
+     *
+     * restrictions: optional
+     * @return ITaxedPriceGroup
+     */
+    public function getInvoicePricing();
+
+    /**
+     * @param ITaxedPriceGroup
+     * @return self
+     */
+    public function setInvoicePricing(ITaxedPriceGroup $priceGroup);
 
     /**
      * Get duty pricing information

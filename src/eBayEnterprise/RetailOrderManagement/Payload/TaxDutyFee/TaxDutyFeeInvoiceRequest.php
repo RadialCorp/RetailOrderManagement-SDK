@@ -32,7 +32,7 @@ use Psr\Log\NullLogger;
 class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
 {
 
-    use TTopLevelPayload, TShipGroupContainer, TDestinationContainer, TFeeContainer;
+    use TTopLevelPayload, TShipGroupContainer, TDestinationContainer, TTaxedFeeContainer;
 
     /** @var string */
     protected $orderId;

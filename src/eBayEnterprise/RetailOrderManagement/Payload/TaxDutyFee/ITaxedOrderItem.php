@@ -23,6 +23,8 @@ interface ITaxedOrderItem extends IOrderItem, ITaxedFeeContainer, ITaxedGifting,
         '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedPriceGroup';
     const DUTY_PRICE_GROUP_INTERFACE =
         '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedDutyPriceGroup';
+    const INVOICE_PRICE_GROUP_INTERFACE =
+        '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedPriceGroup';
 
     /**
      * Get a new, empty price group for merchandise prices.
@@ -37,6 +39,13 @@ interface ITaxedOrderItem extends IOrderItem, ITaxedFeeContainer, ITaxedGifting,
      * @return ITaxedShippingPriceGroup
      */
     public function getEmptyShippingPriceGroup();
+
+    /**
+     * Get a new, empty price group for shipping prices.
+     *
+     * @return ITaxedPriceGroup
+     */
+    public function getEmptyInvoicePriceGroup();
 
     /**
      * Get a new, empty price group for duty prices.
@@ -71,6 +80,20 @@ interface ITaxedOrderItem extends IOrderItem, ITaxedFeeContainer, ITaxedGifting,
      * @return self
      */
     public function setShippingPricing(ITaxedPriceGroup $priceGroup);
+
+    /**
+     * Get the item's price group price
+     *
+     * restrictions: optional
+     * @return ITaxedPriceGroup
+     */
+    public function getInvoicePricing();
+
+    /**
+     * @param ITaxedPriceGroup
+     * @return self
+     */
+    public function setInvoicePricing(ITaxedPriceGroup $priceGroup);
 
     /**
      * Get duty pricing information

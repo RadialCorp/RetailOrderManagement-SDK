@@ -45,6 +45,10 @@ class OrderItemRequest implements IOrderItemRequest
     protected $shippingPricing;
     /** @var IDutyPriceGroup */
     protected $dutyPricing;
+    /** @var ITaxedPriceGroup */
+    protected $invoicePricing;
+    /** @var ITaxedMerchandisePriceGroup */
+    protected $invoiceMerchandisePricing;
 
     /**
      * @param IValidatorIterator
@@ -96,7 +100,6 @@ class OrderItemRequest implements IOrderItemRequest
         $this->customizations = $this->buildPayloadForInterface(
             static::CUSTOMIZATION_ITERABLE_INTERFACE
         );
-        $this->merchandisePricing = $this->getEmptyMerchandisePriceGroup();
     }
 
     public function getEmptyPhysicalAddress()
@@ -109,9 +112,19 @@ class OrderItemRequest implements IOrderItemRequest
         return $this->buildPayloadForInterface(static::MERCHANDISE_PRICE_GROUP_INTERFACE);
     }
 
+    public function getEmptyInvoiceMerchandisePriceGroup()
+    {
+        return $this->buildPayloadForInterface(static::INVOICE_MERCHANDISE_PRICE_GROUP_INTERFACE);
+    }
+
     public function getEmptyShippingPriceGroup()
     {
         return $this->buildPayloadForInterface(static::SHIPPING_PRICE_GROUP_INTERFACE);
+    }
+
+    public function getEmptyInvoicePriceGroup()
+    {
+        return $this->buildPayloadForInterface(static::INVOICE_PRICE_GROUP_INTERFACE);
     }
 
     public function getEmptyDutyPriceGroup()
@@ -163,6 +176,17 @@ class OrderItemRequest implements IOrderItemRequest
         return $this;
     }
 
+    public function getInvoiceMerchandisePricing()
+    {
+        return $this->invoiceMerchandisePricing;
+    }
+
+    public function setInvoiceMerchandisePricing(ITaxedMerchandisePriceGroup $merchandisePricing)
+    {
+        $this->invoiceMerchandisePricing = $merchandisePricing;
+        return $this;
+    }
+
     public function getShippingPricing()
     {
         return $this->shippingPricing;
@@ -171,6 +195,17 @@ class OrderItemRequest implements IOrderItemRequest
     public function setShippingPricing(IPriceGroup $shippingPricing)
     {
         $this->shippingPricing = $shippingPricing;
+        return $this;
+    }
+
+    public function getInvoicePricing()
+    {
+        return $this->invoicePricing;
+    }
+
+    public function setInvoicePricing(ITaxedPriceGroup $invoicePricing)
+    {
+        $this->invoicePricing = $invoicePricing;
         return $this;
     }
 
@@ -209,7 +244,7 @@ class OrderItemRequest implements IOrderItemRequest
     {
         return "<ItemId>{$this->xmlEncode($this->getItemId())}</ItemId>"
             . $this->serializeOptionalXmlEncodedValue('ItemDesc', $this->getDescription())
-            . $this->serializeOptionalXmlEncodedValue('HTSCode', $this->getHtsCode())
+            . $this->serializeXmlEncodedValue('HTSCode', $this->getHtsCode())
             . $this->serializeOptionalXmlEncodedValue('ScreenSize', $this->getScreenSize())
             . $this->serializeOrigins()
             . "<Quantity>{$this->getQuantity()}</Quantity>"

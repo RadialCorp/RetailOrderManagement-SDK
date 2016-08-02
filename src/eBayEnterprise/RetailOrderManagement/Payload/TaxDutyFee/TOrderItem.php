@@ -117,11 +117,16 @@ trait TOrderItem
      */
     protected function serializePricing()
     {
+	$invoicePricing = $this->getInvoicePricing();
         $shippingPricing = $this->getShippingPricing();
+	$merchandisePricing = $this->getMerchandisePricing();
+	$invoiceMerchandisePricing = $this->getInvoiceMerchandisePricing();
         $dutyPricing = $this->getDutyPricing();
         $fees = $this->getFees();
         return '<Pricing>'
-            . $this->getMerchandisePricing()->setRootNodeName('Merchandise')->serialize()
+            . ($merchandisePricing ? $merchandisePricing->setRootNodeName('Merchandise')->serialize() : '')
+	    . ($invoiceMerchandisePricing ? $invoiceMerchandisePricing->setRootNodeName('Merchandise')->serialize() : '')
+	    . ($invoicePricing ? $invoicePricing->setRootNodeName('PriceGroup')->serialize() : '')
             . ($shippingPricing ? $shippingPricing->setRootNodeName('Shipping')->serialize() : '')
             . ($dutyPricing ? $dutyPricing->setRootNodeName('Duty')->serialize() : '')
             . (count($fees) ? $fees->serialize() : '')

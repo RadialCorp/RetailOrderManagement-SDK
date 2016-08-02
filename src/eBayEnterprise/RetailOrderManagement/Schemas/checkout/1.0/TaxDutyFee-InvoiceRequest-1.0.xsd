@@ -358,7 +358,7 @@
     <xsd:sequence>
       <xsd:element name="ItemId" type="ItemId"/>
       <xsd:element name="ItemDesc" type="ItemDesc" minOccurs="0"/>
-      <xsd:element name="HTSCode" type="xsd:string">
+      <xsd:element name="HTSCode" type="xsd:string" minOccurs="0">
         <xsd:annotation>
           <xsd:documentation>
                         Harmonized Tariff Code used for duties calculation.

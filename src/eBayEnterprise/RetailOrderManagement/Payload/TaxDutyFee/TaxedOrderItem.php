@@ -38,6 +38,8 @@ class TaxedOrderItem implements ITaxedOrderItem
     protected $merchandisePricing;
     /** @var ITaxedPriceGroup */
     protected $shippingPricing;
+    /** @var ITaxedPriceGroup */
+    protected $invoicePricing;
     /** @var ITaxedDutyPriceGroup */
     protected $dutyPricing;
 
@@ -99,6 +101,11 @@ class TaxedOrderItem implements ITaxedOrderItem
         return $this->buildPayloadForInterface(static::SHIPPING_PRICE_GROUP_INTERFACE);
     }
 
+    public function getEmptyInvoicePriceGroup()
+    {
+        return $this->buildPayloadForInterface(static::INVOICE_PRICE_GROUP_INTERFACE);
+    }
+
     public function getEmptyDutyPriceGroup()
     {
         return $this->buildPayloadForInterface(static::DUTY_PRICE_GROUP_INTERFACE);
@@ -126,6 +133,17 @@ class TaxedOrderItem implements ITaxedOrderItem
         return $this;
     }
 
+    public function getInvoicePricing()
+    {
+        return $this->invoicePricing;
+    }
+
+    public function setInvoicePricing(ITaxedPriceGroup $invoicingPricing)
+    {
+        $this->invoicePricing = $invoicePricing;
+        return $this;
+    }
+
     public function getDutyPricing()
     {
         return $this->dutyPricing;
@@ -141,7 +159,7 @@ class TaxedOrderItem implements ITaxedOrderItem
     {
         return "<ItemId>{$this->xmlEncode($this->getItemId())}</ItemId>"
             . $this->serializeOptionalXmlEncodedValue('ItemDesc', $this->getDescription())
-            . $this->serializeOptionalXmlEncodedValue('HTSCode', $this->getHtsCode())
+            . $this->serializeXmlEncodedValue('HTSCode', $this->getHtsCode())
             . $this->serializeOptionalXmlEncodedValue('ScreenSize', $this->getScreenSize())
             . "<Quantity>{$this->getQuantity()}</Quantity>"
             . $this->serializePricing()

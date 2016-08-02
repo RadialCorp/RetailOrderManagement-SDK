@@ -2515,8 +2515,8 @@ return call_user_func(function () {
                     '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ShipGroupIterable',
                 '\eBayEnterprise\RetailOrderManagement\Payload\Checkout\IDestinationIterable' =>
                     '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\DestinationIterable',
-		'\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IFeeIterable' =>
-                    '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\FeeIterable',
+		'\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedFeeIterable' =>
+                    '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxedFeeIterable',
             ],
         ],
     ];
@@ -2661,13 +2661,12 @@ return call_user_func(function () {
                 ],
             ],
             [
-                'validator' => $subpayloadValidator,
-                'params' => ['getMerchandisePricing'],
-            ],
-            [
                 'validator' => $optionalSubpayloadValidator,
                 'params' => [
+		    'getMerchandisePricing',
+		    'getInvoiceMerchandisePricing',
                     'getShippingPricing',
+		    'getInvoicePricing',
                     'getDutyPricing',
                     'getFees',
                     'getGiftPricing',
@@ -2685,8 +2684,12 @@ return call_user_func(function () {
                     '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\OriginPhysicalAddress',
                 '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IPriceGroup' =>
                     '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\PriceGroup',
+		'\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedPriceGroup' =>
+                    '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxedPriceGroup',
                 '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IMerchandisePriceGroup' =>
                     '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\MerchandisePriceGroup',
+		'\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedMerchandisePriceGroup' =>
+                    '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxedMerchandisePriceGroup',
                 '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IDutyPriceGroup' =>
                     '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\DutyPriceGroup',
                 '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IFeeIterable' =>
