@@ -25,6 +25,8 @@ interface ITaxedOrderItem extends IOrderItem, ITaxedFeeContainer, ITaxedGifting,
         '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedDutyPriceGroup';
     const INVOICE_PRICE_GROUP_INTERFACE =
         '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedPriceGroup';
+    const PHYSICAL_ADDRESS_INTERFACE =
+        '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IOriginPhysicalAddress';
 
     /**
      * Get a new, empty price group for merchandise prices.

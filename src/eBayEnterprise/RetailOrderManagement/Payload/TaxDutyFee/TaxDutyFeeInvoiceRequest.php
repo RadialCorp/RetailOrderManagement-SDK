@@ -32,7 +32,7 @@ use Psr\Log\NullLogger;
 class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
 {
 
-    use TTopLevelPayload, TShipGroupContainer, TDestinationContainer, TTaxedFeeContainer;
+    use TTopLevelPayload, TTaxedShipGroupContainer, TDestinationContainer, TTaxedFeeContainer;
 
     /** @var string */
     protected $orderId;
@@ -86,7 +86,7 @@ class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
         $this->payloadFactory = new PayloadFactory;
 
         $this->shipGroups = $this->buildPayloadForInterface(
-            static::SHIP_GROUP_ITERABLE_INTERFACE
+            static::TAXED_SHIP_GROUP_ITERABLE_INTERFACE
         );
         $this->destinations = $this->buildPayloadForInterface(
             static::DESTINATION_ITERABLE_INTERFACE

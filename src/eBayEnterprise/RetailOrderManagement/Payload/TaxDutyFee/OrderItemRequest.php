@@ -45,10 +45,6 @@ class OrderItemRequest implements IOrderItemRequest
     protected $shippingPricing;
     /** @var IDutyPriceGroup */
     protected $dutyPricing;
-    /** @var ITaxedPriceGroup */
-    protected $invoicePricing;
-    /** @var ITaxedMerchandisePriceGroup */
-    protected $invoiceMerchandisePricing;
 
     /**
      * @param IValidatorIterator
@@ -176,17 +172,6 @@ class OrderItemRequest implements IOrderItemRequest
         return $this;
     }
 
-    public function getInvoiceMerchandisePricing()
-    {
-        return $this->invoiceMerchandisePricing;
-    }
-
-    public function setInvoiceMerchandisePricing(ITaxedMerchandisePriceGroup $merchandisePricing)
-    {
-        $this->invoiceMerchandisePricing = $merchandisePricing;
-        return $this;
-    }
-
     public function getShippingPricing()
     {
         return $this->shippingPricing;
@@ -195,17 +180,6 @@ class OrderItemRequest implements IOrderItemRequest
     public function setShippingPricing(IPriceGroup $shippingPricing)
     {
         $this->shippingPricing = $shippingPricing;
-        return $this;
-    }
-
-    public function getInvoicePricing()
-    {
-        return $this->invoicePricing;
-    }
-
-    public function setInvoicePricing(ITaxedPriceGroup $invoicePricing)
-    {
-        $this->invoicePricing = $invoicePricing;
         return $this;
     }
 

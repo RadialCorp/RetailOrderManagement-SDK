@@ -34,6 +34,12 @@ class TaxedOrderItem implements ITaxedOrderItem
 
     const ROOT_NODE = 'OrderItem';
 
+    /** @var IPhysicalAddress */
+    protected $adminOrigin;
+    /** @var IPhysicalAddress */
+    protected $shippingOrigin;
+    /** @var string */
+    protected $manufacturingCountryCode;
     /** @var ITaxedMerchandisePriceGroup */
     protected $merchandisePricing;
     /** @var ITaxedPriceGroup */
@@ -73,11 +79,14 @@ class TaxedOrderItem implements ITaxedOrderItem
             'description' => 'x:ItemDesc',
             'screenSize' => 'x:ScreenSize',
             'htsCode' => 'x:HTSCode',
+	    'manufacturingCountryCode' => 'x:Origins/x:ManufacturingCountryCode',
             'giftId' => 'x:Gifting/@id',
             'giftItemId' => 'x:Gifting/x:ItemId',
             'giftDescription' => 'x:Gifting/x:ItemDesc',
         ];
         $this->subpayloadExtractionPaths = [
+	    'adminOrigin' => 'x:Origins/x:AdminOrigin',
+            'shippingOrigin' => 'x:Origins/x:ShippingOrigin',
             'fees' => 'x:Pricing/x:Fees',
             'customizations' => 'x:Customization/x:CustomFeatureList',
         ];
@@ -89,6 +98,11 @@ class TaxedOrderItem implements ITaxedOrderItem
             static::CUSTOMIZATION_ITERABLE_INTERFACE
         );
         $this->merchandisePricing = $this->getEmptyMerchandisePriceGroup();
+    }
+
+    public function getEmptyPhysicalAddress()
+    {
+        return $this->buildPayloadForInterface(static::PHYSICAL_ADDRESS_INTERFACE);
     }
 
     public function getEmptyMerchandisePriceGroup()
@@ -138,7 +152,7 @@ class TaxedOrderItem implements ITaxedOrderItem
         return $this->invoicePricing;
     }
 
-    public function setInvoicePricing(ITaxedPriceGroup $invoicingPricing)
+    public function setInvoicePricing(ITaxedPriceGroup $invoicePricing)
     {
         $this->invoicePricing = $invoicePricing;
         return $this;
@@ -155,12 +169,55 @@ class TaxedOrderItem implements ITaxedOrderItem
         return $this;
     }
 
+    public function getAdminOrigin()
+    {
+        return $this->adminOrigin;
+    }
+
+    public function setAdminOrigin(IPhysicalAddress $address)
+    {
+        $this->adminOrigin = $address;
+        return $this;
+    }
+
+    public function getShippingOrigin()
+    {
+        return $this->shippingOrigin;
+    }
+
+    public function setShippingOrigin(IPhysicalAddress $address)
+    {
+        $this->shippingOrigin = $address;
+        return $this;
+    }
+
+    public function getManufacturingCountryCode()
+    {
+        return $this->manufacturingCountryCode;
+    }
+
+    public function setManufacturingCountryCode($code)
+    {
+        $this->manufacturingCountryCode = $code;
+        return $this;
+    }
+
+    protected function serializeOrigins()
+    {
+        return '<Origins>'
+            . $this->getAdminOrigin()->serialize()
+            . $this->getShippingOrigin()->serialize()
+            . $this->serializeOptionalXmlEncodedValue('ManufacturingCountryCode', $this->getManufacturingCountryCode())
+            . '</Origins>';
+    }
+
     protected function serializeContents()
     {
         return "<ItemId>{$this->xmlEncode($this->getItemId())}</ItemId>"
             . $this->serializeOptionalXmlEncodedValue('ItemDesc', $this->getDescription())
             . $this->serializeXmlEncodedValue('HTSCode', $this->getHtsCode())
             . $this->serializeOptionalXmlEncodedValue('ScreenSize', $this->getScreenSize())
+	    . ($this->adminOrigin ? $this->serializeOrigins() : '' )
             . "<Quantity>{$this->getQuantity()}</Quantity>"
             . $this->serializePricing()
             . $this->serializeGifting()
