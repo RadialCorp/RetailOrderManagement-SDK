@@ -2660,10 +2660,13 @@ return call_user_func(function () {
                     'getShippingOrigin',
                 ],
             ],
+	    [
+                'validator' => $subpayloadValidator,
+                'params' => ['getMerchandisePricing'],
+            ],
             [
                 'validator' => $optionalSubpayloadValidator,
                 'params' => [
-		    'getMerchandisePricing',
                     'getShippingPricing',
                     'getDutyPricing',
                     'getFees',
