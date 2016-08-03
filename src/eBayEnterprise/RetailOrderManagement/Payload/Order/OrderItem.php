@@ -53,8 +53,6 @@ class OrderItem implements IOrderItem
     protected $department;
     /** @var IPriceGroup */
     protected $merchandisePricing;
-    /** @var ITaxedPriceGroup */
-    protected $invoiceMerchandisePricing;
     /** @var IPriceGroup */
     protected $shippingPricing;
     /** @var IPriceGroup */
@@ -297,17 +295,6 @@ class OrderItem implements IOrderItem
         return $this;
     }
 
-    public function getInvoiceMerchandisePricing()
-    {
-        return $this->invoiceMerchandisePricing;
-    }
-
-    public function setInvoiceMerchandisePricing(ITaxedPriceGroup $merchandisePricing)
-    {
-        $this->invoiceMerchandisePricing = $merchandisePricing;
-        return $this;
-    }
-
     public function getShippingPricing()
     {
         return $this->shippingPricing;
@@ -544,11 +531,9 @@ class OrderItem implements IOrderItem
     {
         $shippingPricing = $this->getShippingPricing();
         $dutyPricing = $this->getDutyPricing();
-	$invoiceMerchandisePricing = $this->getInvoiceMerchandisePricing();
 	$merchandisePricing = $this->getMerchandisePricing();
         return '<Pricing>'
             . ($merchandisePricing ? $merchandisePricing->setRootNodeName('Merchandise')->serialize() : '')
-            . ($invoiceMerchandisePricing ? $invoiceMerchandisePricing->setRootNodeName('Merchandise')->serialize() : '')
 	    . ($shippingPricing ? $shippingPricing->setRootNodeName('Shipping')->serialize() : '')
             . ($dutyPricing ? $dutyPricing->setRootNodeName('Duty')->serialize() : '')
             . $this->getFees()->serialize()
