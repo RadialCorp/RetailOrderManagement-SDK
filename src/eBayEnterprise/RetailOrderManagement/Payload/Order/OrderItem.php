@@ -531,9 +531,10 @@ class OrderItem implements IOrderItem
     {
         $shippingPricing = $this->getShippingPricing();
         $dutyPricing = $this->getDutyPricing();
+	$merchandisePricing = $this->getMerchandisePricing();
         return '<Pricing>'
-            . $this->getMerchandisePricing()->setRootNodeName('Merchandise')->serialize()
-            . ($shippingPricing ? $shippingPricing->setRootNodeName('Shipping')->serialize() : '')
+            . ($merchandisePricing ? $merchandisePricing->setRootNodeName('Merchandise')->serialize() : '')
+	    . ($shippingPricing ? $shippingPricing->setRootNodeName('Shipping')->serialize() : '')
             . ($dutyPricing ? $dutyPricing->setRootNodeName('Duty')->serialize() : '')
             . $this->getFees()->serialize()
             . '</Pricing>';

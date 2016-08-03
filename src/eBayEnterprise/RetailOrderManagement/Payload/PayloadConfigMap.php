@@ -2483,6 +2483,54 @@ return call_user_func(function () {
             ],
         ],
     ];
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxDutyFeeInvoiceRequest'] = [
+        'validators' => [
+            [
+                'validator' => $requiredFieldsValidator,
+                'params' => [
+		    'getOrderId',
+		    'getInvoiceNumber',
+		    'getOrderDateTime',
+		    'getShipDateTime',
+                    'getCurrency',
+		    'getVatInclusivePricingFlag',
+                    'getBillingInformation',
+                ],
+            ],
+            [
+                'validator' => $subpayloadValidator,
+                'params' => [
+                    'getShipGroups',
+                    'getDestinations',
+		    'getFees',
+                ],
+            ],
+        ],
+        'validatorIterator' => $validatorIterator,
+        'schemaValidator' => $xsdSchemaValidator,
+        'childPayloads' => [
+            'payloadMap' => $payloadMap,
+            'types' => [
+                '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedShipGroupIterable' =>
+                    '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxedShipGroupIterable',
+                '\eBayEnterprise\RetailOrderManagement\Payload\Checkout\IDestinationIterable' =>
+                    '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\DestinationIterable',
+		'\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedFeeIterable' =>
+                    '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxedFeeIterable',
+            ],
+        ],
+    ];
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxDutyFeeInvoiceReply'] = [
+        'validators' => [
+            [
+                'validator' => $requiredFieldsValidator,
+                'params' => []
+            ]
+        ],
+        'validatorIterator' => $validatorIterator,
+        'schemaValidator' => $xsdSchemaValidator,
+        'childPayloads' => $noChildPayloads,
+    ];
     $map['\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ShipGroupIterable'] = [
         'validators' => [
             [
@@ -2612,7 +2660,7 @@ return call_user_func(function () {
                     'getShippingOrigin',
                 ],
             ],
-            [
+	    [
                 'validator' => $subpayloadValidator,
                 'params' => ['getMerchandisePricing'],
             ],
@@ -2852,6 +2900,8 @@ return call_user_func(function () {
             [
                 'validator' => $optionalSubpayloadValidator,
                 'params' => [
+		    'getAdminOrigin',
+                    'getShippingOrigin',
                     'getShippingPricing',
                     'getDutyPricing',
                     'getFees',
@@ -2866,6 +2916,8 @@ return call_user_func(function () {
         'childPayloads' => [
             'payloadMap' => $payloadMap,
             'types' => [
+		'\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\IOriginPhysicalAddress' =>
+                    '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\OriginPhysicalAddress',
                 '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedPriceGroup' =>
                     '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxedPriceGroup',
                 '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\ITaxedMerchandisePriceGroup' =>

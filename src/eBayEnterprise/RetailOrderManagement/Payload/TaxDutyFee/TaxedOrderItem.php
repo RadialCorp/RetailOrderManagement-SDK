@@ -34,10 +34,18 @@ class TaxedOrderItem implements ITaxedOrderItem
 
     const ROOT_NODE = 'OrderItem';
 
+    /** @var IPhysicalAddress */
+    protected $adminOrigin;
+    /** @var IPhysicalAddress */
+    protected $shippingOrigin;
+    /** @var string */
+    protected $manufacturingCountryCode;
     /** @var ITaxedMerchandisePriceGroup */
     protected $merchandisePricing;
     /** @var ITaxedPriceGroup */
     protected $shippingPricing;
+    /** @var ITaxedPriceGroup */
+    protected $invoicePricing;
     /** @var ITaxedDutyPriceGroup */
     protected $dutyPricing;
 
@@ -71,11 +79,14 @@ class TaxedOrderItem implements ITaxedOrderItem
             'description' => 'x:ItemDesc',
             'screenSize' => 'x:ScreenSize',
             'htsCode' => 'x:HTSCode',
+	    'manufacturingCountryCode' => 'x:Origins/x:ManufacturingCountryCode',
             'giftId' => 'x:Gifting/@id',
             'giftItemId' => 'x:Gifting/x:ItemId',
             'giftDescription' => 'x:Gifting/x:ItemDesc',
         ];
         $this->subpayloadExtractionPaths = [
+	    'adminOrigin' => 'x:Origins/x:AdminOrigin',
+            'shippingOrigin' => 'x:Origins/x:ShippingOrigin',
             'fees' => 'x:Pricing/x:Fees',
             'customizations' => 'x:Customization/x:CustomFeatureList',
         ];
@@ -89,6 +100,11 @@ class TaxedOrderItem implements ITaxedOrderItem
         $this->merchandisePricing = $this->getEmptyMerchandisePriceGroup();
     }
 
+    public function getEmptyPhysicalAddress()
+    {
+        return $this->buildPayloadForInterface(static::PHYSICAL_ADDRESS_INTERFACE);
+    }
+
     public function getEmptyMerchandisePriceGroup()
     {
         return $this->buildPayloadForInterface(static::MERCHANDISE_PRICE_GROUP_INTERFACE);
@@ -97,6 +113,11 @@ class TaxedOrderItem implements ITaxedOrderItem
     public function getEmptyShippingPriceGroup()
     {
         return $this->buildPayloadForInterface(static::SHIPPING_PRICE_GROUP_INTERFACE);
+    }
+
+    public function getEmptyInvoicePriceGroup()
+    {
+        return $this->buildPayloadForInterface(static::INVOICE_PRICE_GROUP_INTERFACE);
     }
 
     public function getEmptyDutyPriceGroup()
@@ -126,6 +147,17 @@ class TaxedOrderItem implements ITaxedOrderItem
         return $this;
     }
 
+    public function getInvoicePricing()
+    {
+        return $this->invoicePricing;
+    }
+
+    public function setInvoicePricing(ITaxedPriceGroup $invoicePricing)
+    {
+        $this->invoicePricing = $invoicePricing;
+        return $this;
+    }
+
     public function getDutyPricing()
     {
         return $this->dutyPricing;
@@ -137,12 +169,77 @@ class TaxedOrderItem implements ITaxedOrderItem
         return $this;
     }
 
+    public function getAdminOrigin()
+    {
+        return $this->adminOrigin;
+    }
+
+    public function setAdminOrigin(IPhysicalAddress $address)
+    {
+        $this->adminOrigin = $address;
+        return $this;
+    }
+
+    public function getShippingOrigin()
+    {
+        return $this->shippingOrigin;
+    }
+
+    public function setShippingOrigin(IPhysicalAddress $address)
+    {
+        $this->shippingOrigin = $address;
+        return $this;
+    }
+
+    public function getManufacturingCountryCode()
+    {
+        return $this->manufacturingCountryCode;
+    }
+
+    public function setManufacturingCountryCode($code)
+    {
+        $this->manufacturingCountryCode = $code;
+        return $this;
+    }
+
+    protected function serializeOrigins()
+    {
+        return '<Origins>'
+            . $this->getAdminOrigin()->serialize()
+            . $this->getShippingOrigin()->serialize()
+            . $this->serializeOptionalXmlEncodedValue('ManufacturingCountryCode', $this->getManufacturingCountryCode())
+            . '</Origins>';
+    }
+
+    /**
+     * Serialize order item pricing - merchandise pricing, shipping and duty
+     * pricing if they have been set and any fees for the item.
+     *
+     * @return string
+     */
+    protected function serializePricing()
+    {
+	$invoicePricing = $this->getInvoicePricing();
+        $shippingPricing = $this->getShippingPricing();
+        $merchandisePricing = $this->getMerchandisePricing();
+        $dutyPricing = $this->getDutyPricing();
+        $fees = $this->getFees();
+        return '<Pricing>'
+            . ($merchandisePricing ? $merchandisePricing->setRootNodeName('Merchandise')->serialize() : '')
+            . ($invoicePricing ? $invoicePricing->setRootNodeName('PriceGroup')->serialize() : '')
+            . ($shippingPricing ? $shippingPricing->setRootNodeName('Shipping')->serialize() : '')
+            . ($dutyPricing ? $dutyPricing->setRootNodeName('Duty')->serialize() : '')
+            . (count($fees) ? $fees->serialize() : '')
+            . '</Pricing>';
+    }
+
     protected function serializeContents()
     {
         return "<ItemId>{$this->xmlEncode($this->getItemId())}</ItemId>"
             . $this->serializeOptionalXmlEncodedValue('ItemDesc', $this->getDescription())
-            . $this->serializeOptionalXmlEncodedValue('HTSCode', $this->getHtsCode())
+            . $this->serializeXmlEncodedValue('HTSCode', $this->getHtsCode())
             . $this->serializeOptionalXmlEncodedValue('ScreenSize', $this->getScreenSize())
+	    . ($this->adminOrigin ? $this->serializeOrigins() : '' )
             . "<Quantity>{$this->getQuantity()}</Quantity>"
             . $this->serializePricing()
             . $this->serializeGifting()

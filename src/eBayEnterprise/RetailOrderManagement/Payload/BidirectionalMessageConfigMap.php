@@ -67,6 +67,10 @@ return call_user_func(function () {
         'request' => '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxDutyFeeQuoteRequest',
         'reply' => '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxDutyFeeQuoteReply',
     ];
+    $map['taxes/invoice'] = [
+        'request' => '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxDutyFeeInvoiceRequest',
+        'reply' => '\eBayEnterprise\RetailOrderManagement\Payload\TaxDutyFee\TaxDutyFeeInvoiceReply',
+    ];
     $map['orders/cancel'] = [
         'request' => '\eBayEnterprise\RetailOrderManagement\Payload\Order\OrderCancelRequest',
         'reply' => '\eBayEnterprise\RetailOrderManagement\Payload\Order\OrderCancelResponse',

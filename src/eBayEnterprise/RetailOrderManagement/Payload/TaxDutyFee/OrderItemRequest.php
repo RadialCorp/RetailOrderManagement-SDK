@@ -96,7 +96,8 @@ class OrderItemRequest implements IOrderItemRequest
         $this->customizations = $this->buildPayloadForInterface(
             static::CUSTOMIZATION_ITERABLE_INTERFACE
         );
-        $this->merchandisePricing = $this->getEmptyMerchandisePriceGroup();
+
+	$this->merchandisePricing = $this->getEmptyMerchandisePriceGroup();
     }
 
     public function getEmptyPhysicalAddress()
