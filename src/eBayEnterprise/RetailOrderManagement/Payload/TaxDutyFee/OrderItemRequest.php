@@ -210,7 +210,7 @@ class OrderItemRequest implements IOrderItemRequest
     {
         return "<ItemId>{$this->xmlEncode($this->getItemId())}</ItemId>"
             . $this->serializeOptionalXmlEncodedValue('ItemDesc', $this->getDescription())
-            . $this->serializeXmlEncodedValue('HTSCode', $this->getHtsCode())
+            . $this->serializeOptionalXmlEncodedValue('HTSCode', $this->getHtsCode())
             . $this->serializeOptionalXmlEncodedValue('ScreenSize', $this->getScreenSize())
             . $this->serializeOrigins()
             . "<Quantity>{$this->getQuantity()}</Quantity>"
