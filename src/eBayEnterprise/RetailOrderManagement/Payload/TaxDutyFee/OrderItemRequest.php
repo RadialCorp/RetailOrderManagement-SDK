@@ -96,6 +96,8 @@ class OrderItemRequest implements IOrderItemRequest
         $this->customizations = $this->buildPayloadForInterface(
             static::CUSTOMIZATION_ITERABLE_INTERFACE
         );
+
+	$this->merchandisePricing = $this->getEmptyMerchandisePriceGroup();
     }
 
     public function getEmptyPhysicalAddress()
@@ -108,19 +110,9 @@ class OrderItemRequest implements IOrderItemRequest
         return $this->buildPayloadForInterface(static::MERCHANDISE_PRICE_GROUP_INTERFACE);
     }
 
-    public function getEmptyInvoiceMerchandisePriceGroup()
-    {
-        return $this->buildPayloadForInterface(static::INVOICE_MERCHANDISE_PRICE_GROUP_INTERFACE);
-    }
-
     public function getEmptyShippingPriceGroup()
     {
         return $this->buildPayloadForInterface(static::SHIPPING_PRICE_GROUP_INTERFACE);
-    }
-
-    public function getEmptyInvoicePriceGroup()
-    {
-        return $this->buildPayloadForInterface(static::INVOICE_PRICE_GROUP_INTERFACE);
     }
 
     public function getEmptyDutyPriceGroup()
