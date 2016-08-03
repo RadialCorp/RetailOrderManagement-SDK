@@ -54,7 +54,6 @@ class BidirectionalMessageFactory implements IBidirectionalMessageFactory
     public function messagePayload($type)
     {
         $key = $this->config->getConfigKey();
-
         if (isset($this->messageTypeMap[$key])) {
             return $this->payloadFactory->buildPayload($this->messageTypeMap[$key][$type], null, null, $this->logger);
         }
