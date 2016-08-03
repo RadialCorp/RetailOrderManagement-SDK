@@ -211,6 +211,28 @@ class TaxedOrderItem implements ITaxedOrderItem
             . '</Origins>';
     }
 
+    /**
+     * Serialize order item pricing - merchandise pricing, shipping and duty
+     * pricing if they have been set and any fees for the item.
+     *
+     * @return string
+     */
+    protected function serializePricing()
+    {
+	$invoicePricing = $this->getInvoicePricing();
+        $shippingPricing = $this->getShippingPricing();
+        $merchandisePricing = $this->getMerchandisePricing();
+        $dutyPricing = $this->getDutyPricing();
+        $fees = $this->getFees();
+        return '<Pricing>'
+            . ($merchandisePricing ? $merchandisePricing->setRootNodeName('Merchandise')->serialize() : '')
+            . ($invoicePricing ? $invoicePricing->setRootNodeName('PriceGroup')->serialize() : '')
+            . ($shippingPricing ? $shippingPricing->setRootNodeName('Shipping')->serialize() : '')
+            . ($dutyPricing ? $dutyPricing->setRootNodeName('Duty')->serialize() : '')
+            . (count($fees) ? $fees->serialize() : '')
+            . '</Pricing>';
+    }
+
     protected function serializeContents()
     {
         return "<ItemId>{$this->xmlEncode($this->getItemId())}</ItemId>"
