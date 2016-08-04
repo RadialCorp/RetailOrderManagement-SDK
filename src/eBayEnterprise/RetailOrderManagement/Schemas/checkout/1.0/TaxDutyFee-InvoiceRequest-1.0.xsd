@@ -596,6 +596,7 @@
       <xsd:element name="VATInvoiceNumber" type="NonWhitespaceString20Type" minOccurs="0"/>
       <xsd:element name="VATInclusivePricing" type="xsd:boolean"/>
       <xsd:element name="CustomerTaxId" type="CustomerTaxId" minOccurs="0"/>
+      <xsd:element name="TaxTransactionId" type="TaxTransactionId" minOccurs="0"/>
       <xsd:element name="BillingInformation" type="DestinationTargetType"/>
       <xsd:element name="Shipping" type="ShippingType" minOccurs="0"/>
       <xsd:element name="Fees" type="OrderFeeList" minOccurs="0"/>

@@ -62,6 +62,8 @@ class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
     protected $vatInvoiceNumber;
     /** @var string */
     protected $customerTaxId;
+    /** @var string */
+    protected $taxTransactionId;
 
     /**
      * @param IValidatorIterator
@@ -110,6 +112,7 @@ class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
 	    'currencyConversionRate' => 'x:CurrencyConversionRate',
 	    'vatInvoiceNumber' => 'x:VATInvoiceNumber',
 	    'customerTaxId' => 'x:CustomerTaxId',
+	    'taxTransactionId' => 'x:TaxTransactionId',
         ];
         $this->booleanExtractionPaths = [
             'vatInclusivePricingFlag' => 'string(x:VATInclusivePricing)',
@@ -364,6 +367,27 @@ class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
     public function setCustomerTaxId($id)
     {
         $this->customerTaxId = $this->cleanString($id, 40);
+        return $this;
+    }
+
+    /**
+     * Tax Identifier for the Tax Quote.
+     *
+     * restrictions: optional
+     * @return string
+     */
+    public function getTaxTransactionId()
+    {
+        return $this->taxTransactionId;
+    }
+
+    /**
+     * @param string
+     * @return self
+     */
+    public function setTaxTransactionId($id)
+    {
+        $this->taxTransactionId = $this->cleanString($id, 40);
         return $this;
     }
 

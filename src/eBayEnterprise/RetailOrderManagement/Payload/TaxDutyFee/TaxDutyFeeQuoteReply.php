@@ -35,6 +35,8 @@ class TaxDutyFeeQuoteReply implements ITaxDutyFeeQuoteReply
 
     /** @var ITaxedShipGroupIterable */
     protected $shipGroups;
+    /** @var string */
+    protected $taxTransactionId;
 
     /**
      * @param IValidatorIterator
@@ -58,6 +60,10 @@ class TaxDutyFeeQuoteReply implements ITaxDutyFeeQuoteReply
         $this->parentPayload = $parentPayload;
         $this->payloadFactory = new PayloadFactory;
 
+	$this->optionalExtractionPaths = [
+            'taxTransactionId' => 'x:TaxTransactionId',
+        ];
+
         $this->shipGroups = $this->buildPayloadForInterface(
             static::SHIP_GROUP_ITERABLE_INTERFACE
         );
@@ -68,6 +74,27 @@ class TaxDutyFeeQuoteReply implements ITaxDutyFeeQuoteReply
             'shipGroups' => 'x:Shipping/x:ShipGroups',
             'destinations' => 'x:Shipping/x:Destinations',
         ];
+    }
+
+    /**
+     * Tax Identifier for the Tax Quote.
+     *
+     * restrictions: optional
+     * @return string
+     */
+    public function getTaxTransactionId()
+    {
+        return $this->taxTransactionId;
+    }
+
+    /**
+     * @param string
+     * @return self
+     */
+    public function setTaxTransactionId($id)
+    {
+        $this->taxTransactionId = $this->cleanString($id, 40);
+        return $this;
     }
 
     public function getShipGroups()

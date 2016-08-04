@@ -44,6 +44,18 @@
       <xsd:maxLength value="40"/>
     </xsd:restriction>
   </xsd:simpleType>
+  <!-- ForAdditinal element TaxTransactionId -->
+  <xsd:simpleType name="TaxTransactionId">
+      <xsd:annotation>
+          <xsd:documentation xml:lang="en">
+              This type represents a string identifier for a tax transaction id.
+              A user-defined id that represents the customer for the transaction or line item.
+          </xsd:documentation>
+      </xsd:annotation>
+      <xsd:restriction base="xsd:string">
+              <xsd:maxLength value="40"/>
+      </xsd:restriction>
+  </xsd:simpleType>
   <xsd:complexType name="TdfDestinationsType">
     <xsd:sequence>
       <xsd:element name="MailingAddress" type="MailingAddressType" minOccurs="0" maxOccurs="unbounded" nillable="false"/>
