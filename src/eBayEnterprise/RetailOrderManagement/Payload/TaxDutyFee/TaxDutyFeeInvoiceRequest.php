@@ -489,6 +489,7 @@ class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
 	    . $this->serializeOptionalXmlEncodedValue('VATInvoiceNumber', $this->getVATInvoiceNumber())
             . $this->serializeVatInclusivePricing()
             . $this->serializeOptionalXmlEncodedValue('CustomerTaxId', $this->getCustomerTaxId())
+	    . $this->serializeOptionalXmlEncodedValue('TaxTransactionId', $this->getTaxTransactionId())
             . $this->serializeBillingInformation()
             . $this->serializeShipping()
  	    . $this->getFees()->serialize();
