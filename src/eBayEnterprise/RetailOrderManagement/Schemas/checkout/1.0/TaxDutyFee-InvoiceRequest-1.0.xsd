@@ -570,6 +570,7 @@
       <xsd:element name="WebOrderNumber" type="WebOrderNumber" minOccurs="0"/>
       <xsd:element name="InvoiceNumber" type="InvoiceNumber"/>
       <xsd:element name="InvoiceType" type="InvoiceType" minOccurs="0"/>
+      <xsd:element name="TaxTransactionId" type="TaxTransactionId" minOccurs="0"/>
       <xsd:element name="OrderDateTime" type="xsd:dateTime">
         <xsd:annotation>
           <xsd:documentation>
@@ -596,7 +597,6 @@
       <xsd:element name="VATInvoiceNumber" type="NonWhitespaceString20Type" minOccurs="0"/>
       <xsd:element name="VATInclusivePricing" type="xsd:boolean"/>
       <xsd:element name="CustomerTaxId" type="CustomerTaxId" minOccurs="0"/>
-      <xsd:element name="TaxTransactionId" type="TaxTransactionId" minOccurs="0"/>
       <xsd:element name="BillingInformation" type="DestinationTargetType"/>
       <xsd:element name="Shipping" type="ShippingType" minOccurs="0"/>
       <xsd:element name="Fees" type="OrderFeeList" minOccurs="0"/>

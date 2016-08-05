@@ -481,6 +481,7 @@ class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
 	    . $this->serializeOptionalXmlEncodedValue('WebOrderNumber', $this->getWebOrderNumber())
 	    . $this->serializeXmlEncodedValue('InvoiceNumber', $this->getInvoiceNumber())
 	    . $this->serializeOptionalXmlEncodedValue('InvoiceType', $this->getInvoiceType())
+	    . $this->serializeOptionalXmlEncodedValue('TaxTransactionId', $this->getTaxTransactionId())
 	    . $this->serializeOptionalDateValue('OrderDateTime', 'c', $this->getOrderDateTime())
 	    . $this->serializeOptionalDateValue('OriginalOrderDateTime', 'c', $this->getOriginalOrderDateTime())
 	    . $this->serializeOptionalDateValue('ShipDateTime', 'c', $this->getShipDateTime())
@@ -489,7 +490,6 @@ class TaxDutyFeeInvoiceRequest implements ITaxDutyFeeInvoiceRequest
 	    . $this->serializeOptionalXmlEncodedValue('VATInvoiceNumber', $this->getVATInvoiceNumber())
             . $this->serializeVatInclusivePricing()
             . $this->serializeOptionalXmlEncodedValue('CustomerTaxId', $this->getCustomerTaxId())
-	    . $this->serializeOptionalXmlEncodedValue('TaxTransactionId', $this->getTaxTransactionId())
             . $this->serializeBillingInformation()
             . $this->serializeShipping()
  	    . $this->getFees()->serialize();
