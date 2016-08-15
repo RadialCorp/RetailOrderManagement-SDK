@@ -67,6 +67,8 @@ class CreditCardAuthRequest implements ICreditCardAuthRequest
     protected $eci;
     /** @var string */
     protected $payerAuthenticationResponse;
+    /** @var string */
+    protected $schemaVersion;
 
     /**
      * @param IValidatorIterator
@@ -133,6 +135,7 @@ class CreditCardAuthRequest implements ICreditCardAuthRequest
             'transactionId' => 'x:SecureVerificationData/x:TransactionId',
             'payerAuthenticationResponse' => 'x:SecureVerificationData/x:PayerAuthenticationResponse',
             'eci' => 'x:SecureVerificationData/x:ECI',
+	    'schemaVersion' => 'x:SchemaVersion',
         ];
         $this->booleanExtractionPaths = [
             'panIsToken' => 'string(x:PaymentContext/x:PaymentAccountUniqueId/@isToken)',
@@ -188,7 +191,8 @@ class CreditCardAuthRequest implements ICreditCardAuthRequest
         . $this->serializeShippingNamePhone()
         . $this->serializeShippingAddress()
         . $this->serializeIsCorrectError()
-        . $this->serializeSecureVerificationData();
+        . $this->serializeSecureVerificationData()
+        . $this->serializeOptionalXmlEncodedValue('SchemaVersion', $this->getSchemaVersion());
     }
 
     /**
@@ -618,6 +622,17 @@ class CreditCardAuthRequest implements ICreditCardAuthRequest
         $this->eci = $value;
 
         return $this;
+    }
+
+    public function getSchemaVersion()
+    {
+	return $this->schemaVersion;
+    }
+
+    public function setSchemaVersion($schemaVersion)
+    {
+	$this->schemaVersion = $schemaVersion;
+	return $this;
     }
 
     /**
