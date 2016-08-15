@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.gsicommerce.com/schema/checkout/1.0" targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="${project.version}">
-  <xsd:include schemaLocation="Payment-Datatypes-CurrencyCode-1.0.xsd"/>
-  <xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
-  <xsd:simpleType name="SuccessFailResponseCodeType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Payment-Datatypes-CurrencyCode-1.0.xsd"/>
+    <xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
+    <xsd:simpleType name="SuccessFailResponseCodeType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 The result of the request transaction.
                 Examples:
                 StoredValueRedeem - Fail means the redemption did not occur.
@@ -16,38 +22,38 @@
                 The authorization can be attempted by the OMS before processing the order.
                 In the case of a StoredValue, you would never accept an order unless the redeem was successful.
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="Fail"/>
-      <xsd:enumeration value="Success"/>
-      <xsd:enumeration value="Timeout"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="AuthorizationResponseCodeType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Fail"/>
+            <xsd:enumeration value="Success"/>
+            <xsd:enumeration value="Timeout"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="AuthorizationResponseCodeType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 Codes defining reasons for authorization declines.
                 Bank specific authorization response codes are mapped to a canonical set of codes.
                 The canonical codes will be returned in this field.
                 The enumeration of the canonical codes and their descriptions will be documented separately.
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:maxLength value="16"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="AmountType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="16"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="AmountType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 Amount field for requests and responses.
                 Will contain the currency of the transaction.
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:simpleContent>
-      <xsd:extension base="AmountBaseType">
-        <xsd:attribute name="currencyCode" type="ISOCurrencyCodeType" use="required">
-          <xsd:annotation>
-            <xsd:documentation>The code that represents the type of currency being used for a
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="AmountBaseType">
+                <xsd:attribute name="currencyCode" type="ISOCurrencyCodeType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>The code that represents the type of currency being used for a
                             transaction.Currency codes are defined by ISO 4217:2008 See:
                             http://en.wikipedia.org/wiki/ISO_4217
 
@@ -58,23 +64,24 @@
                             Restrictions: N/A
                             Aliases: N/A
                         </xsd:documentation>
-          </xsd:annotation>
-        </xsd:attribute>
-      </xsd:extension>
-    </xsd:simpleContent>
-  </xsd:complexType>
-  <xsd:complexType name="AmountNegativeAllowedType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="AmountNegativeAllowedType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 Amount field for requests and responses.
                 Will contain the currency of the transaction.
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:simpleContent>
-      <xsd:extension base="AmountBaseNegativeAllowedType">
-        <xsd:attribute name="currencyCode" type="ISOCurrencyCodeType" use="required">
-          <xsd:annotation>
-            <xsd:documentation>The code that represents the type of currency being used for a
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="AmountBaseNegativeAllowedType">
+                <xsd:attribute name="currencyCode" type="ISOCurrencyCodeType" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>The code that represents the type of currency being used for a
                             transaction.Currency codes are defined by ISO 4217:2008 See:
                             http://en.wikipedia.org/wiki/ISO_4217
 
@@ -85,14 +92,15 @@
                             Restrictions: N/A
                             Aliases: N/A
                         </xsd:documentation>
-          </xsd:annotation>
-        </xsd:attribute>
-      </xsd:extension>
-    </xsd:simpleContent>
-  </xsd:complexType>
-  <xsd:simpleType name="PinType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="PinType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 The personal identification number or code associated with a gift card or gift certificate.
                 Allowable Values: Text string.
                 Required: Yes
@@ -101,43 +109,43 @@
                 Restrictions: N/A
                 Aliases: N/A
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="1"/>
-      <xsd:maxLength value="8"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="CardSecurityCodeType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="8"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="CardSecurityCodeType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 The card security code is the number on the back of the credit card
                 that is normally required for authorizations.
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:maxLength value="4"/>
-      <xsd:pattern value="(\d{3,4})?"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="AccountUniqueIdType">
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="1"/>
-      <xsd:maxLength value="22"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="EncryptedPayloadType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="4"/>
+            <xsd:pattern value="(\d{3,4})?"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="AccountUniqueIdType">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="22"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="EncryptedPayloadType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 Fields that are encrypted via client-side encryption. Ex: PAN, CVV, PIN
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:maxLength value="1000"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="PaymentAccountUniqueIdType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">Global type to cover Payment Account Numbers (PAN) Examples include: credit
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="1000"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="PaymentAccountUniqueIdType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">Global type to cover Payment Account Numbers (PAN) Examples include: credit
                 card numbers, gift card numbers, bank account numbers.
                 Credit cards and gift cards are typically length 14-19. Bank Account numbers have a much higher range of
                 lengths, up to 30 digits in Europe.
@@ -150,12 +158,12 @@
                 Restrictions: N/A
                 Aliases: N/A
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:simpleContent>
-      <xsd:extension base="AccountUniqueIdType">
-        <xsd:attribute name="isToken" type="xsd:boolean" use="required">
-          <xsd:annotation>
-            <xsd:documentation>Indicates if the Payment Account Number (PAN) is the actual number, or a
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="AccountUniqueIdType">
+                <xsd:attribute name="isToken" type="xsd:boolean" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>Indicates if the Payment Account Number (PAN) is the actual number, or a
                             representation of the number.
                             Allowable Values:
                             False - PAN is actual account number
@@ -166,14 +174,24 @@
                             Restrictions: N/A
                             Aliases: N/A
                         </xsd:documentation>
-          </xsd:annotation>
-        </xsd:attribute>
-      </xsd:extension>
-    </xsd:simpleContent>
-  </xsd:complexType>
-  <xsd:simpleType name="TenderTypeType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:simpleType name="MaskedPanType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Masked pan ending with last four digits
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="22"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="TenderTypeType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 This element identifies the tender type.
                 Example values:
                 Credit card: VC (Visa), MC (Master Card), AM (American Express)
@@ -182,17 +200,27 @@
                 Stored Value tender type codes are provider specific (i.e Blackhawk, SVS, etc.)
                 Example: BH (Blackhawk), SP (SVS), OGC (GSI Online Gift Certificate)
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="2"/>
-      <xsd:maxLength value="4"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="PayPalPaymentInfoType">
-    <xsd:sequence>
-      <xsd:element name="PaymentStatus" type="xsd:string" minOccurs="0">
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="2"/>
+            <xsd:maxLength value="4"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="TenderDescriptionType">
         <xsd:annotation>
-          <xsd:documentation>This value is passed through from the Order Management System. It is returned
+            <xsd:documentation xml:lang="en">
+                Tender type Description
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="70"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:complexType name="PayPalPaymentInfoType">
+        <xsd:sequence>
+            <xsd:element name="PaymentStatus" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>This value is passed through from the Order Management System. It is returned
                         from a PayPal Get.
 
                         Allowable values: text string
@@ -202,11 +230,11 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="PendingReason" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>This value is passed through from the Order Management System. It is returned
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="PendingReason" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>This value is passed through from the Order Management System. It is returned
                         from a PayPal Get.
 
                         Allowable values: text string
@@ -216,11 +244,11 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="ReasonCode" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>This value is passed through from the Order Management System. It is returned
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ReasonCode" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>This value is passed through from the Order Management System. It is returned
                         from a PayPal Get.
 
                         Allowable values: text string
@@ -230,20 +258,70 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="SecureVerificationDataType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">3-D Secure is an XML-based protocol designed to be an additional security
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="FinancingApproved" type="xsd:boolean" minOccurs="0">
+	    		<xsd:annotation>
+	    			<xsd:documentation xml:lang="en">
+						This will be set to true if the customer ultimately was approved for
+						and chose to make payment using their approved installment credit.
+						
+						Allowable values: boolean
+                        Required: No
+                        Length: 64
+                        Default Value: false
+                        Restrictions: N/A
+                        Aliases: N/A
+	    			</xsd:documentation>
+	    		</xsd:annotation>
+	    	</xsd:element>
+	    	<xsd:element name="FinancingFeeAmount" type="AmountType" minOccurs="0">
+	    		<xsd:annotation>
+	    			<xsd:documentation xml:lang="en">
+						Installment fee amount the customer has to pay during the lifetime of the loan.
+	    			</xsd:documentation>
+	    		</xsd:annotation>
+	    	</xsd:element>
+	    	<xsd:element name="FinancingTerm" type="xsd:int" minOccurs="0">
+	    		<xsd:annotation>
+	    			<xsd:documentation xml:lang="en">
+						Indicates the payment term. Example values are 6, 12, 18, and 24 months.
+						
+						Allowable values: number
+                        Required: No
+                        Length: N/A
+                        Default Value: 0
+                        Restrictions: N/A
+                        Aliases: N/A
+	    			</xsd:documentation>
+	    		</xsd:annotation>
+	    	</xsd:element>
+	    	<xsd:element name="FinancingMonthlyPayment" type="AmountType" minOccurs="0">
+	    		<xsd:annotation>
+	    			<xsd:documentation xml:lang="en">
+						Estimated amount per month that the customer will need to pay including fees and interests.
+	    			</xsd:documentation>
+	    		</xsd:annotation>
+	    	</xsd:element>
+	    	<xsd:element name="FinancingTotalCost" type="AmountType" minOccurs="0">
+	    		<xsd:annotation>
+	    			<xsd:documentation xml:lang="en">
+						Estimated total payment amount including fees and interests the user will pay during the lifetime of the loan.
+	    			</xsd:documentation>
+	    		</xsd:annotation>
+	    	</xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="SecureVerificationDataType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">3-D Secure is an XML-based protocol designed to be an additional security
                 layer for online credit and debit card transactions. This type is passed through from VISA.
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="AuthenticationAvailable">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">Allowable values: text string
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="AuthenticationAvailable">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">Allowable values: text string
                         VPAS - Verified by VISA e-commerce transactions only.
                         VER - Verify Enrollment Response from the VER message, returned to the POE from the ACS server
                         as a result of a Verify Enrollment Request
@@ -260,17 +338,17 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-        <xsd:simpleType>
-          <xsd:restriction base="xsd:string">
-            <xsd:maxLength value="1"/>
-            <xsd:minLength value="1"/>
-          </xsd:restriction>
-        </xsd:simpleType>
-      </xsd:element>
-      <xsd:element name="AuthenticationStatus">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">This element shows wether the authentication has been done
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1"/>
+                        <xsd:minLength value="1"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="AuthenticationStatus">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">This element shows wether the authentication has been done
                         internally or externally.
 
                         Allowable Values: Text string
@@ -287,17 +365,17 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-        <xsd:simpleType>
-          <xsd:restriction base="xsd:string">
-            <xsd:maxLength value="1"/>
-            <xsd:minLength value="1"/>
-          </xsd:restriction>
-        </xsd:simpleType>
-      </xsd:element>
-      <xsd:element name="CavvUcaf">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">E-commerce Verified by VISA and MasterCard SecureCode transactions
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="1"/>
+                        <xsd:minLength value="1"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="CavvUcaf">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">E-commerce Verified by VISA and MasterCard SecureCode transactions
                         only. Data returned in authentication request.
 
                         Allowable values: For VISA, this field contains CAVV values in upacked, displayable format (0-9,
@@ -309,16 +387,16 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-        <xsd:simpleType>
-          <xsd:restriction base="xsd:string">
-            <xsd:maxLength value="64"/>
-          </xsd:restriction>
-        </xsd:simpleType>
-      </xsd:element>
-      <xsd:element name="TransactionId">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">E-commerce Verified by VISA transactions only.
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="64"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="TransactionId">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">E-commerce Verified by VISA transactions only.
 
                         XID data returned from authentication request in upacked, displayable format (0-9, AF). Left
                         justify, space-fill right.
@@ -330,16 +408,16 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-        <xsd:simpleType>
-          <xsd:restriction base="xsd:string">
-            <xsd:maxLength value="64"/>
-          </xsd:restriction>
-        </xsd:simpleType>
-      </xsd:element>
-      <xsd:element name="ECI" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>3-D Secure is an XML-based protocol designed to be an additional security layer
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="64"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="ECI" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>3-D Secure is an XML-based protocol designed to be an additional security layer
                         for online credit and debit card transactions. This is the ECI value received from Visa.
                         Allowable values: text string
                         Required: No
@@ -348,11 +426,11 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="PayerAuthenticationResponse">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">The Issuer Bank Access Control Server(ACS) authenticates the
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="PayerAuthenticationResponse">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">The Issuer Bank Access Control Server(ACS) authenticates the
                         cardholder.
 
                         The authentication result is represented by the Payer Authentication Response (PAR) generated by
@@ -365,22 +443,22 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-        <xsd:simpleType>
-          <xsd:restriction base="xsd:string">
-            <xsd:maxLength value="10000"/>
-          </xsd:restriction>
-        </xsd:simpleType>
-      </xsd:element>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="PayPalAddressType">
-    <xsd:complexContent>
-      <xsd:extension base="PhysicalAddressType">
-        <xsd:sequence>
-          <xsd:element name="AddressStatus" type="minStringLength1" minOccurs="0">
-            <xsd:annotation>
-              <xsd:documentation>This value is passed through from the Order Management System. It is
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="10000"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="PayPalAddressType">
+        <xsd:complexContent>
+            <xsd:extension base="PhysicalAddressType">
+                <xsd:sequence>
+                    <xsd:element name="AddressStatus" type="minStringLength1" minOccurs="0">
+                        <xsd:annotation>
+                            <xsd:documentation>This value is passed through from the Order Management System. It is
                                 returned from a PayPal Get.
 
                                 Allowable Values: Text string
@@ -390,22 +468,23 @@
                                 Restrictions: N/A
                                 Aliases: N/A
                             </xsd:documentation>
-            </xsd:annotation>
-          </xsd:element>
-        </xsd:sequence>
-      </xsd:extension>
-    </xsd:complexContent>
-  </xsd:complexType>
-  <xsd:complexType name="LineItemsType">
-    <xsd:sequence>
-      <xsd:element name="LineItemsTotal" type="AmountType">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">Total amount for all line items excluding shipping and tax;
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="LineItemsType">
+        <xsd:sequence>
+            <xsd:element name="LineItemsTotal" type="AmountNegativeAllowedType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">Total amount for all line items excluding shipping and tax;
                         calculation works as follows
                         LineItemsTotal = First-LineItem-Quantity * First-LineItem--Amount + next one;
 
                         PayPal validates above calculation and throws error message for incorrect line items total;
-                        LineItemsTotal must always be greater than 0.
+                        LineItemsTotal may be negative for discounted items; note that LineItemsTotal + ShippingTotal + TaxTotal
+                        must be always greater than 0;
 
                         Allowable Values: Text string
                         Required: No
@@ -414,29 +493,29 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="ShippingTotal" type="AmountType">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">Total shipping amount for all line items.
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ShippingTotal" type="AmountType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">Total shipping amount for all line items.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="TaxTotal" type="AmountType">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="TaxTotal" type="AmountType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Total tax amount for all line items.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="LineItem" type="LineItemType" minOccurs="0" maxOccurs="unbounded"/>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="LineItemType">
-    <xsd:sequence>
-      <xsd:element name="Name" type="xsd:string">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">Line item name like product title.
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="LineItem" type="LineItemType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="LineItemType">
+        <xsd:sequence>
+            <xsd:element name="Name" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">Line item name like product title.
 
                         Allowable Values: Text string
                         Required: Yes
@@ -445,11 +524,11 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="SequenceNumber" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">Sequence number of current line item in cart if available.
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="SequenceNumber" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">Sequence number of current line item in cart if available.
 
                         Allowable Values: Text string
                         Required: No
@@ -458,11 +537,11 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="Quantity" type="xsd:int">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">Quantity for this line item.
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Quantity" type="xsd:int">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">Quantity for this line item.
 
                         Allowable Values: int
                         Required: Yes
@@ -471,57 +550,58 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="UnitAmount" type="AmountNegativeAllowedType">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">Unit price amount for a line item.</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:simpleType name="ItemDesc">
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="1"/>
-      <xsd:maxLength value="50"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <!-- BEGIN:  PAYMENT CONTEXT DEFINITION -->
-  <xsd:complexType name="PaymentContextType">
-    <xsd:complexContent>
-      <xsd:extension base="PaymentContextBaseType">
-        <xsd:sequence>
-          <xsd:choice>
-            <xsd:element name="PaymentAccountUniqueId" type="PaymentAccountUniqueIdType">
-              <xsd:annotation>
-                <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="UnitAmount" type="AmountNegativeAllowedType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">Unit price amount for a line item.</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="ItemDesc">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="50"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <!-- BEGIN:  PAYMENT CONTEXT DEFINITION -->
+    <xsd:complexType name="PaymentContextType">
+        <xsd:complexContent>
+            <xsd:extension base="PaymentContextBaseType">
+                <xsd:sequence>
+                    <xsd:choice>
+                        <xsd:element name="PaymentAccountUniqueId" type="PaymentAccountUniqueIdType">
+                            <xsd:annotation>
+                                <xsd:documentation xml:lang="en">
                                     Either a raw PAN or a token representing a PAN.
                                     The type includes an attribute, isToken, to indicate if the PAN is tokenized.
                                 </xsd:documentation>
-              </xsd:annotation>
-            </xsd:element>
-            <xsd:element name="EncryptedPaymentAccountUniqueId" type="EncryptedPayloadType">
-              <xsd:annotation>
-                <xsd:documentation xml:lang="en">
+                            </xsd:annotation>
+                        </xsd:element>
+                        <xsd:element name="EncryptedPaymentAccountUniqueId" type="EncryptedPayloadType">
+                            <xsd:annotation>
+                                <xsd:documentation xml:lang="en">
                                     Client encrypted pan
                                 </xsd:documentation>
-              </xsd:annotation>
-            </xsd:element>
-          </xsd:choice>
-        </xsd:sequence>
-      </xsd:extension>
-    </xsd:complexContent>
-  </xsd:complexType>
-  <xsd:complexType name="PaymentContextBaseType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+                            </xsd:annotation>
+                        </xsd:element>
+                    </xsd:choice>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <xsd:complexType name="PaymentContextBaseType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 A set of values to identify all transactions for a unique payment for a single order
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="OrderId" type="OrderIdType">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">A unique identifier for the order.
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="OrderId" type="OrderIdType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">A unique identifier for the order.
 
                         The client is responsible for ensuring uniqueness across all transactions the client initiates
                         with this service.
@@ -533,528 +613,985 @@
                         Restrictions: N/A
                         Aliases: N/A
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:simpleType name="OrderIdType">
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="1"/>
-      <xsd:maxLength value="20"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="OrderAppIdType">
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="1"/>
-      <xsd:maxLength value="40"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <!-- END:  PAYMENT CONTEXT DEFINITION -->
-  <xsd:simpleType name="TenderClassType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="OrderIdType">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="20"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <!-- END:  PAYMENT CONTEXT DEFINITION -->
+    <xsd:simpleType name="TenderClassType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 TenderClass used for API requests like Tender Type Look Up API or Protect Pan API.
                 NOTE: Use CreditCard tender class type instead of PrivateLabelCreditCard for private label credit card
                 account numbers;
                 PrivateLabelCreditCard is treated as CreditCard tender class type and available here for backward
                 compatibility purpose only.
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="PrivateLabelCreditCard"/>
-      <xsd:enumeration value="CreditCard"/>
-      <xsd:enumeration value="StoredValue"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="PaymentAccountNumberType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="PrivateLabelCreditCard"/>
+            <xsd:enumeration value="CreditCard"/>
+            <xsd:enumeration value="StoredValue"/>
+            <xsd:enumeration value="PayPal"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="PaymentAccountNumberType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 Actual Payment Account Number (PAN).
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="3"/>
-      <xsd:maxLength value="50"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="SettlementTypeType">
-    <xsd:annotation>
-      <xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="3"/>
+            <xsd:maxLength value="50"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="SettlementTypeType">
+        <xsd:annotation>
+            <xsd:documentation>
                 Debit - Deduction from an account as payment for goods or sale
                 Credit - A refund or price adjustment given by a merchant to an account for a previous sale.
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="Credit"/>
-      <xsd:enumeration value="Debit"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="FundReasonType">
-    <xsd:restriction base="xsd:string">
-      <xsd:maxLength value="16"/>
-      <xsd:pattern value="[a-zA-Z0-9]{1,}"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="InvoiceDataType">
-    <xsd:sequence>
-      <xsd:element name="VATData" type="VATDataType" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Credit"/>
+            <xsd:enumeration value="Debit"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="FundReasonType">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="16"/>
+            <xsd:pattern value="[a-zA-Z0-9]{1,}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="InvoiceDataType">
+        <xsd:sequence>
+            <xsd:element name="VATData" type="VATDataType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Only supplied for VAT stores. Used primarily for open invoice payment methods.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="LineItems" type="InvoiceLineItems" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="LineItems" type="InvoiceLineItems" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Refers to individual items within an order.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="CustomAttributes" type="PaymentCustomAttributesType" minOccurs="0" maxOccurs="1"/>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="VATDataType">
-    <xsd:sequence>
-      <xsd:element name="VATInvoiceNumber" type="NonWhitespaceString20Type">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="CustomAttributes" type="PaymentCustomAttributesType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VATDataType">
+        <xsd:sequence>
+            <xsd:element name="VATInvoiceNumber" type="NonWhitespaceString20Type">
+                <xsd:annotation>
+                    <xsd:documentation>
                         VAT Invoice Number associated with the order.
                         For open invoice only.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="VATInvoiceDate" type="xsd:dateTime">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="VATInvoiceDate" type="xsd:dateTime">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         The effective date of the receivable list.
                         VAT Invoice Date is the date when the VAT Invoice was generated.
                         For open invoice only.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="OriginalVATInvoiceDetails" type="OriginalVATInvoiceDetailsType" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="OriginalVATInvoiceDetails" type="OriginalVATInvoiceDetailsType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Used for open invoice CREDIT transaction only.
                         List of Original VAT Invoice Numbers and dates are passed here.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="VATRateInfo" type="VATRateInfoType"/>
-      <xsd:element name="BalanceClearedAmount" type="AmountType" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="VATRateInfo" type="VATRateInfoType"/>
+            <xsd:element name="BalanceClearedAmount" type="AmountType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         The sum of payments or credits deducted from the total gross amount, if any.
                         This can be typically any amount paid/credited through non open invoice payment method.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="InvoicePresentment" type="InvoicePresentmentType"/>
-      <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip" namespace="##any"/>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="OriginalVATInvoiceDetailsType">
-    <xsd:sequence>
-      <xsd:element name="OriginalVATInvoice" type="OriginalVATInvoiceType" maxOccurs="unbounded"/>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="OriginalVATInvoiceType">
-    <xsd:sequence>
-      <xsd:element name="OriginalVATInvoiceNumber" type="NonWhitespaceString20Type">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="InvoicePresentment" type="InvoicePresentmentType"/>
+            <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip" namespace="##any"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OriginalVATInvoiceDetailsType">
+        <xsd:sequence>
+            <xsd:element name="OriginalVATInvoice" type="OriginalVATInvoiceType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OriginalVATInvoiceType">
+        <xsd:sequence>
+            <xsd:element name="OriginalVATInvoiceNumber" type="NonWhitespaceString20Type">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Used for open invoice CREDIT transaction only.
                         Original VAT Invoice Number for the order being credited.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="OriginalVATInvoiceDate" type="xsd:dateTime">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="OriginalVATInvoiceDate" type="xsd:dateTime">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Used for open invoice CREDIT transaction only.
                         Original Reference Date for the order being credited.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="VATRateInfoType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VATRateInfoType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 For VAT stores. The VAT sub-totals grouped per VAT rate.
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="VAT" type="VATType" maxOccurs="unbounded"/>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="VATType">
-    <xsd:annotation>
-      <xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="VAT" type="VATType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VATType">
+        <xsd:annotation>
+            <xsd:documentation>
                 An amount of value added tax for a given VAT rate, in the currency of the enclosing context.
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="VATRegistrationId" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="VATRegistrationId" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Tax identifier used for value added tax purposes.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="Amount" type="AmountType">
-        <xsd:annotation>
-          <xsd:documentation>VAT amount</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-    </xsd:sequence>
-    <xsd:attribute name="rate" type="xsd:decimal" use="required">
-      <xsd:annotation>
-        <xsd:documentation>VAT rate</xsd:documentation>
-      </xsd:annotation>
-    </xsd:attribute>
-  </xsd:complexType>
-  <xsd:simpleType name="InvoicePresentmentType">
-    <xsd:restriction base="xsd:string">
-      <xsd:annotation>
-        <xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Amount" type="AmountType">
+                <xsd:annotation>
+                    <xsd:documentation>VAT amount</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="rate" type="xsd:decimal" use="required">
+            <xsd:annotation>
+                <xsd:documentation>VAT rate</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:simpleType name="InvoicePresentmentType">
+        <xsd:restriction base="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
                     Specifies how the invoice is dispatched to the recipient.
                 </xsd:documentation>
-      </xsd:annotation>
-      <xsd:enumeration value="letter"/>
-      <xsd:enumeration value="email"/>
-      <xsd:enumeration value="web"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="InvoiceLineItems">
-    <xsd:sequence>
-      <xsd:element name="LineItem" type="SkuDataType" minOccurs="1" maxOccurs="unbounded"/>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="SkuDataType">
-    <xsd:sequence>
-      <xsd:element name="ItemId" type="ItemId">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+            </xsd:annotation>
+            <xsd:enumeration value="letter"/>
+            <xsd:enumeration value="email"/>
+            <xsd:enumeration value="web"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="InvoiceLineItems">
+        <xsd:sequence>
+            <xsd:element name="LineItem" type="SkuDataType" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SkuDataType">
+        <xsd:sequence>
+            <xsd:element name="ItemId" type="ItemId">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Represents the identifier for an inventoriable product. a.k.a. SKU
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="ClientItemId" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ClientItemId" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Represents the vendor/client's sku id. Used only in Loyalty Program.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="Quantity" type="xsd:decimal">
-        <xsd:annotation>
-          <xsd:documentation>Item quantity</xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="ItemShortDescription" type="SkuShortDesc">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Quantity" type="xsd:decimal">
+                <xsd:annotation>
+                    <xsd:documentation>Item quantity</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ItemShortDescription" type="SkuShortDesc">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Product description
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="VATInclusiveUnitPrice" type="AmountType" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="VATInclusiveUnitPrice" type="AmountType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
                         For VAT stores, this is the vat inclusive price per unit.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="VATRateInfo" type="VATRateInfoType" minOccurs="0"/>
-      <xsd:element name="CustomAttributes" type="PaymentCustomAttributesType" minOccurs="0" maxOccurs="1"/>
-    </xsd:sequence>
-    <xsd:attribute name="lidCode" type="LineItemDescCodeType" use="optional">
-      <xsd:annotation>
-        <xsd:documentation>Used only for GE Money PLCC/Co-brand settlements</xsd:documentation>
-      </xsd:annotation>
-    </xsd:attribute>
-    <xsd:attribute name="lineId" type="xsd:string" use="optional">
-      <xsd:annotation>
-        <xsd:documentation>Unique identifier for this line item</xsd:documentation>
-      </xsd:annotation>
-    </xsd:attribute>
-  </xsd:complexType>
-  <xsd:simpleType name="SkuShortDesc">
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="1"/>
-      <xsd:maxLength value="100"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="PaymentCustomAttributesType">
-    <xsd:annotation>
-      <xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="VATRateInfo" type="VATRateInfoType" minOccurs="0"/>
+            <xsd:element name="CustomAttributes" type="PaymentCustomAttributesType" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="lidCode" type="LineItemDescCodeType" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>Used only for GE Money PLCC/Co-brand settlements</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="lineId" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>Unique identifier for this line item</xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:simpleType name="SkuShortDesc">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="100"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="PaymentCustomAttributesType">
+        <xsd:annotation>
+            <xsd:documentation>
                 A list of Generic Key/Value pair used for partner customizations.
                 Example use: Loyalty Program
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="CustomAttribute" type="PaymentCustomAttributeType" maxOccurs="unbounded"/>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="PaymentCustomAttributeType">
-    <xsd:annotation>
-      <xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="CustomAttribute" type="PaymentCustomAttributeType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PaymentCustomAttributeType">
+        <xsd:annotation>
+            <xsd:documentation>
                 Generic Key/Value pair
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="Key" type="xsd:string"/>
-      <xsd:element name="Value" type="xsd:normalizedString"/>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:simpleType name="LineItemDescCodeType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="Key" type="xsd:string"/>
+            <xsd:element name="Value" type="xsd:normalizedString"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="LineItemDescCodeType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 Line Item Description (LID) Codes used for GE Money 225 Byte Settlement file for PLCC/Co-Brand.
                 Use either 4 alpha-numeric chars or 7 digits LID codes for a store.
                 Example: 0090, 2001 etc
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="4"/>
-      <xsd:maxLength value="7"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="SettlementStatusType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="4"/>
+            <xsd:maxLength value="7"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="SettlementStatusType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 The full set of SettlementStatus values are:
                 "S" = Settled
                 "R" = Settlement Refused
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="S"/>
-      <xsd:enumeration value="R"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="StoreIdType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="S"/>
+            <xsd:enumeration value="R"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="StoreIdType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
                 Contains the store identifier passed by the client in request URI
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:restriction base="xsd:string">
-      <xsd:minLength value="1"/>
-      <xsd:maxLength value="100"/>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:complexType name="BMLAuthParamType">
-    <xsd:sequence>
-      <xsd:element name="Amount" type="AmountType">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="100"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="BMLAuthParamType">
+        <xsd:sequence>
+            <xsd:element name="Amount" type="AmountType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Amount to authorize
                         The AmountType includes a required attribute for a three character ISO currency code.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="CustomerRegistrationDate" type="xsd:string">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="CustomerRegistrationDate" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         For existing customer, customer original registration date mm/dd/yyyy.
                         If not registered or new to the site, use the current date mm/dd/yyyy.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="DeliveryMethod" type="BMLDeliveryMethodType"/>
-      <xsd:element name="ItemCategory" type="xsd:string">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="DeliveryMethod" type="BMLDeliveryMethodType"/>
+            <xsd:element name="ItemCategory" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         General categorization of the most expensive extended item cost in the shopping basket.
                         See the Bill Me Later Project Manager for a list of assigned codes.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="ProcessorMerchantID" type="xsd:string">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ProcessorMerchantID" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         This is the processor's merchant ID. Assigned by the processor.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="PayCaptureMerchantID" type="xsd:string">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="PayCaptureMerchantID" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Value used for Pricing, Terms, Merchant Settings.
                         Bill Me Later, Inc defined value.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="ChannelIndicator" type="BMLChannelIndicatorType">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ChannelIndicator" type="BMLChannelIndicatorType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Sales channel for the transaction
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="CustomerIPAddress" type="xsd:string"/>
-      <xsd:element name="CustomerAuthenticatedByMerchant" type="xsd:boolean">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="CustomerIPAddress" type="xsd:string"/>
+            <xsd:element name="CustomerAuthenticatedByMerchant" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Flag that customer has logged into the merchant site successfully.
                         true - Customer logged into merchant website.
                         false - Customer not logged into merchant website.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="STEqualsBTNameIndicator" type="xsd:boolean">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="STEqualsBTNameIndicator" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Indicates if ShipToName = BillToName.
                         For BMLB, indicates if ShipToName= AdministratorFirstName + AdministratorLastName
                         true - Information is equal
                         false - Information is not equal
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="STEqualsBTAddressIndicator" type="xsd:boolean">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="STEqualsBTAddressIndicator" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Should default to FALSE if business rules allow different Ship To from Bill To information
                         true - Information is equal
                         false - Information is not equal
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="BillingFirstName" type="xsd:string"/>
-      <xsd:element name="BillingLastName" type="xsd:string"/>
-      <xsd:element name="BillingPhoneNo" type="xsd:string"/>
-      <xsd:element name="BillingAddress" type="PhysicalAddressType"/>
-      <xsd:element name="CustomerEmail" type="xsd:string"/>
-      <xsd:element name="ShippingAmount" type="AmountType" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="BillingFirstName" type="xsd:string"/>
+            <xsd:element name="BillingLastName" type="xsd:string"/>
+            <xsd:element name="BillingPhoneNo" type="xsd:string"/>
+            <xsd:element name="BillingAddress" type="PhysicalAddressType"/>
+            <xsd:element name="CustomerEmail" type="xsd:string"/>
+            <xsd:element name="ShippingAmount" type="AmountType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         The shipping amount is required by BML is the DeliveryMethod = PHY
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="ShipToFirstName" type="xsd:string" minOccurs="0"/>
-      <xsd:element name="ShipToLastName" type="xsd:string" minOccurs="0"/>
-      <xsd:element name="ShipToPhoneNo" type="xsd:string" minOccurs="0"/>
-      <xsd:element name="ShippingAddress" type="PhysicalAddressType" minOccurs="0"/>
-      <xsd:element name="PayCaptureChooseOtherMopURL" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ShipToFirstName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="ShipToLastName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="ShipToPhoneNo" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="ShippingAddress" type="PhysicalAddressType" minOccurs="0"/>
+            <xsd:element name="PayCaptureChooseOtherMopURL" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Used to specify the redirect from the BML hosted application page to the merchant
                         if the customer chooses to go back to the payment options screen while sitting on a BML hosted
                         application page.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="PayCaptureUpdateInfoURL" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="PayCaptureUpdateInfoURL" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Used to redirect the customer back to the merchant
                         if they choose to update their address on a BML hosted application page. Merchant generated.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="PayCaptureFavIconURL" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="PayCaptureFavIconURL" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Allows merchant to customize favicon.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="PayCaptureMerchantLogoURL" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="PayCaptureMerchantLogoURL" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         Places the merchant logo on the BML application page.
                         Maximum logo size is 375px high by 75px high.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="PayCapturePopUpURL" type="xsd:string" minOccurs="0">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="PayCapturePopUpURL" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
                         The URL of the what-is informational window HTML page/file referenced from the PayCapture
                         screens.
                         This will be used by the merchant to specify the informational window when the merchant is
                         running a special offer .
                         If not supplied, this URL will default to the URL for standard terms.
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="extension" type="ExtensionType" minOccurs="0"/>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:simpleType name="BMLChannelIndicatorType">
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="W">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="extension" type="ExtensionType" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="BMLChannelIndicatorType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="W">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Web
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="C">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="C">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Call Center
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="R">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="R">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Retail
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="K">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="K">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Kiosk
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="O">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="O">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Used for reauthorizations (When BackOfficeIndicator is set to true)
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:enumeration>
-    </xsd:restriction>
-  </xsd:simpleType>
-  <xsd:simpleType name="BMLDeliveryMethodType">
-    <xsd:restriction base="xsd:string">
-      <xsd:enumeration value="PHY">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="BMLDeliveryMethodType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="PHY">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Physical
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="DIG">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="DIG">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Digital
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="CNC">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="CNC">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Cash and Carry
                     </xsd:documentation>
-        </xsd:annotation>
-      </xsd:enumeration>
-      <xsd:enumeration value="SVC">
-        <xsd:annotation>
-          <xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="SVC">
+                <xsd:annotation>
+                    <xsd:documentation>
                         Service
                     </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="SchemaVersion">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Optional schema version, used to enable additional, non-backwards-compatible elements in
+                response messages. example values: 1, 2.0, 1.2.3.4
+            </xsd:documentation>
         </xsd:annotation>
-      </xsd:enumeration>
-    </xsd:restriction>
-  </xsd:simpleType>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="([0-9]+\.)*[0-9]+"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="Language">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">ISO 639 language code</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[a-z]{2}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="NotesType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Notes from customer
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="512"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="ReasonStringType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Reason information for success/failure.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="VaultIdType">
+        <xsd:restriction base="xsd:string">
+        <xsd:pattern value="[0-9]+"/>
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="38"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="VaultCustomerIdType">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1" />
+            <xsd:maxLength value="60" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="VaultActiveType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Specifies Vault activation/deactivation status
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:boolean"/>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="VaultTenderSelectionType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Specifies Vault Tender selected/not-selected status
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:boolean"/>
+    </xsd:simpleType>
+    
+    <xsd:simpleType name="VaultTenderIdType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Specifies unique vault tender id
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="40"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="VaultTenderType">
+        <xsd:sequence>
+            <xsd:element name="VaultTenderId" type="VaultTenderIdType"/>
+            <xsd:element name="Active" type="VaultActiveType"/>
+            <xsd:element name="TenderClass" type="TenderClassType"/>
+            <xsd:element name="TenderType" type="TenderTypeType"/>
+            <xsd:element name="TenderDescription" type="TenderDescriptionType"/>
+            <xsd:element name="MaskedPan" type="MaskedPanType"/>
+            <xsd:element name="BillingPersonName" type="PersonNameType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Customer billing name
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="BillingAddress" type="PhysicalAddressType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Customer billing address
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="ExpirationDate" type="xsd:gYearMonth" minOccurs="0"/>
+            <xsd:element name="Notes" type="NotesType" minOccurs="0"/>
+            <xsd:element name="Selected" type="VaultTenderSelectionType"/>
+            <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip" namespace="##any"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="GatewayKeyType">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="30"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="SecondaryGatewayKeyType">
+        <xsd:restriction base="xsd:string">
+            <xsd:minLength value="1"/>
+            <xsd:maxLength value="16"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="PaymentTransactionType">
+        <xsd:sequence>
+            <xsd:element name="PaymentContext" type="PaymentContextType"/>
+            <xsd:element name="TenderType" type="TenderTypeType"/>
+            <xsd:element name="TransactionType" type="xsd:string"/>
+            <xsd:element name="TransactionStatus" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="TransactionAmount" type="AmountType" minOccurs="0"/>
+            <xsd:element name="ResponseCode" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="GatewayKey" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="GatewayResponseCode" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="RequestTimestamp" type="xsd:dateTime" minOccurs="0"/>
+            <xsd:element name="ReplyTimestamp" type="xsd:dateTime" minOccurs="0"/>
+            <xsd:element name="SecondaryGatewayKey" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="GatewayId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="CreditCardTransaction" type="CreditCardTransactionType" minOccurs="0"/>
+            <xsd:element name="SettlementTransaction" type="SettlementTransactionType" minOccurs="0"/>
+            <xsd:element name="TransactionHistoryDetail" type="TransactionHistoryDetailType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CreditCardTransactionType">
+        <xsd:sequence>
+            <xsd:element name="AuthorizedAmount" type="AmountType" minOccurs="0"/>
+            <xsd:element name="AuthorizationCode" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="AuthorizationDate" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="VerbalAuth" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="AvsResponse" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="Cvv2Response" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="CardExpirationDate" type="xsd:gYearMonth" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SettlementTransactionType">
+        <xsd:sequence>
+            <xsd:element name="TaxAmount" type="AmountType" minOccurs="0"/>
+            <xsd:element name="SettlementType" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="SettlementStatus" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="SettlementSentDate" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="SettlementConfirmDate" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="TransactionDate" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="BusinessDate" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="BatchId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="SettlementConfirmAmount" type="AmountType" minOccurs="0"/>
+            <xsd:element name="ProcessorSettleStatusCode" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="ProcessorSettleReasonCode" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="TransactionHistoryDetailType">
+        <xsd:sequence>
+            <xsd:element name="FieldName" type="xsd:string" />
+            <xsd:element name="FieldValue" type="xsd:string" />
+            <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip" namespace="##any" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!--Card Present Types-->
+    <xsd:simpleType name="PaymentAccountEntryMode">
+        <xsd:annotation>
+            <xsd:documentation>
+                The field represents an identifier used to indicate how the account number was entered at the POS(point of sale).
+
+                Possible Values:
+                MANUAL - Key Entered
+                INTEGRATED_CIRCUIT_READ - Reliable
+                CARD_SWIPED - Magnetic Stripe - Track Read
+                CONTACTLESS - Contactless Magnetic Stripe Read
+
+                Allowable Values: String
+                Required: Yes
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="MANUAL"/>
+            <xsd:enumeration value="INTEGRATED_CIRCUIT_READ"/>
+            <xsd:enumeration value="CARD_SWIPED"/>
+            <xsd:enumeration value="CONTACTLESS"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="AuthenticationEntryMode">
+        <xsd:annotation>
+            <xsd:documentation>
+                The field represents an identifier used to indicate  the Pin capability of the POS.
+
+                Possible Values:
+                PIN - Electronic/PIN authentication
+                UNSPECIFIED - Not specified
+
+                Allowable Values: String
+                Required: Yes
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="PIN"/>
+            <xsd:enumeration value="UNSPECIFIED"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="TransactionConditionCode">
+        <xsd:annotation>
+            <xsd:documentation>
+                The field identifies the presence of the person and the card at the point of sale.
+
+                Possible Values:
+                CARDHOLDER_PRESENT_CARD_PRESENT - Cardholder Present, Card Present
+                CARDHOLDER_PRESENT_STRIPE_UNREADABLE - Cardholder Present, Magnetic Stripe Could Not Be Read
+
+                Allowable Values: String
+                Required: Yes
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="CARDHOLDER_PRESENT_CARD_PRESENT"/>
+            <xsd:enumeration value="CARDHOLDER_PRESENT_STRIPE_UNREADABLE"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="TerminalCategoryCode">
+        <xsd:annotation>
+            <xsd:documentation>
+                An identifier used to describe the type of terminal being used for the transaction.
+
+                Possible Values:
+                UNSPECIFIED
+                ELECTRONIC_PAYMENT_TERMINAL - Electronic Payment Terminal (POS)
+                UNATTENDED_CUSTOMER_TERMINAL
+                MOBILE - Mobile POS (mPOS for example a cellphone or tablet device on a cellular network)
+
+                Allowable Values: String
+                Required: Yes
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="UNSPECIFIED"/>
+            <xsd:enumeration value="ELECTRONIC_PAYMENT_TERMINAL"/>
+            <xsd:enumeration value="UNATTENDED_CUSTOMER_TERMINAL"/>
+            <xsd:enumeration value="MOBILE"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="TerminalEntryCapability">
+        <xsd:annotation>
+            <xsd:documentation>
+                An identifier used to indicate the entry mode capability of the terminal.
+
+                Possible Values:
+                MAGNETIC - Magnetic stripe only
+                MAGNETIC_KEY - Magnetic stripe and key entry
+                MAGNETIC_KEY_CHIP - Magnetic stripe, key entry and chip
+                CONTACTLESS_RFID - Proximity terminal - contactless chip / RFID
+                CHIP - Chip only
+                MAGNETIC_CHIP - Chip and magnetic stripe
+                MANUAL - Manual entry only
+                CONTACTLESS - Proximity terminal - contactless magnetic stripe
+
+                Allowable Values: String
+                Required: Yes
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="MAGNETIC"/>
+            <xsd:enumeration value="MAGNETIC_KEY"/>
+            <xsd:enumeration value="MAGNETIC_KEY_CHIP"/>
+            <xsd:enumeration value="CONTACTLESS_RFID"/>
+            <xsd:enumeration value="CHIP"/>
+            <xsd:enumeration value="MAGNETIC_CHIP"/>
+            <xsd:enumeration value="MANUAL"/>
+            <xsd:enumeration value="CONTACTLESS"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    
+    <xsd:group name="CreditCardResponseCodes">
+        <xsd:sequence>
+        	<xsd:element name="ResponseCode" type="xsd:string" minOccurs="0">
+          <xsd:annotation>
+              <xsd:documentation xml:lang="en">
+                  Response code of the credit card authorization.  This includes approval, timeout, and several decline codes.
+                  Please see supporting documentation for a full list of these codes.
+              </xsd:documentation>
+          </xsd:annotation>
+	      </xsd:element>
+	      <xsd:element name="AuthorizationResponseCode" type="xsd:string">
+	        <xsd:annotation>
+	          <xsd:documentation xml:lang="en">
+	            Response code of the credit card authorization.  This includes approval, timeout, and several decline codes.
+	            Please see supporting documentation for a full list of these codes.
+	          </xsd:documentation>
+	        </xsd:annotation>
+	      </xsd:element>
+	      <xsd:element name="BankAuthorizationCode" type="xsd:string">
+	        <xsd:annotation>
+	          <xsd:documentation xml:lang="en">
+	            Authorization Code returned by the payment processor upon a successful credit card auth.
+	            Any order taken by the Order Service that is paid for by Credit Card MUST have this authorization code.
+	          </xsd:documentation>
+	        </xsd:annotation>
+	      </xsd:element>
+	      <xsd:element name="CVV2ResponseCode" type="xsd:string">
+	        <xsd:annotation>
+	          <xsd:documentation xml:lang="en">
+	            Payment Processor Response for CVV2 (Card Verification Value) check.
+	            For most credit cards, you will get an Approval on the AuthorizationResponseCode, even
+	            though CVV2ResponseCode returns a CVV2 failure.
+	            You CANNOT accept an order where CVV2ResponseCode returns a CVV2 failure code.
+	            Please see supporting documentation for a full list of these codes.
+	          </xsd:documentation>
+	        </xsd:annotation>
+	      </xsd:element>
+	      <xsd:element name="AVSResponseCode" type="xsd:string">
+	        <xsd:annotation>
+	          <xsd:documentation xml:lang="en">
+	            Payment Processor Response for the Address Verification System check.
+	            For most credit cards, you will get an Approval on the AuthorizationResponseCode, even
+	            though AVSResponseCode returns an AVS failure code.  That said, it is typically considered a significant fraud
+	            risk to accept an order where AVSResponseCode returns an AVS failure code.
+	            Please see supporting documentation for a full list of these codes.
+	          </xsd:documentation>
+	        </xsd:annotation>
+	      </xsd:element>
+	      <xsd:element name="PhoneResponseCode" type="xsd:string" minOccurs="0">
+	        <xsd:annotation>
+	          <xsd:documentation xml:lang="en">
+	            Response code for customer phone number verification (only applies to Amex auths).  This data should be
+	            included in the OrderCreateRequest for Orders paid for with Amex to support downstream fraud processing.
+	          </xsd:documentation>
+	        </xsd:annotation>
+	      </xsd:element>
+	      <xsd:element name="NameResponseCode" type="xsd:string" minOccurs="0">
+	        <xsd:annotation>
+	          <xsd:documentation xml:lang="en">
+	            Response code for customer name verification (only applies to Amex auths). This data should be
+	            included in the OrderCreateRequest for Orders paid for with Amex to support downstream fraud processing.
+	          </xsd:documentation>
+	        </xsd:annotation>
+	      </xsd:element>
+	      <xsd:element name="EmailResponseCode" type="xsd:string" minOccurs="0">
+	        <xsd:annotation>
+	          <xsd:documentation xml:lang="en">
+	            Response code for customer email verification (only applies to Amex auths). This data should be
+	            included in the OrderCreateRequest for Orders paid for with Amex to support downstream fraud processing.
+	          </xsd:documentation>
+	        </xsd:annotation>
+	      </xsd:element>
+	      <xsd:element name="AmountAuthorized" type="AmountType">
+	        <xsd:annotation>
+	          <xsd:documentation xml:lang="en">
+	            The amount authorized by the credit card processor.
+	            Includes a required attribute for a three character ISO currency code.
+	          </xsd:documentation>
+	        </xsd:annotation>
+	      </xsd:element>
+        </xsd:sequence>
+    </xsd:group>
+
+    <xsd:complexType name="TrackingInfoType">
+        <xsd:annotation>
+            <xsd:documentation>
+                Profile Tracking Information
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="TrackingHash" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="TrackingCode" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="AddressType">
+        <xsd:sequence>
+            <xsd:element name="Line1" type="xsd:string"/>
+            <xsd:element name="Line2" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="Line3" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="Line4" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="BuildingName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="PoBox" type="xsd:string" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Post Office Box (do not pass PO Box as part of the request. e.g. 765)
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="City" type="xsd:string"/>
+            <xsd:element name="MainDivision" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        This is the full displayable State/Province name
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="MainDivisionCode" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Typically a two- or three-digit postal abbreviation for
+                        the state or province. Mainly used in Canada and the US.
+                        This does not necessarily conform to the ISO 3166-2 code.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="CountryName" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="CountryCode" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Two digit ISO country code conforming to ISO 3166 alpha 2.
+                        See: http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="PostalCode" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
 </xsd:schema>
