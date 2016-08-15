@@ -28,7 +28,7 @@ class TaxedFeeIterable extends SplObjectStorage implements ITaxedFeeIterable
     use TIterablePayload;
 
     const SUBPAYLOAD_XPATH = 'x:Fee';
-    const ROOT_NODE = 'Fees';
+    const ROOT_NODE = 'FeeListRequest';
 
     /**
      * @param IValidatorIterator
