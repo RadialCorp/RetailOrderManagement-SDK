@@ -59,6 +59,8 @@ class CreditCardAuthReply implements ICreditCardAuthReply
     protected $invalidAvsCodes = ['N', 'AW'];
     /** @var string[] CVV response codes that should be rejected */
     protected $invalidCvvCodes = ['N'];
+    /** @var string */
+    protected $riskResponseCode;
 
     /**
      * @param IValidatorIterator
@@ -99,6 +101,7 @@ class CreditCardAuthReply implements ICreditCardAuthReply
             'phoneResponseCode' => 'x:PhoneResponseCode',
             'nameResponseCode' => 'x:NameResponseCode',
             'emailResponseCode' => 'x:EmailResponseCode',
+	    'riskResponseCode' => 'x:ResponseCode',
         ];
     }
 
@@ -188,12 +191,14 @@ class CreditCardAuthReply implements ICreditCardAuthReply
      */
     protected function serializeResponseCodes()
     {
-        $template = '<AuthorizationResponseCode>%s</AuthorizationResponseCode>'
+        $template = '<ResponseCode>%s</ResponseCode>'
+	    . '<AuthorizationResponseCode>%s</AuthorizationResponseCode>'
             . '<BankAuthorizationCode>%s</BankAuthorizationCode>'
             . '<CVV2ResponseCode>%s</CVV2ResponseCode>'
             . '<AVSResponseCode>%s</AVSResponseCode>';
         return sprintf(
             $template,
+	    $this->xmlEncode($this->getRiskResponseCode()),
             $this->xmlEncode($this->getAuthorizationResponseCode()),
             $this->xmlEncode($this->getBankAuthorizationCode()),
             $this->xmlEncode($this->getCVV2ResponseCode()),
@@ -234,6 +239,17 @@ class CreditCardAuthReply implements ICreditCardAuthReply
     public function getEmailResponseCode()
     {
         return $this->emailResponseCode;
+    }
+
+    public function getRiskResponseCode()
+    {
+	return $this->riskResponseCode;
+    }
+
+    public function setRiskResponseCode($riskResponseCode)
+    {
+	$this->riskResponseCode = $riskResponseCode;
+	return $this;
     }
 
     /**
