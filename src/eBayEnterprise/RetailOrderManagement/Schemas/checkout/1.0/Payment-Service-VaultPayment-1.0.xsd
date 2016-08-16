@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Payment-Datatypes-1.0.xsd"/>
+    <xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
+
+    
+    <xsd:element name="VaultPaymentRequest" type="VaultPaymentRequestType" />
+	<xsd:element name="VaultPaymentReply" type="VaultPaymentReplyType" />
+	
+    <xsd:complexType name="VaultPaymentRequestType" >
+        <xsd:sequence>
+    		<xsd:element name="OrderId" type="OrderIdType">
+    			<xsd:annotation>
+				    <xsd:documentation xml:lang="en">
+				        Unique identifier for an order.
+				    </xsd:documentation>
+				</xsd:annotation>
+    		</xsd:element>
+    		<xsd:element name="VaultId" type="VaultIdType" />
+    		<xsd:element name="Amount" type="AmountType" />
+    		<xsd:element name="Recurring" type="xsd:boolean">
+    			<xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                       Is this a recurring payment or not
+                    </xsd:documentation>
+                </xsd:annotation>
+    		</xsd:element>
+            <xsd:element name="InitialOrderId" type="OrderIdType" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        This identifier typically ties payment transactions to an order.
+                        Note that this identifier must be initial web /subscription order id is used
+                        to look up initial PayPal recurring billing agreement details.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+    	</xsd:sequence>
+    	<xsd:attribute name="requestId" type="RequestId" use="required"/>
+    </xsd:complexType>
+    
+    <xsd:complexType name="VaultPaymentReplyType" >
+    	<xsd:sequence>
+    		<xsd:element name="VaultId" type="VaultIdType" />
+    		<xsd:element name="AmountPaid" type="AmountType" />
+    		<xsd:element name="ResponseCode" type="SuccessFailResponseCodeType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Used by client to determine Success or Fail or Timeout response.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Fault" type="Fault" minOccurs="0"/>
+            <xsd:element name="PaymentResponses" type="PaymentResponses"/>
+            <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="skip" >
+	        <xsd:annotation>
+	          <xsd:documentation xml:lang="en">
+	            This xsd:any element indicates that future optional elements may show up in this location of the XML document in the
+	            responses returned from the service.
+	            The purpose of this xsd:any element is to define a more robust service interface that allows for new, optional elements to be added
+	            to the service's responses without the service clients' code throwing exceptions.
+	            The client code for this service call should be written to not break if new optional XML elements show up in this part
+	            of the service response.  Modern XML marshalling frameworks often process xsd:any elements properly out-of-the-box
+	            (for example, in Java, JAXB and JibX XML marshalling frameworks both honor xsd:any elements and don't throw exceptions
+	            if new optional elements appear within the xsd:any section of the XML document).
+	            Developers' unit tests of their service client code should include a test case where this reply message
+	            contains one or more new elements in this location of the XML document.
+	            If new optional elements are added to this interface, a new schema will be created, communications will be sent out,
+	            and you will have the option to modify your service client code to process and use the new elements.
+	            If there is no need/desire to process the new optional elements, your service client should continue to run
+	            uninterrupted as long as it is built to honor this xsd:any element.
+	          </xsd:documentation>
+	        </xsd:annotation>
+      </xsd:any>
+    	</xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="PaymentResponses">
+        <xsd:sequence>
+            <xsd:element name="CreditCardAuthResponse" type="CreditCardAuthResponse" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="StoredValueRedeemResponse" type="StoredValueRedeemResponse" minOccurs="0" maxOccurs="unbounded" />
+            <xsd:element name="PayPalReferenceTxResponse" type="PayPalReferenceTxResponse" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="CreditCardAuthResponse">
+        <xsd:sequence>
+            <xsd:element name="VaultTenderId" type="VaultTenderIdType" />
+            <xsd:element name="Token" type="AccountUniqueIdType"/>
+            <xsd:element name="TenderType" type="TenderTypeType"/>
+            <xsd:group ref="CreditCardResponseCodes"/>
+            <xsd:element name="BillingPersonName" type="PersonNameType"/>
+            <xsd:element name="BillingAddress" type="PhysicalAddressType"/>
+            <xsd:element name="CustomerPhoneNo" type="xsd:string" />
+            <xsd:element name="CustomerEmail" type="EmailAddress"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="StoredValueRedeemResponse">
+        <xsd:sequence>
+            <xsd:element name="VaultTenderId" type="VaultTenderIdType" />
+            <xsd:element name="Token" type="AccountUniqueIdType"/>
+            <xsd:element name="TenderType" type="TenderTypeType"/>
+            <xsd:element name="ResponseCode" type="SuccessFailResponseCodeType" />
+		    <xsd:element name="AmountRedeemed" type="AmountType" />
+		    <xsd:element name="BalanceAmount" type="AmountType" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="PayPalReferenceTxResponse">
+        <xsd:sequence>
+            <xsd:element name="VaultTenderId" type="VaultTenderIdType" />
+            <xsd:element name="TenderType" type="TenderTypeType"/>
+            <xsd:element name="ResponseCode" type="SuccessFailResponseCodeType" />
+            <xsd:element name="AmountAuthorized" type="AmountType" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="Fault">
+        <xsd:sequence>
+            <xsd:element name="Code" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+</xsd:schema>    

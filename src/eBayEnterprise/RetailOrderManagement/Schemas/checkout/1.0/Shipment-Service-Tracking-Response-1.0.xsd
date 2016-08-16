@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
+
+    <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+            ${project.name}
+            Version: ${project.version}
+            Build Date: ${timestamp}
+        </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:element name="ShipmentTrackingResponse" type="ShipmentTrackingResponseType"/>
+
+    <xsd:complexType name="ShipmentTrackingResponseType">
+        <xsd:sequence>
+            <xsd:element name="Carrier" type="xsd:string"/>
+            <xsd:element name="Mode" type="xsd:string"/>
+            <xsd:element name="TrackingNumber" type="xsd:string"/>
+            <xsd:element name="TrackingUrl" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            version="${project.version}" >
+
+    <xsd:include schemaLocation="Payment-Datatypes-1.0.xsd"/>
+    <xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
+    <xsd:include schemaLocation="Checkout-Service-Fault-1.0.xsd"/>
+
+    <xsd:element name="PLCCAuthRequest" type="PLCCAuthRequestType" />
+
+    <xsd:complexType name="PLCCAuthRequestType" >
+        <xsd:sequence>
+            <xsd:element name="PaymentContext" type="PaymentContextType" />
+            <xsd:element name="ExpirationDate" type="xsd:gYearMonth" minOccurs="0"/>
+            <xsd:choice>
+                <xsd:element name="CardSecurityCode" type="CardSecurityCodeType" minOccurs="0">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            The CVV2 code found on the back of credit cards.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="EncryptedCardSecurityCode" type="EncryptedPayloadType" minOccurs="0">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            Used to validate card not present transactions
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:choice>
+            <xsd:element name="Amount" type="AmountType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Amount to authorize
+                        The AmountType includes a required attribute for a three character ISO currency code.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="BillingFirstName" type="xsd:string" >
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        First name of the person on the Billing Address of the credit card
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="BillingLastName" type="xsd:string" >
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Last name of the person on the Billing Address of the credit card
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="BillingAddress" type="PhysicalAddressType" >
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Billing Address of the credit card.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="StorePlanCode" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Store Plan Code associated with PLCC authorizations;
+                        Plan code are typically used for discounts or special offers/promotions.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="isRequestToCorrectCVVOrAVSError" type="xsd:boolean">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Indicates that this is an authorization re-submission to correct AVS or CVV2 error.
+                        Note: Even when an AVS error or CVV error occurs, the credit card processor will authorize a credit card
+                        (reserving the amount authorized from the available credit limit on the credit card).
+                        We require customers to fix CVV/AVS errors.  We do not want to double-auth the amount already authorized on the customer's card.
+                        If this element is set true, the payment service will decrement the auth amount for purposes of AVS/CVV2 check.
+                        (For example in the US will auth for $0.01)
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="useAlternateMerchantId" type="xsd:boolean" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Indicates that an alternate merchant id be used to authorize and settle the payment.
+                        For example, Japan regulation requires an alternate merchant id be used to purchase
+                        gift cards.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="requestId" type="RequestId" use="required"/>
+        <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+    </xsd:complexType>
+
+
+    <xsd:element name="PLCCAuthReply" type="PLCCAuthReplyType" />
+
+    <xsd:complexType name="PLCCAuthReplyType" >
+        <xsd:choice>
+            <xsd:element name="Fault" type="FaultResponseType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Fault will be returned when a fatal system error occurs within the payment service.
+                        Examples:
+                        Gateway not responding
+                        Token Manager not responding
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:sequence>
+                <xsd:element name="PaymentContext" type="PaymentContextType" />
+                <xsd:element name="ResponseCode" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            Response code of the credit card authorization.  This includes approval, timeout, and several decline codes.
+                            Please see supporting documentation for a full list of these codes.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="BankAuthorizationCode" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            Authorization Code returned by the payment processor upon a successful credit card auth.
+                            Any order taken by the Order Service that is paid for by Credit Card MUST have this authorization code.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="CVV2ResponseCode" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            Payment Processor Response for CVV2 (Card Verification Value) check.
+                            For most credit cards, you will get an Approval on the AuthorizationResponseCode, even
+                            though CVV2ResponseCode returns a CVV2 failure.
+                            You CANNOT accept an order where CVV2ResponseCode returns a CVV2 failure code.
+                            Please see supporting documentation for a full list of these codes.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="AVSResponseCode" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            Payment Processor Response for the Address Verification System check.
+                            For most credit cards, you will get an Approval on the AuthorizationResponseCode, even
+                            though AVSResponseCode returns an AVS failure code.  That said, it is typically considered a significant fraud
+                            risk to accept an order where AVSResponseCode returns an AVS failure code.
+                            Please see supporting documentation for a full list of these codes.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="AVSResponseCodeDesc" type="xsd:string" minOccurs="0">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            Description if the AVS response code.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="AuthorizationResponseCode" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            Response code of the credit card authorization.  This includes approval, timeout, and several decline codes.
+                            Please see supporting documentation for a full list of these codes.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="AmountAuthorized" type="AmountType">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            The AmountType includes a required attribute for a three character ISO currency code.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip" namespace="##any" />
+            </xsd:sequence>
+        </xsd:choice>
+        <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+    </xsd:complexType>
+
+</xsd:schema>

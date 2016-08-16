@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Order-Datatypes-Common-1.0.xsd"/>
+
+    <xsd:annotation>
+        <xsd:documentation>
+            ${project.name}
+            Version: ${project.version}
+            Build Date: ${timestamp}
+        </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:complexType name="OrderInvoiceRequestType">
+        <xsd:sequence>
+            <xsd:element name="InvoiceNo" type="xsd:string" nillable="false"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OrderInvoiceResponseType">
+        <xsd:sequence>
+            <xsd:element name="Invoice" type="InvoiceType" nillable="false"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InvoiceType">
+        <xsd:sequence>
+            <xsd:element name="Items" type="InvoicedItemsType"/>
+            <xsd:element name="PriceSummary" type="InvoiceSummaryType"/>
+        </xsd:sequence>
+        <xsd:attribute name="number" type="ItemId" use="required"/>
+        <xsd:attribute name="key" type="ItemId" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="InvoicedItemsType">
+        <xsd:sequence>
+            <xsd:element name="Item" type="InvoicedItemType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="InvoicedItemType">
+        <xsd:sequence>
+            <xsd:element name="Quantity" type="xsd:double" nillable="false"/>
+            <xsd:element name="Summary" type="InvoiceSummaryType"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="ItemId" use="required"/>
+        <xsd:attribute name="lineKey" type="ItemId" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="InvoiceSummaryType">
+        <xsd:sequence>
+            <xsd:element name="Merchandise" type="CurrencyAmount"/>
+            <xsd:element name="Charges" type="CurrencyAmount"/>
+            <xsd:element name="Discounts" type="CurrencyAmount"/>
+            <xsd:element name="Taxes" type="CurrencyAmount"/>
+            <xsd:element name="Total" type="CurrencyAmount"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:element name="OrderInvoiceResponse" type="OrderInvoiceResponseType" nillable="false"/>
+    <xsd:element name="OrderInvoiceRequest" type="OrderInvoiceRequestType" nillable="false"/>
+</xsd:schema>

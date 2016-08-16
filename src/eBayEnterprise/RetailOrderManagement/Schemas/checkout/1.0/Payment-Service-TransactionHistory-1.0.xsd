@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            version="${project.version}">
+
+<xsd:include schemaLocation="Payment-Datatypes-1.0.xsd"/>
+
+<xsd:complexType name="TransactionHistoryRequestType" >
+  <xsd:choice>
+    <xsd:element name="OrderId" type="OrderIdType"/>
+    <xsd:group ref="TenderTypeAndPaymentAccountUniqueId" />
+    <xsd:element name="GatewayKey" type="GatewayKeyType" />
+    <xsd:element name="SecondaryGatewayKey" type="SecondaryGatewayKeyType" />
+  </xsd:choice>
+  <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+</xsd:complexType>
+
+<xsd:group name="TenderTypeAndPaymentAccountUniqueId">
+    <xsd:sequence>
+        <xsd:element name="TenderType" type="TenderTypeType"/>
+        <xsd:element name="PaymentAccountUniqueId" type="PaymentAccountUniqueIdType"/>
+        <xsd:group ref="DateRange" minOccurs="0"/>
+    </xsd:sequence>
+</xsd:group>
+
+<xsd:group name="DateRange">
+    <xsd:sequence>
+        <xsd:element name="FromDateTime" type="xsd:dateTime"/>
+        <xsd:element name="ToDateTime" type="xsd:dateTime"/>
+    </xsd:sequence>
+</xsd:group>
+
+<xsd:element name="TransactionHistoryRequest" type="TransactionHistoryRequestType" />
+
+<xsd:complexType name="TransactionHistoryReplyType" >
+  <xsd:sequence>
+      <xsd:element name="Transactions">
+          <xsd:complexType>
+              <xsd:sequence>
+                  <xsd:element name="PaymentTransaction" type="PaymentTransactionType" minOccurs="0" maxOccurs="unbounded"/>
+                  <xsd:element name="extension" type="ExtensionType" minOccurs="0"/>
+              </xsd:sequence>
+          </xsd:complexType>
+      </xsd:element>
+  </xsd:sequence>
+    <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+</xsd:complexType>
+
+
+<xsd:element name="TransactionHistoryReply" type="TransactionHistoryReplyType" />
+
+</xsd:schema>

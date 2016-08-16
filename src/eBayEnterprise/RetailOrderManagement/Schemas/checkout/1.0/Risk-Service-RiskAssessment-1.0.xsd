@@ -93,8 +93,6 @@
   	<xsd:complexType name="RiskAssessmentReplyType">
   		<xsd:sequence>
   			<xsd:element name="OrderId" type="OrderIdType"/>
-  			<xsd:element name="TransactionDeviceInfo" type="TransactionDeviceInfoType" minOccurs="0"/>
-  			<xsd:element name="RiskInfo" type="RiskInfoType" minOccurs="0"/>
   			<xsd:element name="MockOrderEvent" type="xsd:boolean" minOccurs="0"/>
   			<xsd:element name="ResponseCode" type="ResponseCodeType"/>
   			<xsd:element name="StoreId" type="StoreIdType" />
@@ -116,4 +114,5 @@
   		</xsd:sequence>
         <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
   	</xsd:complexType>
+  	
 </xsd:schema>

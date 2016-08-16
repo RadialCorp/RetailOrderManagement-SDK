@@ -1,35 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.gsicommerce.com/schema/checkout/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0" version="${project.version}">
-  <xsd:include schemaLocation="Payment-Datatypes-1.0.xsd"/>
-  <xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
-  <xsd:complexType name="StoredValueFundAndActivateRequestType">
-    <xsd:sequence>
-      <xsd:element name="PaymentContext" type="PaymentContextType"/>
-      <xsd:element name="Pin" type="PinType" minOccurs="0"/>
-      <xsd:element name="Amount" type="AmountType"/>
-      <xsd:element name="FundReason" type="FundReasonType" minOccurs="0"/>
-      <xsd:element name="PromoCode" type="xsd:string" minOccurs="0"/>
-    </xsd:sequence>
-    <xsd:attribute name="requestId" type="RequestId" use="required"/>
-  </xsd:complexType>
-  <xsd:element name="StoredValueFundAndActivateRequest" type="StoredValueFundAndActivateRequestType"/>
-  <xsd:complexType name="StoredValueFundAndActivateReplyType">
-    <xsd:sequence>
-      <xsd:element name="PaymentContext" type="PaymentContextType"/>
-      <xsd:element name="PaymentAccountUniqueId" type="PaymentAccountUniqueIdType">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Payment-Datatypes-1.0.xsd"/>
+    <xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
+
+    <xsd:complexType name="StoredValueFundAndActivateRequestType" >
+        <xsd:sequence>
+            <xsd:choice>
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en"> PaymentContextBase is for activation of virtual gift cards, PaymentContext for all others    </xsd:documentation>
+                </xsd:annotation>
+                <xsd:element name="PaymentContextBase" type="PaymentContextBaseType"/>
+                <xsd:element name="PaymentContext" type="PaymentContextType"/>
+            </xsd:choice>
+            <xsd:element name="Pin" type="PinType" minOccurs="0" />
+            <xsd:element name="Amount" type="AmountType"/>
+            <xsd:element name="FundReason" type="FundReasonType" minOccurs="0"/>
+            <xsd:element name="PromoCode" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="requestId" type="RequestId" use="required"/>
+        <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:element name="StoredValueFundAndActivateRequest" type="StoredValueFundAndActivateRequestType" />
+
+    <xsd:complexType name="StoredValueFundAndActivateReplyType" >
+            <xsd:sequence>
+                <xsd:element name="PaymentContext" type="PaymentContextType" />
+                <xsd:element name="PaymentAccountUniqueId" type="PaymentAccountUniqueIdType">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
                             Either a raw PAN or a token representing a PAN.
                             The type includes an attribute, isToken, to indicate if the PAN is tokenized.
                         </xsd:documentation>
-        </xsd:annotation>
-      </xsd:element>
-      <xsd:element name="Pin" type="PinType" minOccurs="0"/>
-      <xsd:element name="ResponseCode" type="SuccessFailResponseCodeType"/>
-      <xsd:element name="AmountFunded" type="AmountType"/>
-      <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="skip">
-        <xsd:annotation>
-          <xsd:documentation xml:lang="en">
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="Pin" type="PinType" minOccurs="0" />
+                <xsd:element name="ResponseCode" type="SuccessFailResponseCodeType" />
+                <xsd:element name="AmountFunded" type="AmountType" />
+                <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="skip" >
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
                             This xsd:any element indicates that future optional elements may show up in this location of the XML document in the
                             responses returned from the service.
                             The purpose of this xsd:any element is to define a more robust service interface that allows for new, optional elements to be added
@@ -45,9 +61,12 @@
                             If there is no need/desire to process the new optional elements, your service client should continue to run
                             uninterrupted as long as it is built to honor this xsd:any element.
                         </xsd:documentation>
-        </xsd:annotation>
-      </xsd:any>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:element name="StoredValueFundAndActivateReply" type="StoredValueFundAndActivateReplyType"/>
+                    </xsd:annotation>
+                </xsd:any>
+            </xsd:sequence>
+        <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:element name="StoredValueFundAndActivateReply" type="StoredValueFundAndActivateReplyType" />
+
 </xsd:schema>

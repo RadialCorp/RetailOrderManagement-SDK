@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.gsicommerce.com/schema/checkout/1.0" targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xsd:include schemaLocation="Risk-OrderStatus-1.0.xsd"/>
+	<xsd:include schemaLocation="Risk-Service-Datatypes-1.0.xsd"/>
+	<xsd:element name="RiskOrderResponseResendRequest">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+            Definition: Requests order responses for a list of order IDs.
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="OrderIdList" type="OrderIdsListType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RiskOrderResponseResendReply">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+                Definition: The risk order response resend reply includes the order ID and acknowledgement status  
+                for each order ID provided in the request. This reply includes only a simple acknowledgement that 
+                the responses are re-sent. The responses will be re-sent using the original route by which the 
+                responses were received previously.
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="OrderResponseDetailsList" type="OrderResponseDetailsListType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="OrderResponseDetailsListType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+                Definition: The list of order details with status.
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="OrderResponseDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OrderResponseDetails">
+		<xsd:annotation>
+			<xsd:documentation>Definition: Each Order Response Details object includes an Order ID and
+			a risk response acknowledgement, which indicates whether or not the response is re-sent
+                        using the original route.
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="OrderId" type="OrderIdType"/>
+				<xsd:element name="ResendResponseAcknowledgement" type="xsd:boolean"/>
+				<xsd:element name="any" type="AnyExtensionType" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

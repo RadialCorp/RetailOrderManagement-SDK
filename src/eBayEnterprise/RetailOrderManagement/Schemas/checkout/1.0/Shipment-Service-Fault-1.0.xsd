@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
+
+    <xsd:annotation>
+        <xsd:documentation xml:lang="en">
+            ${project.name}
+            Version: ${project.version}
+            Build Date: ${timestamp}
+        </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:element name="FaultResponse" type="FaultResponseType2">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Fault will be returned when an exception occurs that prevents the transaction from being processed.
+                Examples:
+                Invalid user input that violates the service interface.
+                Sytem errors.
+                A service that the system relies on is not available.
+                Validation failure.
+                A timeout occurred.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:complexType name="FaultResponseType2">
+        <xsd:sequence>
+            <xsd:element name="Code" type="xsd:string"/>
+            <xsd:element name="Description" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

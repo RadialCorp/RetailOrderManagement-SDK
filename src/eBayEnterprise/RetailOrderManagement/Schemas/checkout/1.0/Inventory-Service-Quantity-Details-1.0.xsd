@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Inventory-Datatypes-1.0.xsd"/>
+
+    <!--request-->
+    <xsd:complexType name="QuantityDetailsRequestMessage">
+        <xsd:sequence>
+            <xsd:element name="ItemList" type="ItemList"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemList">
+        <xsd:sequence>
+            <xsd:element name="Item" type="ItemType" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ItemType">
+        <xsd:attribute name="lineId" type="OrderItemLineId" use="required">
+            <xsd:annotation>
+                <xsd:documentation>Unique line identifier with the enclosing  QuantityDetailsRequestMessage
+                    Allowable Values: Text string
+                    Required: Yes
+                    Length:40
+                    Default Value: N/A
+                    Restrictions: N/A
+                    Aliases: N/A
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+
+        <xsd:attribute name="itemId" type="ItemId" use="required">
+            <xsd:annotation>
+                <xsd:documentation>Represents the identifier for an inventoriable product.
+                    Allowable Values: Text string
+                    Required: Yes
+                    Length:100
+                    Default Value: N/A
+                    Restrictions: N/A
+                    Aliases: N/A
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <!--response-->
+    <xsd:complexType name="QuantityDetailsResponseMessage">
+        <xsd:sequence>
+            <xsd:element name="QuantityDetails" type="QuantityDetails"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="QuantityDetails">
+        <xsd:sequence>
+            <xsd:element name="QuantityDetail" type="QuantityDetail" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="QuantityDetail">
+        <xsd:sequence>
+            <xsd:element name="Quantity" type="Quantity" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="lineId" type="OrderItemLineId" use="required">
+            <xsd:annotation>
+                <xsd:documentation>Unique line identifier with the enclosing  QuantityDetailsRequestMessage
+                    Allowable Values: Text string
+                    Required: Yes
+                    Length:40
+                    Default Value: N/A
+                    Restrictions: N/A
+                    Aliases: N/A
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+
+        <xsd:attribute name="itemId" type="ItemId" use="required">
+            <xsd:annotation>
+                <xsd:documentation>Represents the identifier for an inventoriable product.
+                    Allowable Values: Text string
+                    Required: Yes
+                    Length:100
+                    Default Value: N/A
+                    Restrictions: N/A
+                    Aliases: N/A
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="totalAvailableQty" type="xsd:int" use="required"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="Quantity">
+        <xsd:attribute name="type" type="QuantityType" use="required"/>
+        <xsd:attribute name="availableDate" type="xsd:date" use="optional"/>
+        <xsd:attribute name="availableQty" type="xsd:int" use="required"/>
+    </xsd:complexType>
+
+    <xsd:simpleType name="QuantityType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="FUTURE"/>
+            <xsd:enumeration value="ONHAND"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:element name="QuantityDetailsRequestMessage" type="QuantityDetailsRequestMessage" nillable="false"/>
+    <xsd:element name="QuantityDetailsResponseMessage" type="QuantityDetailsResponseMessage" nillable="false"/>
+
+</xsd:schema>

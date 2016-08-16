@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
+
+    <xsd:annotation>
+        <xsd:documentation>
+            ${project.name}
+            Version: ${project.version}
+            Build Date: ${timestamp}
+        </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:include schemaLocation="Order-Datatypes-Common-1.0.xsd"/>
+
+    <xsd:element name="SubscriptionUpdateVaultTenderRequest" type="SubscriptionUpdateVaultTenderRequestType"/>
+
+    <xsd:complexType name="SubscriptionUpdateVaultTenderRequestType">
+        <xsd:sequence>
+            <!-- request fields -->
+            <xsd:element name="CreateTimestamp" type="xsd:dateTime"/>
+            <xsd:element name="Context" type="OrderContext"/>
+            <!-- tender fields -->
+            <xsd:choice>
+                <xsd:element name="VaultUpdateCreditCardAttributes" type="VaultUpdateCreditCardAttributesType"/>
+                <xsd:element name="VaultUpdateStoredValueAttributes" type="VaultUpdateStoredValueAttributesType"/>
+                <xsd:element name="VaultUpdatePayPalAttributes" type="VaultUpdatePayPalAttributesType"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="BaseTenderAttributesType">
+        <xsd:sequence>
+            <xsd:element name="Selected" type="xsd:boolean"/>
+            <xsd:element name="Notes" type="NotesType" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="VaultUpdateCreditCardAttributesType">
+        <xsd:complexContent>
+            <xsd:extension base="BaseTenderAttributesType">
+                <xsd:sequence>
+                    <xsd:element name="ExpirationDate" type="xsd:gYearMonth" minOccurs="0"/>
+                    <xsd:element name="BillingAddress" type="PhysicalAddressType" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="VaultUpdateStoredValueAttributesType">
+        <xsd:complexContent>
+            <xsd:extension base="BaseTenderAttributesType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="VaultUpdatePayPalAttributesType">
+        <xsd:complexContent>
+            <xsd:extension base="BaseTenderAttributesType"/>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:element name="SubscriptionUpdateVaultTenderResponse" type="SubscriptionUpdateVaultTenderResponseType"/>
+
+    <xsd:complexType name="SubscriptionUpdateVaultTenderResponseType">
+        <xsd:sequence>
+            <xsd:element name="SourceId" type="SourceId"/>
+            <xsd:element name="CustomerId" type="xsd:string"/>
+            <xsd:element name="ResponseCode" type="UpdateTenderResponseCodeTypeEnum"/>
+
+            <xsd:element name="Fault" type="FaultResponseType" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="UpdateTenderResponseCodeTypeEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="SUCCESS"/>
+            <xsd:enumeration value="FAIL"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

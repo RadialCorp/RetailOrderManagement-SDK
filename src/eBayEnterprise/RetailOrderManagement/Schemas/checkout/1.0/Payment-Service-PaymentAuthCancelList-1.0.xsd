@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Payment-Service-PaymentAuthCancel-1.0.xsd"/>
+
+    <xsd:element name="PaymentAuthCancelReplyList" type="PaymentAuthCancelReplyListType"/>
+    <xsd:complexType name="PaymentAuthCancelReplyListType">
+        <xsd:sequence>
+            <xsd:element name="PaymentAuthCancelReply" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

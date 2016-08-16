@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.gsicommerce.com/schema/checkout/1.0" targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+<xsd:include schemaLocation="Risk-Service-Datatypes-1.0.xsd"/>
+	<xsd:element name="RiskOrderStatusRequest">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+                Definition: The risk order status request with a list of order IDs.
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="OrderIdsList" type="OrderIdsListType"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="RiskOrderStatusReply">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+                Definition: The risk order status reply with an order status for each order ID listed in the request.
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="OrderDetailsList" type="OrderDetailsListType"/>
+				<xsd:element name="any" type="AnyExtensionType" minOccurs="0"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="OrderIdsListType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+                Definition: Contains the list of order IDs for which risk order status responses are needed.
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="OrderId" type="OrderIdType" maxOccurs="1000"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderDetailsListType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+                Definition: The list of order details with status.
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element ref="OrderDetails" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OrderDetails">
+		<xsd:annotation>
+			<xsd:documentation>Definition: Includes an Order ID and its risk order status.
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="OrderId" type="OrderIdType"/>
+				<xsd:element name="RiskOrderStatus" type="RiskOrderStatusType" nillable="true"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:simpleType name="RiskOrderStatusType">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="en">
+                One of the following status values is provided for each Order ID in the RiskOrderStatus Reply.
+            </xsd:documentation>
+		</xsd:annotation>
+		<xsd:restriction base="RiskOrderStatusTypeEnums"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="RiskOrderStatusTypeEnums">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="APPROVED">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+                        Definition: Indicates that the order is already APPROVED from risk.
+                    </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="CANCELLED">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+                        Definition: Indicates that the order is CANCELLED from risk.
+                    </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="SUSPENDED">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+                        Definition: Indicates that that the order is SUSPENDED until a manual review 
+                        of risk can be completed. For suspended orders, there will be one more
+                        final response to the order, after the manual review.
+                    </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="REQUEST_NOT_FOUND">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+                        Definition: Indicates that the original request was not found in the 
+                        system. This can occur either because the original request is invalid, or
+                        because the original request is not yet updated in the risk system.
+                    </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="IN_PROCESS">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="en">
+                        Definition: Indicates that the request is received but the response 
+                        is not yet generated. It is in process.
+                    </xsd:documentation>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

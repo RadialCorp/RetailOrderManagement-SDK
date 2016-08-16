@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Payment-Datatypes-1.0.xsd"/>
+    <xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
+    
+    <xsd:element name="VaultAddStoredValueRequest" type="VaultAddStoredValueRequestType" />
+
+    <xsd:complexType name="VaultAddStoredValueRequestType" >
+        <xsd:sequence>
+    		<xsd:element name="VaultId" type="VaultIdType" />
+            <xsd:choice>
+                <xsd:element name="PaymentAccountUniqueId" type="PaymentAccountUniqueIdType">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            Either a raw PAN or a token representing a PAN.
+                            The type includes an attribute, isToken, to indicate if the PAN is tokenized.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+                <xsd:element name="EncryptedPaymentAccountUniqueId" type="EncryptedPayloadType">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">
+                            Either a raw PAN or a token representing a PAN.
+                            The type includes an attribute, isToken, to indicate if the PAN is tokenized.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:choice>
+            <xsd:element name="Pin" type="PinType" minOccurs="0" />
+            <xsd:element name="CurrencyCode" type="ISOCurrencyCodeType" />
+            <xsd:element name="Notes" type="NotesType" minOccurs="0" />
+    	</xsd:sequence>
+    	<xsd:attribute name="sessionId" type="RequestId" use="optional" />
+    </xsd:complexType>
+
+    <xsd:element name="VaultAddStoredValueReply" type="VaultAddStoredValueReplyType" />
+    
+    <xsd:complexType name="VaultAddStoredValueReplyType" >
+        <xsd:sequence>
+    		<xsd:element name="VaultId" type="VaultIdType" />
+    		<xsd:element name="VaultTenderId" type="VaultTenderIdType" />
+    		<xsd:element name="ResponseCode" type="SuccessFailResponseCodeType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Used by client to determine Success or Fail or Timeout response.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+    		<xsd:element name="Reason" type="ReasonStringType" minOccurs="0" />
+            <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##other" />
+    	</xsd:sequence>
+    </xsd:complexType>
+    
+</xsd:schema>

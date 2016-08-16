@@ -1,39 +1,137 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns="http://api.gsicommerce.com/schema/checkout/1.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="${project.version}">
-  <xsd:include schemaLocation="Order-Datatypes-Common-1.0.xsd"/>
-  <xsd:element name="OrderSummaryRequest" type="OrderSummaryRequestType" nillable="false"/>
-  <xsd:element name="OrderSummaryResponse" type="OrderSummaryResponseType" nillable="false"/>
-  <xsd:complexType name="OrderSearchType">
-    <xsd:annotation>
-      <xsd:documentation xml:lang="en">Search</xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:choice minOccurs="1" maxOccurs="1">
-        <xsd:element name="CustomerId" type="CustomerIdType">
-          <xsd:annotation>
-            <xsd:documentation xml:lang="en">
-                            Finds orders for a particular customer
-			            </xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
-        <xsd:element name="CustomerOrderId" type="OrderId">
-          <xsd:annotation>
-            <xsd:documentation xml:lang="en">Finds orders related to this order id such as return orders</xsd:documentation>
-          </xsd:annotation>
-        </xsd:element>
-      </xsd:choice>
-    </xsd:sequence>
-  </xsd:complexType>
-  <xsd:complexType name="OrderSummaryRequestType">
-    <xsd:annotation>
-      <xsd:documentation>
+<xsd:schema xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified" 
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Order-Datatypes-Common-1.0.xsd"/>
+
+    <xsd:element name="OrderSummaryRequest" type="OrderSummaryRequestType" nillable="false"/>
+    <xsd:element name="OrderSummaryResponse" type="OrderSummaryResponseType" nillable="false"/>
+
+    <xsd:complexType name="OrderSearchType">
+    	<xsd:annotation>
+            <xsd:documentation xml:lang="en">Search</xsd:documentation>
+        </xsd:annotation>
+        
+ 	    <xsd:sequence>
+            <xsd:choice minOccurs="0" maxOccurs="1">
+                <xsd:element name="OmsOrderId" type="OrderId"/>
+                <xsd:element name="CustomerOrderId" type="OrderId">
+                    <xsd:annotation>
+                        <xsd:documentation xml:lang="en">Finds orders with this order id</xsd:documentation>
+                    </xsd:annotation>
+                </xsd:element>
+            </xsd:choice>
+            <xsd:element name="SubscriptionId" type="xsd:string" minOccurs="0" maxOccurs="1"  />
+            <xsd:element name="OrganizationName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ExternalOrderId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="poNumber" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="OpenInvoiceNumber" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="CustomerId" type="CustomerIdType" minOccurs="0" maxOccurs="1" >
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Finds orders for a particular customer
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="BillingPhone" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="EmailAddress" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="PersonInfo" type="PersonInfoType" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ProxyPersonInfo" type="ProxyPersonInfoType" minOccurs="0" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Information for the proxy pickup person on the order
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="Source" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        A label of the origination of the order. Examples are WEB, MOBILE, DASHBOARD
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="DateRange" type="DateRangeType" minOccurs="0"/>
+            <xsd:element name="OrderType" type="OrderType" minOccurs="0"/>
+            <xsd:element name="PaymentInfo" type="PaymentInfoType" minOccurs="0"/>
+            <xsd:element name="RmaId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:sequence>
+        <xsd:attribute name="performDeepSearch" type="xsd:boolean" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+                    Defaults to false if omitted.
+                    For customer service, turning this attribute on will allow the search to query vendornet orders
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="OrderSummaryRequestType">
+        <xsd:annotation>
+            <xsd:documentation>
                 Search can be one of 2 types.
                 Order Search or Related Order Search
             </xsd:documentation>
-    </xsd:annotation>
-    <xsd:sequence>
-      <xsd:element name="OrderSearch" type="OrderSearchType"/>
-    </xsd:sequence>
-    <xsd:attribute name="maximumRecords" type="xsd:int" use="optional"/>
-  </xsd:complexType>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="OrderSearch" type="OrderSearchType"/>
+        </xsd:sequence>
+        <xsd:attribute name="maximumRecords" type="xsd:int" use="optional" />
+        <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+        <xsd:attribute name="isVerbose" type="xsd:boolean" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>Used to indicate that the customer wants all the order search response elements when
+                    true. It returns the current response when false or the attribute is missing.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="PersonInfoType">
+        <xsd:sequence>
+            <xsd:element name="FirstName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="LastName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="ZipCode" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ProxyPersonInfoType">
+        <xsd:choice minOccurs="1" maxOccurs="unbounded">
+            <xsd:element name="Name" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="EmailAddress" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="PhoneNumber" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:simpleType name="SupportedPaymentType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="CreditCard"/>
+            <xsd:enumeration value="Points"/>
+            <xsd:enumeration value="StoredValueCard"/>
+            <xsd:enumeration value="BillMeLater"/>
+            <xsd:enumeration value="PrepaidPurchaseOrder"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="PaymentInfoType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">Payment Info for an OrderSearch request</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element name="PaymentType" type="SupportedPaymentType" minOccurs="1" maxOccurs="1" />
+            <xsd:element name="PaymentAccountUniqueId" type="xsd:string" minOccurs="1" maxOccurs="1">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        The callee needs to pass in the clear or token representation of the PaymentAccountUniqueId
+                        depending on the PaymentType.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="PaymentAccountSecondaryId" type="xsd:string" minOccurs="0" maxOccurs="1" />
+        </xsd:sequence>
+    </xsd:complexType>
+
 </xsd:schema>

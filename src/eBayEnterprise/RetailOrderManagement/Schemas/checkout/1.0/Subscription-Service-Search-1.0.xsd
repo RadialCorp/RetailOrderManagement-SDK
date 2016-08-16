@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
+
+    <xsd:annotation>
+        <xsd:documentation>
+            ${project.name}
+            Version: ${project.version}
+            Build Date: ${timestamp}
+        </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:include schemaLocation="Order-Datatypes-Common-1.0.xsd"/>
+
+
+    <xsd:element name="SearchSubscriptionRequest">
+        <xsd:complexType>
+            <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="SearchSubscriptionResponse" type="SearchSubscriptionResponseType"/>
+
+    <xsd:complexType name="SearchSubscriptionResponseType">
+        <xsd:sequence>
+            <xsd:element name="CreateTimestamp" type="xsd:dateTime"/>
+            <xsd:element name="CustomerId" type="xsd:string"/>
+            <xsd:choice>
+                <xsd:element name="Subscriptions">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Subscription" type="SearchResponseSubscriptionsType"
+                                         maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="Fault" type="FaultResponseType"/>
+            </xsd:choice>
+
+        </xsd:sequence>
+        <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+    </xsd:complexType>
+
+    <!--SubscriptionType-->
+    <xsd:complexType name="SearchResponseSubscriptionsType">
+        <xsd:sequence>
+            <xsd:element name="Label" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="Interval" type="IntervalType"/>
+            <xsd:element name="ShippingAddressId" type="xsd:string"/>
+            <xsd:element name="CurrentInterval" type="BaseIntervalType"/>
+            <xsd:element name="MaxInterval" type="MaxIntervalType" minOccurs="0"/>
+            <xsd:element name="NextOrderDate" type="xsd:date"/>
+            <xsd:element name="Status" type="xsd:string"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:string"/>
+        <xsd:attribute name="type" type="xsd:string"/>
+    </xsd:complexType>
+
+</xsd:schema>

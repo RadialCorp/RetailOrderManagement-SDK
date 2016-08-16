@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Order-Datatypes-Common-1.0.xsd"/>
+
+    <xsd:element name="OrderInvoiceSearchRequest" type="OrderInvoiceSearchRequestType" nillable="false"/>
+    <xsd:element name="OrderInvoiceSearchResponse" type="OrderInvoiceSearchResponseType" />
+
+    <xsd:complexType name="OrderInvoiceSearchRequestType">
+        <xsd:sequence>
+            <xsd:element name="OrderType" type="OrderType" nillable="false" />
+            <xsd:element name="OmsOrderId" type="OrderId" minOccurs="0" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OrderInvoiceSearchResponseType">
+        <xsd:sequence>
+            <xsd:element name="Invoice" type="SearchInvoiceType" minOccurs="0" maxOccurs="unbounded" />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="SearchInvoiceType">
+        <xsd:sequence>
+            <xsd:element name="OmsOrderId" type="OrderId" />
+            <xsd:element name="AmountCollected" type="CurrencyAmount">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Total amount which has been paid against this invoice
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="TotalAmount" type="CurrencyAmount" >
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Grand total for the invoice.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element name="VATInvoiceNumber" type="xsd:string" minOccurs="0" maxOccurs="1" />
+            <xsd:element name="InvoiceDate" type="xsd:dateTime" minOccurs="0"/>
+            <xsd:element name="ShipNode" type="xsd:string" minOccurs="0">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Warehouse/location from where product was fulfilled
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="number" type="ItemId" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The Invoice Number
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="type" type="xsd:string" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+                    Classifies an invoice. For example, Orders, Returns, Debit Memo, Credit Memo, Info etc.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="archived" type="xsd:boolean" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+                    True if an archived record
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+</xsd:schema>

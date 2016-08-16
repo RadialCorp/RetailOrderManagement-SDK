@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Payment-Service-PaymentSettlement-1.0.xsd"/>
+
+    <xsd:element name="PaymentSettlementStatusList" type="PaymentSettlementStatusListType"/>
+    <xsd:complexType name="PaymentSettlementStatusListType">
+        <xsd:sequence>
+            <xsd:element name="PaymentSettlementStatus" minOccurs="1" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

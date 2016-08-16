@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://api.gsicommerce.com/schema/checkout/1.0" targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.8.56">
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
 
     <xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
     <xsd:include schemaLocation="Payment-Datatypes-1.0.xsd"/>
@@ -128,38 +133,6 @@ Aliases: N/A</xsd:documentation>
             <xsd:enumeration value="SELLER"/>
         </xsd:restriction>
     </xsd:simpleType>
-    <xsd:complexType name="AttributeType">
-        <xsd:annotation>
-            <xsd:documentation>
-Generic Key/Value pair used for partner customizations.</xsd:documentation>
-        </xsd:annotation>
-        <xsd:sequence>
-            <xsd:element name="Key" type="xsd:string">
-                <xsd:annotation>
-					<xsd:documentation>The type of data being assigned a value. For example,the key might be "Customer Loyalty Number"
-
-                        Allowable Values: Text string.
-                        Required: Yes
-                        Length: TBD
-                        Default Value: blank
-                        Restrictions: Within a KeyValuePairList, keys must be unique
-Aliases: N/A</xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-            <xsd:element name="Value" type="xsd:normalizedString">
-                <xsd:annotation>
-					<xsd:documentation>The value assigned to a key. For example if the key is "Customer Loyalty Number" and this value is "A123", then the Customer Loyalty Number for this key/value pair is A123.
-
-                        Allowable Values: Normalized text string.
-                        Required: Yes
-                        Length: TBD
-                        Default Value: blank
-                        Restrictions: N/A
-Aliases: N/A</xsd:documentation>
-                </xsd:annotation>
-            </xsd:element>
-        </xsd:sequence>
-    </xsd:complexType>
     <xsd:complexType name="PayPalAuthorization">
         <xsd:annotation>
             <xsd:documentation>Authorization code for Paypal purchases.</xsd:documentation>
@@ -260,17 +233,6 @@ Aliases: N/A</xsd:documentation>
                     </xsd:complexContent>
                 </xsd:complexType>
             </xsd:element>
-        </xsd:sequence>
-    </xsd:complexType>
-    <xsd:complexType name="CustomAttributesType">
-        <xsd:annotation>
-            <xsd:documentation>
-                A list of Generic Key/Value pair used for partner customizations.
-                Example use: Loyalty Program
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:sequence>
-            <xsd:element name="Attribute" type="AttributeType" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
     <xsd:simpleType name="ShopRunnerMessageType">
@@ -434,6 +396,7 @@ Aliases: N/A</xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
         </xsd:sequence>
+		<xsd:attribute name="id" type="xsd:ID" use="optional"/>
     </xsd:complexType>
     <xsd:simpleType name="CustomerIdType">
         <xsd:annotation>
@@ -492,7 +455,7 @@ Aliases: N/A</xsd:documentation>
                             Postal Service". The value in this field is used in shipping confirmation emails and on
                             webstore checkout pages. All line items in an order must have a shipping type specified. If
                             this is not the case, the shipping type must be defined at the order level, at which point
-                            line items that don???t have shipping specified will inherit that value. If the shipping type
+                            line items that don�t have shipping specified will inherit that value. If the shipping type
                             is not defined for all line items, and is not defined at the order level, the entire order
                             is not released for shipping.
 
@@ -1726,7 +1689,8 @@ Aliases: N/A</xsd:documentation>
                     </xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <xsd:element name="ExtendedAuthorizationResponseCodes" type="ExtendedAuthorizationResponseCodesType" minOccurs="0">
+            <xsd:element name="ExtendedAuthorizationResponseCodes" type="ExtendedAuthorizationResponseCodesType"
+                         minOccurs="0">
                 <xsd:annotation>
                     <xsd:documentation xml:lang="en">
                         Combines the response code desciption and the reason code. Sent in the order message to OMS for
@@ -2255,7 +2219,7 @@ Aliases: N/A</xsd:documentation>
                 </xsd:documentation>
             </xsd:annotation>
         </xsd:attribute>
-        <xsd:attribute name="operation" type="operationType" use="optional"/>
+        <xsd:attribute name="operation" type="operationType" use="optional" />
     </xsd:complexType>
     <xsd:complexType name="OrderItemRelationships">
         <xsd:annotation>
@@ -2286,6 +2250,13 @@ Aliases: N/A</xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
         </xsd:sequence>
+        <xsd:attribute name="taxTransactionId" type="xsd:string" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+                    Specifies the transaction Id for the tax quote call. This can be used later for calling other API's.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
     </xsd:complexType>
     <xsd:complexType name="ImpositionType">
         <xsd:annotation>
@@ -3415,8 +3386,8 @@ Aliases: N/A</xsd:documentation>
                     </xsd:documentation>
                 </xsd:annotation>
             </xsd:element>
-            <xsd:element name="ExternalOrderId" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="SubscriptionId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ExternalOrderId" type="xsd:string" minOccurs="0" />
+            <xsd:element name="SubscriptionId" type="xsd:string" minOccurs="0" maxOccurs="1"  />
             <xsd:element name="CustomerId" type="xsd:string" minOccurs="0">
                 <xsd:annotation>
                     <xsd:documentation>Allowable Values: Text string
@@ -3728,7 +3699,8 @@ Aliases: N/A</xsd:documentation>
                         </xsd:complexContent>
                     </xsd:complexType>
                 </xsd:element>
-                <xsd:element name="StoreLocation" type="StoreLocation" nillable="false" minOccurs="0" maxOccurs="unbounded"/>
+                <xsd:element name="StoreLocation" type="StoreLocation" nillable="false" minOccurs="0"
+                             maxOccurs="unbounded"/>
                 <xsd:element name="Email" nillable="false" minOccurs="0" maxOccurs="unbounded">
                     <xsd:complexType>
                         <xsd:sequence>
@@ -3831,15 +3803,6 @@ Aliases: N/A</xsd:documentation>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
-    <xsd:simpleType name="CurrencyAmount">
-        <xsd:annotation>
-            <xsd:documentation xml:lang="en">
-                Represents a decimal currency with two decimal points. Sample value: 4.205
-            </xsd:documentation>
-        </xsd:annotation>
-        <xsd:restriction base="xsd:decimal"/>
-    </xsd:simpleType>
-
 
     <!--Remove if necessary-->
     <xsd:complexType name="ChargeGroupType">
@@ -3903,7 +3866,8 @@ Aliases: N/A</xsd:documentation>
 
     <xsd:complexType name="SubscriptionsType">
         <xsd:sequence>
-            <xsd:element name="RecurringSubscription" type="RecurringSubscriptionType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="RecurringSubscription" type="RecurringSubscriptionType" minOccurs="0"
+                         maxOccurs="unbounded"/>
             <xsd:element name="FixedSubscription" type="FixedSubscriptionType" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
@@ -3955,65 +3919,31 @@ Aliases: N/A</xsd:documentation>
         </xsd:restriction>
     </xsd:simpleType>
 
-    <!--placeholder-->
 
-    <xsd:complexType name="OrderItemTotals">
-        <xsd:annotation>
-            <xsd:documentation>Customer care element</xsd:documentation>
-        </xsd:annotation>
-        <xsd:sequence>
-            <xsd:element type="CurrencyAmount" name="Charges" minOccurs="0"/>
-            <xsd:element type="CurrencyAmount" name="Discount" minOccurs="0"/>
-            <xsd:element type="CurrencyAmount" name="ExtendedPrice" minOccurs="0"/>
-            <xsd:element type="CurrencyAmount" name="LineTotal" minOccurs="0"/>
-            <xsd:element type="CurrencyAmount" name="LineTotalWithoutTax" minOccurs="0"/>
-            <xsd:element type="xsd:string" name="PricingQty" minOccurs="0"/>
-            <xsd:element type="CurrencyAmount" name="ShippingCharges" minOccurs="0"/>
-            <xsd:element type="CurrencyAmount" name="ShippingDiscount" minOccurs="0"/>
-            <xsd:element type="CurrencyAmount" name="ShippingTotal" minOccurs="0"/>
-            <xsd:element type="CurrencyAmount" name="Tax" minOccurs="0"/>
-            <xsd:element type="CurrencyAmount" name="UnitPrice" minOccurs="0"/>
-            <xsd:element name="MinLineStatus" type="LineStatusType" minOccurs="0"/>
-            <xsd:element name="MaxLineStatus" type="LineStatusType" minOccurs="0"/>
-        </xsd:sequence>
-    </xsd:complexType>
-
-
-    <xsd:complexType name="LineStatusType">
-        <xsd:simpleContent>
-            <xsd:annotation>
-                <xsd:documentation>Customer care element : Combines status and description into one element.
-                </xsd:documentation>
-            </xsd:annotation>
-            <xsd:extension base="xsd:string">
-                <xsd:attribute name="description" use="optional"/>
-            </xsd:extension>
-        </xsd:simpleContent>
-    </xsd:complexType>
 
     <xsd:complexType name="OrderHoldType">
-        <xsd:attribute name="type" type="HoldType"/>
-        <xsd:attribute name="action" type="HoldAction"/>
+        <xsd:attribute name="type" type="HoldType" />
+        <xsd:attribute name="action" type="HoldAction" />
     </xsd:complexType>
 
     <xsd:simpleType name="HoldType">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="ORDER_MODIFY_HOLD"/>
+            <xsd:enumeration value="ORDER_MODIFY_HOLD" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="HoldAction">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="CREATE"/>
-            <xsd:enumeration value="RESOLVE"/>
+            <xsd:enumeration value="CREATE" />
+            <xsd:enumeration value="RESOLVE" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:complexType name="OrderHoldStatusType">
 		<xsd:sequence>
-			<xsd:element name="ShortDesc" type="xsd:string" minOccurs="0"/>
-			<xsd:element name="LongDesc" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="HoldDuration" type="HoldDurationType" minOccurs="0"/>
+			<xsd:element name="ShortDesc" type="xsd:string" minOccurs="0" />
+			<xsd:element name="LongDesc" type="xsd:string" minOccurs="0" />
+            <xsd:element name="HoldDuration" type="HoldDurationType" minOccurs="0" />
 		</xsd:sequence>
     </xsd:complexType>
 
@@ -4024,7 +3954,7 @@ Aliases: N/A</xsd:documentation>
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
-
+	
     <xsd:complexType name="UpdateTypesType">
         <xsd:sequence>
             <xsd:element name="UpdateType" type="UpdateTypeType" maxOccurs="unbounded"/>
@@ -4037,8 +3967,8 @@ Aliases: N/A</xsd:documentation>
                 Represents Update Type (Either Simple or Complex Type) which can be allowed to update after an Order has submitted/create
             </xsd:documentation>
         </xsd:annotation>
-        <xsd:attribute name="name" type="xsd:string"/>
-        <xsd:attribute name="allowed" type="xsd:boolean"/>
+        <xsd:attribute name="name" type="xsd:string" />
+        <xsd:attribute name="allowed" type="xsd:boolean" />
     </xsd:complexType>
 
     <xsd:complexType name="AgentType">
@@ -4058,9 +3988,9 @@ Aliases: N/A</xsd:documentation>
             </xsd:documentation>
         </xsd:annotation>
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="SUCCESS"/>
-            <xsd:enumeration value="FAILURE"/>
-            <xsd:enumeration value="TIMEOUT"/>
+            <xsd:enumeration value="SUCCESS" />
+            <xsd:enumeration value="FAILURE" />
+            <xsd:enumeration value="TIMEOUT" />
         </xsd:restriction>
     </xsd:simpleType>
 
@@ -4100,10 +4030,10 @@ Aliases: N/A</xsd:documentation>
             </xsd:documentation>
         </xsd:annotation>
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="MODIFY"/>
-            <xsd:enumeration value="CREATE"/>
-            <xsd:enumeration value="CANCEL"/>
-            <xsd:enumeration value="REPLACE_BUNDLE"/> <!--? OMS will get back -->
+            <xsd:enumeration value="MODIFY" />
+            <xsd:enumeration value="CREATE" />
+            <xsd:enumeration value="CANCEL" />
+            <xsd:enumeration value="REPLACE_BUNDLE" /> <!--? OMS will get back -->
         </xsd:restriction>
     </xsd:simpleType>
 
@@ -4113,8 +4043,8 @@ Aliases: N/A</xsd:documentation>
             </xsd:documentation>
         </xsd:annotation>
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="CREATE"/>
-            <xsd:enumeration value="DELETE"/>
+            <xsd:enumeration value="CREATE" />
+            <xsd:enumeration value="DELETE" />
         </xsd:restriction>
     </xsd:simpleType>
 
@@ -4128,6 +4058,34 @@ Aliases: N/A</xsd:documentation>
     <xsd:simpleType name="MaxIntervalType">
         <xsd:restriction base="BaseIntervalType">
             <xsd:minInclusive value="2"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="ReservationPaymentType">
+        <xsd:annotation>
+            <xsd:documentation>
+                In store pickup store reservation payment.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="NO_PAYMENT"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="CreditCheckResultCodeType">
+        <xsd:annotation>
+            <xsd:documentation>
+                ok - Successfully retrieved Credit Score and below the risk threshold.
+                nok - Successfully retrieved Credit Score and above the risk threshold.
+                undefined - Successfully retrieved Credit Score but provider is unable to decide about risk
+                na - Unable to retrieve Credit Score
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="ok"/>
+            <xsd:enumeration value="nok"/>
+            <xsd:enumeration value="na"/>
+            <xsd:enumeration value="undefined"/>
         </xsd:restriction>
     </xsd:simpleType>
 

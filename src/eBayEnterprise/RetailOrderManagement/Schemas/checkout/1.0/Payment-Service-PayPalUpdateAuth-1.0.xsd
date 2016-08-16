@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            version="${project.version}">
+
+<xsd:include schemaLocation="Payment-Datatypes-1.0.xsd"/>
+<xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
+
+<xsd:complexType name="PayPalUpdateAuthorizationRequestType" >
+  <xsd:sequence>
+    <xsd:element name="OrderId" type="OrderIdType" >
+         <xsd:annotation>
+              <xsd:documentation xml:lang="en">
+                   A unique identifier for the order.<br/>
+                   The client is responsible for ensuring uniqueness across all transactions the client initiates with this service.
+              </xsd:documentation>
+         </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ShipToName">
+      <xsd:annotation>
+          <xsd:documentation xml:lang="en">
+              The name of the person shipped to like "FirstName LastName". Max length is 32 chars
+          </xsd:documentation>
+      </xsd:annotation>
+      <xsd:simpleType>
+          <xsd:restriction base="xsd:string">
+              <xsd:minLength value="1"/>
+              <xsd:maxLength value="32"/>
+          </xsd:restriction>
+      </xsd:simpleType>
+    </xsd:element>
+    <xsd:element name="ShippingAddress" type="PhysicalAddressType">
+      <xsd:annotation>
+          <xsd:documentation xml:lang="en">
+              Address the order will be shipped to.<br/>
+              Notes about state code - use two chars state code for US like "PA" for Pennsylvania;<br/>
+              For the rest of the countries, use full state name like "British Columbia" in Canada.<br/>
+              Notes about country code - always use valid ISO country code; see http://countrycode.org like US, CA etc.
+          </xsd:documentation>
+      </xsd:annotation>
+    </xsd:element>
+  </xsd:sequence>
+  <xsd:attribute name="requestId" type="RequestId" use="required"/>
+  <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+</xsd:complexType>
+
+<xsd:element name="PayPalUpdateAuthorizationRequest" type="PayPalUpdateAuthorizationRequestType" />
+
+<xsd:complexType name="PayPalUpdateAuthorizationReplyType" >
+  <xsd:sequence>
+    <xsd:element name="OrderId" type="OrderIdType" />
+    <xsd:element name="ResponseCode" type="xsd:string" >
+         <xsd:annotation>
+              <xsd:documentation xml:lang="en">
+                   Response code like Success, Failure etc
+              </xsd:documentation>
+         </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ErrorMessage" type="xsd:string" minOccurs="0">
+      <xsd:annotation>
+          <xsd:documentation xml:lang="en">
+              The description of error like "The totals of the cart item amounts do not match order
+              amounts".
+          </xsd:documentation>
+      </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ShortErrorMessage" type="xsd:string" minOccurs="0">
+          <xsd:annotation>
+              <xsd:documentation xml:lang="en">
+                  Short description of error like "The totals of the cart item amounts do not match order
+                  amounts".
+              </xsd:documentation>
+          </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="ErrorCode" type="xsd:string" minOccurs="0">
+          <xsd:annotation>
+              <xsd:documentation xml:lang="en">
+                  The error code like "10413".
+              </xsd:documentation>
+          </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="extension" type="ExtensionType" minOccurs="0"/>
+  </xsd:sequence>
+  <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+</xsd:complexType>
+
+<xsd:element name="PayPalUpdateAuthorizationReply" type="PayPalUpdateAuthorizationReplyType" />
+
+</xsd:schema>

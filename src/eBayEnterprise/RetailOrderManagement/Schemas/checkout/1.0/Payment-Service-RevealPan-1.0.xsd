@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            version="${project.version}">
+
+    <xsd:include schemaLocation="Payment-Datatypes-1.0.xsd"/>
+    <xsd:include schemaLocation="Checkout-Datatypes-1.0.xsd"/>
+
+    <xsd:element name="RevealPanRequest" type="RevealPanRequestType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">The Request Message for revealing a previously tokenized Payment Account Number (PAN)
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:element name="RevealPanReply" type="RevealPanReplyType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">The Reply Message for revealing a previously tokenized Payment Account Number (PAN)
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:complexType name="RevealPanRequestType">
+        <xsd:sequence>
+            <xsd:element name="Token" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        The token that needs to be revealed.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+
+            <xsd:element name="TenderClass" type="TenderClassType" >
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">
+                        Tender class represents type of Payment Account Number (PAN): PrivateLabelCreditCard, CreditCard and StoredValue (gift card).
+                        NOTE: Currently, only StoredValue tender class type is supported for reveal pan for security reasons.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="RevealPanReplyType">
+        <xsd:sequence>
+            <xsd:element name="PaymentAccountNumber" type="PaymentAccountNumberType">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">Payment Account Number (PAN) corresponding to the token passed in the request.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded">
+                <xsd:annotation>
+                    <xsd:documentation xml:lang="en">This xsd:any element indicates that future optional elements may show up in this location of the XML document in the responses returned from the service.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:any>
+        </xsd:sequence>
+        <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+    </xsd:complexType>
+
+</xsd:schema>

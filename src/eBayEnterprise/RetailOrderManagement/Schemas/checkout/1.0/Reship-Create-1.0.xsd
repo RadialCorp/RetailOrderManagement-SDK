@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://api.gsicommerce.com/schema/checkout/1.0"
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            version="${project.version}">
+
+    <xsd:annotation>
+        <xsd:documentation>                                                                                                                                 t
+            Reship Create Request
+        </xsd:documentation>
+    </xsd:annotation>
+
+    <xsd:include schemaLocation="Order-Datatypes-Common-1.0.xsd" />
+    <xsd:element name="ReshipCreateRequest" type="ZcrCreateRequestType"/>
+    <xsd:element name="ReshipCreateResponse" type="ZcrCreateResponseType"/>
+
+
+    <xsd:complexType name="ZcrCreateRequestType">
+        <xsd:sequence>
+            <xsd:element type="xsd:string" name="SourceSystem"/>
+            <xsd:element name="Agent" type="AgentType" minOccurs="1"/>
+            <xsd:element type="xsd:string" name="InteractionId" />      <!--Should this be optional , OMS does not use this but this is used in reporting , 3rd party CSR tools may not send this in -->
+            <xsd:element type="xsd:string" name="TransactionId"/>
+            <xsd:sequence>
+                <xsd:choice minOccurs="1" maxOccurs="1">
+                    <xsd:element name="CustomerOrderId" type="OrderId">
+                        <xsd:annotation>
+                            <xsd:documentation>The unique text string that identifies an order.
+
+                                Allowable Values: Text string
+                                Required: Yes
+                                Length: 24
+                                Default Value: blank
+                                Restrictions: This string must be unique within the webstore.
+                                Aliases: N/A
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                    <xsd:element name="OmsOrderId" type="OrderId"/>
+                </xsd:choice>
+            </xsd:sequence>
+            <xsd:element type="ZcrOrderType" name="Order"/>
+        </xsd:sequence>
+        <xsd:attribute type="xsd:string" name="orderType"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrOrderType">
+        <xsd:sequence>
+            <xsd:element name="Customer" type="ZcrCustomerType" minOccurs="0"/>
+            <xsd:element type="OrderItemsType" name="OrderItems" minOccurs="1" />
+            <xsd:element type="ZCRShippingType" name="Shipping"/>
+            <xsd:element type="ZcrPaymentType" name="Payment" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrCustomerType">
+        <xsd:sequence>
+            <xsd:element name="EmailAddress" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZCRShippingType">
+        <xsd:sequence>
+            <xsd:element name="ShipGroups" nillable="false">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ShipGroup" type="ZcrShipGroupType" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Destinations" type="DestinationsType" nillable="false">
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrShipGroupType">
+        <xsd:sequence>
+            <xsd:element name="DestinationTarget" type="DestinationTargetType"/>
+            <xsd:element name="OrderItems" type="OrderItemReferenceList"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="OrderItemsType">
+        <xsd:sequence>
+            <xsd:element type="ZcrOrderItemType" name="OrderItem" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrOrderItemType">
+        <xsd:sequence>
+            <xsd:element type="xsd:string" name="Quantity"/>
+            <xsd:element type="xsd:string" name="ReasonCode"/>
+            <xsd:element type="xsd:string" name="ShippingMethod"/>
+            <xsd:element type="ZcrDateRequestType" name="EstimatedDeliveryDate"/>
+        </xsd:sequence>
+        <xsd:attribute type="xsd:ID" name="id"/>
+        <xsd:attribute type="xsd:string" name="lineId"/>
+        <xsd:attribute type="xsd:string" name="subLineId"/>
+        <xsd:attribute type="xsd:boolean" name="returnRequired"/>
+        <xsd:attribute type="xsd:boolean" name="isStoredValueCard" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrPaymentType">
+        <xsd:sequence>
+            <xsd:element name="BillingAddress">
+                <xsd:complexType>
+                    <xsd:attribute name="ref" type="xsd:IDREF"/>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Payments" type="ZcrPaymentsType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrPaymentsType">
+        <xsd:sequence>
+            <xsd:element type="ZcrCreditCardType" name="CreditCard"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrCreditCardType">
+        <xsd:sequence>
+            <xsd:element name="ExpirationDate" type="YYYY-MMDateType" minOccurs="0"/>
+            <xsd:element name="PurchasePlanCode" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="PurchasePlanDescription" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="PaymentContext" type="ZcrPaymentContextType"/>
+        </xsd:sequence>
+        <xsd:attribute name="useAlternateMerchantId" type="xsd:boolean" use="optional"/>
+        <xsd:attribute name="isPLCC" type="xsd:boolean" use="optional"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrPaymentContextType">
+        <xsd:sequence>
+            <xsd:element name="TenderType" type="xsd:string"/>
+            <xsd:element name="PaymentAccountUniqueId" type="PaymentAccountUniqueIdType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrDateRequestType">
+        <xsd:sequence>
+            <xsd:element name="DeliveryWindow" type="DateRangeType" minOccurs="0"/>
+            <xsd:element name="ShippingWindow" type="DateRangeType" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrCreateResponseType">
+        <xsd:sequence>
+            <xsd:element name="SourceId" type="SourceId" minOccurs="1"/>
+            <xsd:element name="OmsOrderId" type="OrderId" minOccurs="1"/>
+            <xsd:element type="xsd:string" name="TransactionId"/>
+            <xsd:element type="xsd:string" name="ResponseCode"/>
+            <xsd:choice>
+                <xsd:element name="ErrorInformation" type="ZcrErrorType" minOccurs="1"/>
+                <xsd:element name="ReshipInfo" type="ZcrSuccess" minOccurs="1"/>
+            </xsd:choice>
+        </xsd:sequence>
+        <xsd:attribute type="xsd:string" name="orderType"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrSuccess">
+        <xsd:sequence>
+            <xsd:element type="ReshipWithReturnType" name="ReshipWithReturn" minOccurs="0"/>
+            <xsd:element type="ReshipWithoutReturnType" name="ReshipWithoutReturn" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="ReshipWithReturnType">
+        <xsd:sequence>
+            <xsd:element type="GeneratedOrderType" name="GeneratedOrder" />
+            <xsd:element type="ZcrOrderItemsType" name="OrderItems" />
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ReshipWithoutReturnType">
+        <xsd:sequence>
+            <xsd:element type="ZcrOrderItemsType" name="OrderItems"  />
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="GeneratedOrderType">
+        <xsd:sequence>
+            <xsd:element type="xsd:string" name="OrderType"/>
+            <xsd:element name="OmsOrderId" type="OrderId" minOccurs="1"/>
+            <xsd:element type="xsd:string" name="OrderPurpose"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="ZcrOrderItemsType">
+        <xsd:sequence>
+            <xsd:element type="OrderItemType" name="OrderItem" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="OrderItemType">
+        <xsd:sequence>
+            <xsd:element type="xsd:string" name="ResponseCode"/>
+            <xsd:element type="xsd:string" name="TotalChargeIfNotReturned" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute type="xsd:string" name="lineId" use="required"/>
+        <xsd:attribute type="xsd:string" name="subLineId" use="required"/>
+        <xsd:attribute type="xsd:string" name="origLineId" use="required"/>
+        <xsd:attribute type="xsd:string" name="origSubLineId" use="required"/>
+    </xsd:complexType>
+
+    <!-- error types-->
+    <xsd:complexType name="OrderItemTypeError">
+        <xsd:sequence>
+            <xsd:element name="ResponseCode" type="xsd:string"></xsd:element>
+            <xsd:element name="ResponseDescription" type="xsd:string"></xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="lineId" type="nonEmptyString">
+            <xsd:annotation>
+                <xsd:documentation>
+                    Order prime line id
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        <xsd:attribute name="subLineId" type="nonEmptyString">
+            <xsd:annotation>
+                <xsd:documentation>
+                    Order subline id
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="OrderItemsTypeError">
+        <xsd:sequence>
+            <xsd:element name="OrderItem" type="OrderItemTypeError" maxOccurs="unbounded" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ZcrErrorType">
+        <xsd:sequence>
+            <xsd:element name="OrderItems" type="OrderItemsTypeError"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+
+</xsd:schema>
+
+

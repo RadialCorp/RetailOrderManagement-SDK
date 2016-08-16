@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://api.gsicommerce.com/schema/checkout/1.0" 
+            targetNamespace="http://api.gsicommerce.com/schema/checkout/1.0"
+            elementFormDefault="qualified" 
+            attributeFormDefault="unqualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            version="${project.version}">
+	<xsd:include schemaLocation="Shipping-Restriction-Datatypes-1.0.xsd" />
+	
+	<xsd:complexType name="RestrictionRequestOrderItemType">
+		<xsd:sequence>
+            <xsd:element name="ItemId" type="ItemId"/>
+            <xsd:element name="VendorPartNumber" type="VendorPartNumber" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="lineNumber" type="LineNumber" use="required"/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="RestrictionRequestItemListType">
+		<xsd:sequence>
+            <xsd:element name="OrderItem" type="RestrictionRequestOrderItemType" nillable="false" maxOccurs="unbounded"/>
+        </xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="RestrictionRequestShipGroupListType">
+		<xsd:sequence>
+            <xsd:element name="DestinationTarget" type="DestinationTargetType"/>
+            <xsd:element name="Items" type="RestrictionRequestItemListType" nillable="false"/>
+        </xsd:sequence>
+        <xsd:attribute name="id" type="xsd:ID" use="required">
+            <xsd:annotation>
+                <xsd:documentation>
+                    The id field is used to uniquely identify the shipgroup within an XML document
+                    to allow XML references.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:complexType name="RestrictionRequestShippingType">
+		<xsd:sequence>
+            <xsd:element name="ShipGroups" nillable="false">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="ShipGroup" type="RestrictionRequestShipGroupListType" maxOccurs="unbounded"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="Destinations" type="ShippingDestinationsListType" nillable="false" maxOccurs="1" minOccurs="1">
+            </xsd:element>
+        </xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ShippingDestinationRestrictionRequestType">
+		<xsd:sequence>
+            <xsd:element name="Shipping" type="RestrictionRequestShippingType"/>
+        </xsd:sequence>
+        <xsd:attribute name="sessionId" type="RequestId" use="optional"/>
+	</xsd:complexType>
+	
+	<xsd:element name="ShippingDestinationRestrictionRequest" type="ShippingDestinationRestrictionRequestType"/>
+</xsd:schema>
