@@ -38,6 +38,8 @@ class PayPalSetExpressCheckoutRequest implements IPayPalSetExpressCheckoutReques
     protected $amount;
     /** @var boolean * */
     protected $addressOverride;
+    /** @var string * */
+    protected $shipToName;
 
     /**
      * @param IValidatorIterator
@@ -68,6 +70,7 @@ class PayPalSetExpressCheckoutRequest implements IPayPalSetExpressCheckoutReques
             'cancelUrl' => 'string(x:CancelUrl)',
             'localeCode' => 'string(x:LocaleCode)',
             'currencyCode' => 'string(x:Amount/@currencyCode)',
+	    'shipToName' => 'string(x:ShipToName)',
             // see addressLinesFromXPath - Address lines Line1 through Line4 are specially handled with that function
             'shipToCity' => 'string(x:ShippingAddress/x:City)',
             'shipToMainDivision' => 'string(x:ShippingAddress/x:MainDivision)',
@@ -104,8 +107,38 @@ class PayPalSetExpressCheckoutRequest implements IPayPalSetExpressCheckoutReques
         . $this->serializeLocaleCode()
         . $this->serializeCurrencyAmount('Amount', $this->getAmount(), $this->xmlEncode($this->getCurrencyCode()))
         . $this->serializeAddressOverride()
+	. $this->serializeShipToName()
         . $this->serializeShippingAddress()
         . $this->serializeLineItemsContainer();
+    }
+   
+    /**
+     * Serialize the Ship To Name
+     * @return string
+     */
+    protected function serializeShipToName()
+    {
+        return $this->serializeOptionalXmlEncodedValue("ShipToName", $this->getShipToName());
+    }
+
+    /**
+     * The name of the person shipped to like "FirsName LastName".
+     *
+     * @return string
+     */
+    public function getShipToName()
+    {
+        return $this->shipToName;
+    }
+
+    /**
+     * @param string
+     * @return self
+     */
+    public function setShipToName($name)
+    {
+        $this->shipToName = $name;
+        return $this;
     }
 
     /**

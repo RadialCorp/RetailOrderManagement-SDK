@@ -196,7 +196,7 @@ class PayPalDoExpressCheckoutRequest implements IPayPalDoExpressCheckoutRequest
      */
     protected function serializePickupStoreId()
     {
-        return $this->serializeOptionalXmlEncodedValue("ShipToName", $this->getPickupStoreId());
+        return $this->serializeOptionalXmlEncodedValue("PickUpStoreId", $this->getPickupStoreId());
     }
 
     /**
