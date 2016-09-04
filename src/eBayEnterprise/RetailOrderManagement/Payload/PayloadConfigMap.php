@@ -194,12 +194,17 @@ return call_user_func(function () {
         'schemaValidator' => $xsdSchemaValidator,
         'childPayloads' => $noChildPayloads,
     ];
-    $map['\eBayEnterprise\RetailOrderManagement\Payload\Payment\PaymentAuthCancelReply'] = [
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\OrderEvents\PaymentAuthCancelReply'] = [
         'validators' => [
             [
                 'validator' => $requiredFieldsValidator,
-                'params' => []
-            ]
+                'params' => [
+                    'getAmount',
+                    'getCurrencyCode',
+                    'getTenderType',
+                    'getResponseCode',
+                ]
+	    ]
         ],
         'validatorIterator' => $validatorIterator,
         'schemaValidator' => $xsdSchemaValidator,
