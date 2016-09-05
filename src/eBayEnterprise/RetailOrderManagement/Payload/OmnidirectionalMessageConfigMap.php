@@ -32,7 +32,7 @@ return call_user_func(function () {
     $map['OrderReturnInTransit'] = "$orderEvents\OrderReturnInTransit";
     $map['OrderShipped'] = "$orderEvents\OrderShipped";
     $map['PaymentSettlementStatus'] = "$orderEvents\SettlementStatus";
-    $map['PaymentAuthCancelReply'] = "$orderEvents\PaymentAuthCancelReply";
+    $map['PaymentAuthCancelReply'] = "$orderEvents\PaymentAuthCancel";
     $map['Test'] = "$orderEvents\TestMessage";
     $map['RiskAssessmentReply'] = "$riskEvents\RiskAssessmentReply";
     return $map;

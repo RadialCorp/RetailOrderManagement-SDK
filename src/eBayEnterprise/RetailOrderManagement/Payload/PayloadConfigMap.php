@@ -205,7 +205,7 @@ return call_user_func(function () {
         'schemaValidator' => $xsdSchemaValidator,
         'childPayloads' => $noChildPayloads,
     ];
-    $map['\eBayEnterprise\RetailOrderManagement\Payload\OrderEvents\PaymentAuthCancelReply'] = [
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\OrderEvents\PaymentAuthCancel'] = [
         'validators' => [
             [
                 'validator' => $requiredFieldsValidator,

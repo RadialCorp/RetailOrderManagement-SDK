@@ -20,7 +20,6 @@ use eBayEnterprise\RetailOrderManagement\Payload\Payment\IPaymentContext;
 
 interface IPaymentAuthCancelReply extends IPayload, IOrderEvent, IPaymentContext
 {
-    const EVENT_TYPE = 'auth_cancel';
     const ROOT_NODE = 'PaymentAuthCancelReply';
     const XML_NS = 'http://api.gsicommerce.com/schema/checkout/1.0';
     const XSD = '/checkout/1.0/Payment-Service-PaymentAuthCancel-1.0.xsd';
