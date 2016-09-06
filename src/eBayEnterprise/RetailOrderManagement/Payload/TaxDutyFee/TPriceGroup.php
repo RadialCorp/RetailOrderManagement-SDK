@@ -43,7 +43,7 @@ trait TPriceGroup
     public function setUnitPrice($unitPrice)
     {
         $cleanPrice = $this->sanitizeAmount($unitPrice);
-        $this->unitPrice = $cleanPrice && $cleanPrice > 0 ? $cleanPrice : null;
+        $this->unitPrice = $cleanPrice;
         return $this;
     }
 
