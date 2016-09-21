@@ -182,7 +182,7 @@ class AmqpApi implements IAmqpApi
         return $this->connection && $this->connection->isConnected();
     }
 
-    /**
+     /**
      * Get the next message from the queue.
      * @return AMQPMessage
      * @throws ConnectionError Thrown by self::openConnection if connection cannot be established
@@ -190,14 +190,14 @@ class AmqpApi implements IAmqpApi
     public function getNextMessage()
     {
         $this->openConnection();
-        $message = $this->channel->basic_get($this->config->getQueueName());
-        // Currently no reason to want to see any message more than once so
-        // ack every message received from the queue.
-        if ($message) {
-            // direct delivery_info array access recommended in PhpAmqpLib documentation
-            $this->channel->basic_ack($message->delivery_info['delivery_tag']);
-        }
-        return $message;
+        $this->channel->basic_consume($this->config->getQueueName(), '', false, false, false, false, array($this, 'process'));
+	return $this->message;
+    }
+
+    public function process(AMQPMessage $msg)
+    {
+        $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
+        $this->message = $msg;
     }
 
     public function closeConnection()
