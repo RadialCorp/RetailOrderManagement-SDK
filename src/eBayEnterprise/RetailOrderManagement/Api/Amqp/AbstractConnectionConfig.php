@@ -46,6 +46,8 @@ abstract class AbstractConnectionConfig implements IConnectionConfig
     protected $connectionTimeout;
     /** @var string */
     protected $connectionReadWriteTimeout;
+    /** @var int */
+    protected $connectionHeartbeat;
     /** @var LoggerInterface */
     protected $logger;
 
@@ -76,6 +78,7 @@ abstract class AbstractConnectionConfig implements IConnectionConfig
         $connectionLocale = null,
         $connectionTimeout = null,
         $connectionReadWriteTimeout = null,
+	$connectionHeartbeat = null,
         LoggerInterface $logger = null
     ) {
         $this->logger = $logger ?: new NullLogger();
@@ -90,6 +93,7 @@ abstract class AbstractConnectionConfig implements IConnectionConfig
         $this->connectionLocale = $connectionLocale;
         $this->connectionTimeout = $connectionTimeout;
         $this->connectionReadWriteTimeout = $connectionReadWriteTimeout;
+	$this->connectionHeartbeat = $connectionHeartbeat;
     }
 
     abstract public function getConnectionParams();

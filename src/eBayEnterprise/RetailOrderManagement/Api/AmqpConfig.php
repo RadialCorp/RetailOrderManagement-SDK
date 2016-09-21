@@ -97,6 +97,11 @@ class AmqpConfig implements IAmqpConfig
      */
     protected $connectionReadWriteTimeout;
     /**
+     * connection heartbeat check
+     * @var int
+     */
+    protected  $connectionHeartbeat;
+    /**
      * connection queue name
      * @var string
      */
@@ -147,6 +152,7 @@ class AmqpConfig implements IAmqpConfig
      * @param string $connectionLocale
      * @param int $connectionTimeout
      * @param int $connectionReadWriteTimeout
+     * @param int $connectionHeartbeat
      * @param string $queueName
      * @param bool $queuePassive
      * @param bool $queueDurable
@@ -170,6 +176,7 @@ class AmqpConfig implements IAmqpConfig
         $connectionLocale,
         $connectionTimeout,
         $connectionReadWriteTimeout,
+        $connectionHeartbeat,
         $queueName,
         $queuePassive,
         $queueDurable,
@@ -196,7 +203,8 @@ class AmqpConfig implements IAmqpConfig
             $connectionLoginMethod,
             $connectionLocale,
             $connectionTimeout,
-            $connectionReadWriteTimeout
+            $connectionReadWriteTimeout,
+            $connectionHeartbeat
         );
 
         $this->queueName = $queueName;

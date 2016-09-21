@@ -47,6 +47,7 @@ class SslConnectionConfig extends AbstractConnectionConfig
                 'locale' => $this->connectionLocale,
                 'connection_timeout' => $this->connectionTimeout,
                 'read_write_timeout' => $this->connectionReadWriteTimeout,
+		'heartbeat' => $this->connectionHeartbeat,
             ]),
         ];
     }

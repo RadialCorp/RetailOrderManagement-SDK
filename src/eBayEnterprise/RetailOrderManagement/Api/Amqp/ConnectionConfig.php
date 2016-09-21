@@ -40,8 +40,9 @@ class ConnectionConfig extends AbstractConnectionConfig
             'login_method' => $this->connectionLoginMethod ?: 'AMQPLAIN',
             'login_response' => null, // unused so no config provided
             'locale' => $this->connectionLocale ?: 'en_US',
-            'connection_timeout' => $this->connectionTimeout ?: 3,
-            'read_write_timeout' => $this->connectionReadWriteTimeout ?: 3,
+            'connection_timeout' => $this->connectionTimeout ?: 10,
+            'read_write_timeout' => $this->connectionReadWriteTimeout ?: 20,
+	    'heartbeat' => $this->connectionHeartbeat ?: 10,
             'context' => $this->connectionContext,
         ];
     }
