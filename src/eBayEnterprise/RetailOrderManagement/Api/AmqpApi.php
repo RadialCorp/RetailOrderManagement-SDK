@@ -95,6 +95,25 @@ class AmqpApi implements IAmqpApi
     }
 
     /**
+     * Get the appropriate payload type for the AMQP message and deserialize
+     * the message body with the payload.
+     * @param AMQPMessage $message
+     * @throws Exception\UnexpectedResponse
+     * @return IPayload
+     */
+    public function processMessage(AMQPMessage $message)
+    {
+        try {
+            $type = $message->get('type');
+        } catch (OutOfBoundsException $e) {
+            throw new Exception\UnexpectedResponse('No "type" set for message.');
+        }
+        $payload = $this->messageFactory->messagePayload($type);
+        $payload->deserialize($message->body);
+        return $payload;
+    }
+
+    /**
      * Connect to the queue. Any method called should be idempotent so this method may be
      * called multiple times without creating additional connections, exchanges, queues, etc.
      * @return self
@@ -121,6 +140,24 @@ class AmqpApi implements IAmqpApi
             $this->isQueueSetup = true;
         }
         return $this;
+    }
+
+    /**
+     * Get the next message from the queue.
+     * @return AMQPMessage
+     * @throws ConnectionError Thrown by self::openConnection if connection cannot be established
+     */
+    public function getNextMessage()
+    {
+        $this->openConnection();
+        $message = $this->channel->basic_get($this->config->getQueueName());
+        // Currently no reason to want to see any message more than once so
+        // ack every message received from the queue.
+        if ($message) {
+            // direct delivery_info array access recommended in PhpAmqpLib documentation
+            $this->channel->basic_ack($message->delivery_info['delivery_tag']);
+        }
+        return $message;
     }
 
     /**
@@ -182,24 +219,6 @@ class AmqpApi implements IAmqpApi
         return $this->connection && $this->connection->isConnected();
     }
 
-     /**
-     * Get the next message from the queue.
-     * @return AMQPMessage
-     * @throws ConnectionError Thrown by self::openConnection if connection cannot be established
-     */
-    public function getNextMessage()
-    {
-        $this->openConnection();
-        $this->channel->basic_consume($this->config->getQueueName(), '', false, false, false, false, array($this, 'process'));
-	return $this->message;
-    }
-
-    public function process(AMQPMessage $msg)
-    {
-        $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']);
-        $this->message = $msg;
-    }
-
     public function closeConnection()
     {
         if ($this->channel) {
@@ -227,5 +246,10 @@ class AmqpApi implements IAmqpApi
         $logMessage = 'AMQP API to: {rom_request_url} for queue {queue_name}';
         $this->logger->debug($logMessage, $this->getRequestUrlLogData());
         return $this;
+    }
+    
+    public function getChannel()
+    {
+	return $this->channel;
     }
 }
