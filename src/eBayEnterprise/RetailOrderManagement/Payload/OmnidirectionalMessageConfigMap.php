@@ -35,5 +35,6 @@ return call_user_func(function () {
     $map['PaymentAuthCancelReply'] = "$orderEvents\PaymentAuthCancel";
     $map['Test'] = "$orderEvents\TestMessage";
     $map['RiskAssessmentReply'] = "$riskEvents\RiskAssessmentReply";
+    $map['Fault_DUPLICATE'] = "$riskEvents\FaultDuplicate";
     return $map;
 });

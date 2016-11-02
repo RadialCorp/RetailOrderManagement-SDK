@@ -4144,5 +4144,21 @@ return call_user_func(function () {
          'schemaValidator' => $xsdSchemaValidator,
          'childPayloads' => $noChildPayloads,
     ];
+    $map['\eBayEnterprise\RetailOrderManagement\Payload\Risk\FaultDuplicate'] = [
+        'validators' => [
+        [
+          'validator' => $requiredFieldsValidator,
+                 'params' => [
+                        'getOrderId',
+			'getCode',
+			'getDescription',
+			'getStoreId',
+                 ]
+             ]
+         ],
+         'validatorIterator' => $validatorIterator,
+         'schemaValidator' => $xsdSchemaValidator,
+         'childPayloads' => $noChildPayloads,
+    ];
     return $map;
 });
