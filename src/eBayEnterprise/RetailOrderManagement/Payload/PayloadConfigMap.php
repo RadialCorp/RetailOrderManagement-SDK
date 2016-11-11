@@ -4149,10 +4149,8 @@ return call_user_func(function () {
         [
           'validator' => $requiredFieldsValidator,
                  'params' => [
-                        'getOrderId',
 			'getCode',
 			'getDescription',
-			'getStoreId',
                  ]
              ]
          ],
