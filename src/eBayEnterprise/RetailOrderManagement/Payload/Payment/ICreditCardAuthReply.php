@@ -157,4 +157,12 @@ interface ICreditCardAuthReply extends ICreditCardAuth
      * @return string
      */
     public function getResponseCode();
+   
+    /**
+     * Authorization response code acceptable to send to the OMS.
+     * Only valid values for the OMS are "APPROVED" or "TIMEOUT".
+     * Note this may duplicate the above.
+     * @return string
+     */
+    public function getRiskResponseCode();
 }
