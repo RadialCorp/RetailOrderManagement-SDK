@@ -331,4 +331,17 @@ interface ICreditCardAuthRequest extends ICreditCardAuth, IBillingAddress, IShip
      * @return self
      */
     public function setPayerAuthenticationResponse($response);
+
+    /**
+     * Schema Version Flag to Enhance AVS / CSC Error Reporting (should be set to 1.1)
+     *
+     * @return string
+     */
+    public function getSchemaVersion();
+
+    /**
+     * @param string $schemaVersion
+     * @return self
+     */
+    public function setSchemaVersion($schemaVersion);
 }
